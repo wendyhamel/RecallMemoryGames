@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memory Games</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { barlow: ['Barlow', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="assets/css/production.css">
+  <script defer src="assets/js/app.js"></script>
+  <script defer src="assets/js/alpine.js"></script>
+</head>
+<body
+	x-data="memoryGame()"
+	x-cloak
+	class="font-barlow text-white min-h-screen flex flex-col items-center justify-center gap-8 px-5 py-7"
+>
+
+<!-- Header -->
+<header class="text-center">
+	<h1 class="text-[40px] font-black leading-none tracking-[0.5px] [text-shadow:0_2px_0_rgba(0,0,0,0.18)]">
+		<span>Memory</span><span class="title-games">Games</span>
+	</h1>
+	<p class="mt-2 text-[13px] font-semibold tracking-[3px] uppercase text-gray">
+		Repeat the sequence
+	</p>
+</header>
+
+<main class="flex flex-col items-center gap-8">
+	<!-- Stats -->
+	<div class="flex gap-[14px]">
+		<div class="min-w-[92px] px-[18px] pt-3 pb-[11px] text-center bg-white/5 border border-white/[0.08] rounded-2xl backdrop-blur-sm">
+			<div class="text-[11px] font-bold tracking-[2px] uppercase text-gray">Level</div>
+			<div class="mt-[3px] text-[28px] font-black leading-none tabular-nums" x-text="level"></div>
+		</div>
+		<div class="min-w-[92px] px-[18px] pt-3 pb-[11px] text-center bg-white/5 border border-white/[0.08] rounded-2xl backdrop-blur-sm">
+			<div class="text-[11px] font-bold tracking-[2px] uppercase text-gray">Score</div>
+			<div :class="['mt-[3px] text-[28px] font-black leading-none tabular-nums', scorePop && 'score-pop']" x-text="score"></div>
+		</div>
+		<div class="min-w-[92px] px-[18px] pt-3 pb-[11px] text-center bg-white/5 border border-white/[0.08] rounded-2xl backdrop-blur-sm">
+			<div class="text-[11px] font-bold tracking-[2px] uppercase text-gray">Best</div>
+			<div class="mt-[3px] text-[28px] font-black leading-none tabular-nums" x-text="best"></div>
+		</div>
+	</div>
+
+	<!-- Board -->
+	<div class="relative">
+		<div :class="['disc grid grid-cols-2 gap-[14px] w-[380px] h-[380px] rounded-full', shake && 'disc-shake']">
+			<!-- TL: Red — Heart -->
+			<button @click="handlePress(0)" :class="['quad tl', lit === 0 && 'lit', phase === 'input' ? 'armed' : 'idle']" tabindex="-1" aria-label="Button 1">
+				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-10 opacity-70">
+					<path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+				</svg>
+			</button>
+			<!-- TR: Blue — Star -->
+			<button @click="handlePress(1)" :class="['quad tr', lit === 1 && 'lit', phase === 'input' ? 'armed' : 'idle']" tabindex="-1" aria-label="Button 2">
+				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-10 opacity-70">
+					<path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
+				</svg>
+			</button>
+			<!-- BL: Yellow — Bolt -->
+			<button @click="handlePress(2)" :class="['quad bl', lit === 2 && 'lit', phase === 'input' ? 'armed' : 'idle']" tabindex="-1" aria-label="Button 3">
+				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-10 opacity-70">
+					<path stroke-linecap="round" stroke-linejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" />
+				</svg>
+			</button>
+			<!-- BR: Cyan — Sparkles -->
+			<button @click="handlePress(3)" :class="['quad br', lit === 3 && 'lit', phase === 'input' ? 'armed' : 'idle']" tabindex="-1" aria-label="Button 4">
+				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-10 opacity-70">
+					<path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
+				</svg>
+			</button>
+		</div>
+
+		<!-- Hub -->
+		<div class="hub absolute top-1/2 left-1/2 -translate-x-1/4 -translate-y-1/4 w-[168px] h-[168px] rounded-full border-2 border-[var(--header-line)] z-10 flex flex-col items-center justify-center text-center p-3">
+
+			<!-- idle -->
+			<div x-show="phase === 'idle'" class="flex flex-col items-center gap-2">
+				<div class="text-[13px] font-bold tracking-[1.5px] uppercase text-gray">Ready?</div>
+				<button @click="startGame()" class="start-btn font-barlow text-[19px] font-black tracking-[1.5px] uppercase text-white border-none rounded-[40px] px-[22px] py-[13px] cursor-pointer">Start</button>
+			</div>
+
+			<!-- gameover -->
+			<div x-show="phase === 'gameover'" class="flex flex-col items-center gap-1">
+				<div class="text-[13px] font-bold text-red tracking-[1.5px] uppercase">Game Over</div>
+				<div class="hub-big text-[46px] font-black leading-[0.95] tabular-nums" x-text="score"></div>
+				<button @click="startGame()" class="start-btn font-barlow text-[15px] font-black tracking-[1.5px] uppercase text-white border-none rounded-[40px] px-[18px] py-[10px] cursor-pointer">Retry</button>
+			</div>
+
+			<!-- levelup -->
+			<div x-show="phase === 'levelup'" class="flex flex-col items-center gap-1">
+				<div class="text-[13px] text-cyan font-bold tracking-[1.5px] uppercase">Level Up!</div>
+				<div class="hub-big text-[46px] font-black leading-[0.95] tabular-nums" x-text="level"></div>
+				<div class="text-[12px] text-gray font-semibold tracking-[0.5px]">cleared</div>
+			</div>
+
+			<!-- watch / input -->
+			<div x-show="phase === 'watch' || phase === 'input'" class="flex flex-col items-center gap-1">
+				<div class="text-[13px] font-bold tracking-[1.5px] uppercase"
+				     :class="phase === 'watch' ? 'text-yellow' : 'text-cyan'"
+				     x-text="phase === 'watch' ? 'Watch' : 'Your Turn'"></div>
+				<div class="hub-big text-[46px] font-black leading-[0.95] tabular-nums" x-text="roundCount"></div>
+				<div class="text-[12px] text-gray font-semibold tracking-[0.5px]"
+				     x-text="roundCount === 1 ? 'press' : 'presses'"></div>
+			</div>
+
+		</div>
+	</div>
+
+	<!-- Progress dots -->
+	<div class="flex gap-[11px] items-center">
+		<template x-for="i in LEVEL_LEN" :key="i">
+			<div :class="['w-[15px] h-[15px] rounded-full border border-white/[0.14] bg-white/10 transition-all duration-[250ms]', i <= litLen ? 'dot-done' : '']"></div>
+		</template>
+		<span class="ml-2 text-[12px] text-gray font-bold tracking-[1.5px] uppercase"
+		      x-text="`${litLen} / ${LEVEL_LEN}`"></span>
+	</div>
+
+	<!-- Controls -->
+	<div class="flex gap-[14px] items-center">
+		<button @click="muted = !muted"
+		        class="flex gap-1 items-center bg-white/5 border border-white/10 rounded-[20px] px-4 py-2 cursor-pointer transition-colors text-gray hover:text-white hover:border-white/25"
+		>
+			<svg
+				data-slot="icon"
+				fill="none"
+				stroke-width="1.5"
+				stroke="currentColor"
+				viewBox="0 0 24 24"
+				xmlns="http://www.w3.org/2000/svg"
+				aria-hidden="true"
+				class="size-4"
+				x-show="!muted"
+				x-cloak
+			>
+				<path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z"></path>
+			</svg>
+			<svg
+				data-slot="icon"
+				fill="none"
+				stroke-width="1.5"
+				stroke="currentColor"
+				viewBox="0 0 24 24"
+				xmlns="http://www.w3.org/2000/svg"
+				aria-hidden="true"
+				class="size-4"
+				x-show="muted"
+				x-cloak
+			>
+				<path stroke-linecap="round" stroke-linejoin="round" d="M17.25 9.75 19.5 12m0 0 2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25m-10.5-6 4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z"></path>
+			</svg>
+			<span class="font-barlow text-[12px] font-bold tracking-[1px] uppercase " x-text="muted ? 'Sound off' : 'Sound on'"></span>
+		</button>
+	</div>
+
+	<!-- Hint -->
+	<p class="text-[12.5px] text-gray font-medium text-center max-w-[360px] min-h-4"
+	   x-text="hint"></p>
+
+</main>
+
+</body>
+</html>
