@@ -3,17 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Memory Games</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { barlow: ['Barlow', 'sans-serif'] }
-        }
-      }
-    }
-  </script>
+  <title>Recall</title>
+  <link rel="icon" type="image/svg+xml" href="assets/brand/recall-favicon.svg">
+  <link rel="alternate icon" type="image/png" sizes="32x32" href="assets/brand/recall-favicon-32.png">
+  <link rel="alternate icon" type="image/png" sizes="16x16" href="assets/brand/recall-favicon-16.png">
+  <link rel="apple-touch-icon" href="assets/brand/recall-apple-touch-icon.png">
   <link rel="stylesheet" href="assets/css/production.css">
   <script defer src="assets/js/app.js"></script>
   <script defer src="assets/js/alpine.js"></script>
@@ -25,13 +19,41 @@
 >
 
 <!-- Header -->
-<header class="text-center">
-	<h1 class="text-[40px] font-black leading-none tracking-[0.5px] [text-shadow:0_2px_0_rgba(0,0,0,0.18)]">
-		<span>Memory</span><span class="title-games">Games</span>
-	</h1>
-	<p class="mt-2 text-[13px] font-semibold tracking-[3px] uppercase text-gray">
-		Repeat the sequence
-	</p>
+<header class="flex justify-center">
+	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 430 120" width="260" role="img" aria-label="Recall — Memory Games">
+		<defs>
+			<linearGradient id="wmg" x1="0" y1="0" x2="1" y2="0">
+				<stop offset="0" stop-color="hsl(230,85%,63%)"/>
+				<stop offset="1" stop-color="hsl(261,73%,60%)"/>
+			</linearGradient>
+			<linearGradient id="mk" x1="0" y1="0" x2="1" y2="1">
+				<stop offset="0" stop-color="hsl(230,90%,72%)"/>
+				<stop offset="1" stop-color="hsl(258,85%,74%)"/>
+			</linearGradient>
+		</defs>
+		<g transform="translate(8 8) scale(1.04)">
+			<g>
+				<circle cx="50" cy="52" r="22" fill="none" stroke="url(#mk)" stroke-width="3" opacity="0.61"/>
+				<circle cx="50" cy="52" r="34" fill="none" stroke="url(#mk)" stroke-width="3" opacity="0.38"/>
+				<circle cx="50" cy="52" r="46" fill="none" stroke="url(#mk)" stroke-width="3" opacity="0.21"/>
+			</g>
+			<g stroke="hsl(232,52%,74%)" stroke-width="2.3" stroke-linecap="round" opacity="0.55">
+				<line x1="50" y1="52" x2="22.5" y2="32"/>
+				<line x1="50" y1="52" x2="73" y2="38"/>
+				<line x1="50" y1="52" x2="68.9" y2="83.05"/>
+				<line x1="50" y1="52" x2="32" y2="66.4"/>
+			</g>
+			<g>
+				<circle cx="22.5" cy="32" r="5.5" fill="hsl(232,60%,80%)"/>
+				<circle cx="73" cy="38" r="6" fill="hsl(189,62%,60%)"/>
+				<circle cx="68.9" cy="83.05" r="5" fill="hsl(232,60%,80%)"/>
+				<circle cx="32" cy="66.4" r="4" fill="hsl(232,60%,80%)"/>
+			</g>
+			<circle cx="50" cy="52" r="9.5" fill="url(#mk)"/>
+		</g>
+		<text x="150" y="60" font-family="Barlow, sans-serif" font-weight="800" font-size="62" letter-spacing="-1" fill="#ffffff" dominant-baseline="middle">Recall</text>
+		<text x="153" y="92" font-family="Barlow, sans-serif" font-weight="700" font-size="15" letter-spacing="4" fill="rgba(255,255,255,0.55)">MEMORY GAMES</text>
+	</svg>
 </header>
 
 <main class="flex flex-col items-center gap-8">
@@ -81,7 +103,7 @@
 		</div>
 
 		<!-- Hub -->
-		<div class="hub absolute top-1/2 left-1/2 -translate-x-1/4 -translate-y-1/4 w-[168px] h-[168px] rounded-full border-2 border-[var(--header-line)] z-10 flex flex-col items-center justify-center text-center p-3">
+		<div class="hub absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[168px] h-[168px] rounded-full border-2 border-[var(--header-line)] z-10 flex flex-col items-center justify-center text-center p-3">
 
 			<!-- idle -->
 			<div x-show="phase === 'idle'" class="flex flex-col items-center gap-2">
