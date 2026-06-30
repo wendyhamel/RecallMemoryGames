@@ -19,7 +19,7 @@
 >
 
 <!-- Header -->
-<header class="flex justify-center">
+<header class="flex flex-col items-center gap-4">
 	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 430 120" width="260" role="img" aria-label="Recall — Memory Games">
 		<defs>
 			<linearGradient id="wmg" x1="0" y1="0" x2="1" y2="0">
@@ -54,6 +54,27 @@
 		<text x="150" y="60" font-family="Barlow, sans-serif" font-weight="800" font-size="62" letter-spacing="-1" fill="#ffffff" dominant-baseline="middle">Recall</text>
 		<text x="153" y="92" font-family="Barlow, sans-serif" font-weight="700" font-size="15" letter-spacing="4" fill="rgba(255,255,255,0.55)">MEMORY GAMES</text>
 	</svg>
+
+	<!-- Games dropdown -->
+	<div class="relative" x-data="{ open: false }" @click.outside="open = false" @keydown.escape="open = false">
+		<button @click="open = !open" type="button" :aria-expanded="open"
+		        class="flex items-center gap-2 bg-white/5 border border-white/10 rounded-[20px] px-4 py-2 cursor-pointer transition-colors text-white hover:border-white/25"
+		>
+			<span class="font-barlow text-[12px] font-bold tracking-[1px] uppercase">Sequence</span>
+			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+			     class="size-3 transition-transform" :class="open && 'rotate-180'">
+				<path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+			</svg>
+		</button>
+		<ul x-show="open" x-cloak x-transition.opacity.duration.150ms
+		    class="absolute left-1/2 top-full -translate-x-1/2 mt-2 w-40 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-sm overflow-hidden z-20 py-1"
+		>
+			<li class="px-4 py-2 text-[12px] font-bold tracking-[1px] uppercase text-white bg-white/10">Sequence</li>
+			<li class="px-4 py-2 text-[12px] font-bold tracking-[1px] uppercase text-gray">Match</li>
+			<li class="px-4 py-2 text-[12px] font-bold tracking-[1px] uppercase text-gray">Difference</li>
+			<li class="px-4 py-2 text-[12px] font-bold tracking-[1px] uppercase text-gray">Tray</li>
+		</ul>
+	</div>
 </header>
 
 <main class="flex flex-col items-center gap-8">
