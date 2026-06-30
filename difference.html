@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Recall — Dashboard</title>
+  <title>Recall — Difference</title>
   <link rel="icon" type="image/svg+xml" href="assets/images/brand/recall-favicon.svg">
   <link rel="alternate icon" type="image/png" sizes="32x32" href="assets/images/brand/recall-favicon-32.png">
   <link rel="alternate icon" type="image/png" sizes="16x16" href="assets/images/brand/recall-favicon-16.png">
@@ -57,7 +57,7 @@
 	<!-- Full navigation -->
 	<nav class="flex items-center gap-2 flex-wrap justify-center">
 		<a href="index.html"
-		   class="flex items-center gap-2 bg-white/10 border border-white/25 rounded-2.5xl px-4 py-2 text-white no-underline font-barlow text-xs font-bold tracking-px uppercase">
+		   class="flex items-center gap-2 bg-white/5 border border-white/10 rounded-2.5xl px-4 py-2 text-white no-underline hover:border-white/25 transition-colors font-barlow text-xs font-bold tracking-px uppercase">
 			Dashboard
 		</a>
 		<a href="scores.html"
@@ -66,7 +66,7 @@
 		</a>
 		<div class="relative" x-data="{ open: false }" @click.outside="open = false" @keydown.escape="open = false">
 			<button @click="open = !open" type="button" :aria-expanded="open"
-			        class="flex items-center gap-2 bg-white/5 border border-white/10 rounded-2.5xl px-4 py-2 cursor-pointer transition-colors text-white hover:border-white/25">
+			        class="flex items-center gap-2 bg-white/10 border border-white/25 rounded-2.5xl px-4 py-2 cursor-pointer transition-colors text-white hover:border-white/25">
 				<span class="font-barlow text-xs font-bold tracking-px uppercase">Games</span>
 				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
 				     class="size-3 transition-transform" :class="open && 'rotate-180'">
@@ -88,7 +88,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="difference.html" class="flex items-center gap-3 px-4 py-2.5 text-white no-underline hover:bg-white/[0.08] transition-colors font-barlow text-xs font-bold tracking-px uppercase">
+					<a href="difference.html" class="flex items-center gap-3 px-4 py-2.5 bg-white/10 text-white no-underline font-barlow text-xs font-bold tracking-px uppercase">
 						<img src="assets/images/game_icons/difference.svg" width="24" height="24" alt="">
 						Difference
 					</a>
@@ -104,38 +104,10 @@
 	</nav>
 </header>
 
-<main class="w-full max-w-4xl flex flex-col items-center gap-6 pb-8">
-	<div class="grid md:grid-cols-2 gap-6 w-full">
-
-		<a href="sequence.html"
-		   class="flex flex-col items-center text-center pt-8 px-5 pb-7 bg-white/5 border border-white/10 rounded-2.5xl no-underline text-white gap-2.5 transition-all duration-200 hover:bg-white/[0.09] hover:border-white/[0.22] hover:-translate-y-1.5 active:-translate-y-px">
-			<img src="assets/images/game_icons/sequence.svg" width="64" height="64" alt="">
-			<div class="font-barlow text-sm font-black tracking-medium uppercase">Sequence</div>
-			<div class="text-[13px] text-gray font-semibold leading-snug">Repeat the growing sequence of lights</div>
-		</a>
-
-		<a href="match.html"
-		   class="flex flex-col items-center text-center pt-8 px-5 pb-7 bg-white/5 border border-white/10 rounded-2.5xl no-underline text-white gap-2.5 transition-all duration-200 hover:bg-white/[0.09] hover:border-white/[0.22] hover:-translate-y-1.5 active:-translate-y-px">
-			<img src="assets/images/game_icons/match.svg" width="64" height="64" alt="">
-			<div class="font-barlow text-sm font-black tracking-medium uppercase">Match</div>
-			<div class="text-[13px] text-gray font-semibold leading-snug">Flip cards to find the matching pairs</div>
-		</a>
-
-		<a href="difference.html"
-		   class="flex flex-col items-center text-center pt-8 px-5 pb-7 bg-white/5 border border-white/10 rounded-2.5xl no-underline text-white gap-2.5 transition-all duration-200 hover:bg-white/[0.09] hover:border-white/[0.22] hover:-translate-y-1.5 active:-translate-y-px">
-			<img src="assets/images/game_icons/difference.svg" width="64" height="64" alt="">
-			<div class="font-barlow text-sm font-black tracking-medium uppercase">Difference</div>
-			<div class="text-[13px] text-gray font-semibold leading-snug">Spot what changed between two images</div>
-		</a>
-
-		<a href="tray.html"
-		   class="flex flex-col items-center text-center pt-8 px-5 pb-7 bg-white/5 border border-white/10 rounded-2.5xl no-underline text-white gap-2.5 transition-all duration-200 hover:bg-white/[0.09] hover:border-white/[0.22] hover:-translate-y-1.5 active:-translate-y-px">
-			<img src="assets/images/game_icons/tray.svg" width="64" height="64" alt="">
-			<div class="font-barlow text-sm font-black tracking-medium uppercase">Tray</div>
-			<div class="text-[13px] text-gray font-semibold leading-snug">Memorize the objects, then recall them</div>
-		</a>
-
-	</div>
+<main class="flex-1 flex flex-col items-center justify-center gap-4 text-center">
+	<img src="assets/images/game_icons/difference.svg" width="64" height="64" alt="">
+	<div class="font-barlow text-[20px] font-black tracking-large uppercase">Difference</div>
+	<p class="text-[13px] text-gray font-semibold">Content coming soon</p>
 </main>
 
 </body>

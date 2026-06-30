@@ -68,6 +68,13 @@
 	--dark-text:    hsl(229, 25%, 31%);
 	--score-text:   hsl(229, 64%, 46%);
 	--header-line:  hsl(217, 16%, 45%);
+
+	/* rounded corners */
+	--radius-2\.5xl: 1.25rem;
+
+	/* tracking */
+	--tracking-medium: 0.093em;
+	--tracking-large: 0.16em;
 }
 
 /* ---- Alpine cloak ---- */
