@@ -73,6 +73,16 @@ const QUADS = [
 ];
 
 const HS_KEY = 'memorygames.best';
+const SEQ_SCORES_KEY = 'memorygames.sequence.scores';
+const MAX_SCORES = 3;
+
+/* ── Shared score store ──────────────────────────────────────── */
+document.addEventListener('alpine:init', () => {
+	Alpine.store('scores', {
+		sequenceBest:   Alpine.$persist(0).as(HS_KEY),
+		sequenceScores: Alpine.$persist([]).as(SEQ_SCORES_KEY),
+	});
+});
 
 /* ── Alpine component ────────────────────────────────────────── */
 function memoryGame() {
@@ -81,7 +91,6 @@ function memoryGame() {
 		sequence:   [],
 		level:      1,
 		score:      0,
-		best:       parseInt(localStorage.getItem(HS_KEY) || '0') || 0,
 		roundCount: 0,
 		lit:        null,
 		hint:       'Press Start, then repeat the sequence of lights.',
@@ -92,6 +101,13 @@ function memoryGame() {
 
 		_runId:    0,
 		_inputIdx: 0,
+
+		get best() {
+			return Alpine.store('scores').sequenceBest;
+		},
+		set best(v) {
+			Alpine.store('scores').sequenceBest = v;
+		},
 
 		get litLen() {
 			return this.sequence.length === 0
@@ -149,10 +165,14 @@ function memoryGame() {
 		},
 
 		_commitBest(s) {
-			if (s > this.best) {
-				this.best = s;
-				localStorage.setItem(HS_KEY, String(s));
-			}
+			if (s > this.best) this.best = s;
+		},
+
+		_recordScore(score, level) {
+			const store = Alpine.store('scores');
+			store.sequenceScores = [...store.sequenceScores, { score, level, date: new Date().toISOString() }]
+				.sort((a, b) => b.score - a.score)
+				.slice(0, MAX_SCORES);
 		},
 
 		handlePress(idx) {
@@ -169,6 +189,7 @@ function memoryGame() {
 				_buzz(this.muted);
 				if (this.roundCount > 0) this.score += this.roundCount;
 				this._commitBest(this.score);
+				this._recordScore(this.score, this.level);
 				this.shake = true;
 				setTimeout(() => { this.shake = false; }, 520);
 				this.phase = 'gameover';
@@ -202,23 +223,49 @@ function memoryGame() {
 			}
 		},
 
-		init() {
-			const self = this;
+		handleKey(e) {
 			const keyMap = {
 				q: 0, w: 1, a: 2, s: 3,
 				arrowleft: 0, arrowup: 1, arrowdown: 2, arrowright: 3,
 			};
-			document.addEventListener('keydown', (e) => {
-				const k = e.key.toLowerCase();
-				if (k === ' ' || k === 'enter') {
-					if (self.phase === 'idle' || self.phase === 'gameover') {
-						e.preventDefault();
-						self.startGame();
-					}
-					return;
+			const k = e.key.toLowerCase();
+			if (k === ' ' || k === 'enter') {
+				if (this.phase === 'idle' || this.phase === 'gameover') {
+					e.preventDefault();
+					this.startGame();
 				}
-				if (k in keyMap) { e.preventDefault(); self.handlePress(keyMap[k]); }
-			});
+				return;
+			}
+			if (k in keyMap) { e.preventDefault(); this.handlePress(keyMap[k]); }
+		},
+	};
+}
+
+/* ── App shell ───────────────────────────────────────────────── */
+function app() {
+	return {
+		page: 'dashboard', // dashboard | scores | sequence | match | difference | tray
+	};
+}
+
+/* ── Dashboard ───────────────────────────────────────────────── */
+function dashboard() {
+	return {
+		get sequenceBest() {
+			return Alpine.store('scores').sequenceBest;
+		},
+	};
+}
+
+/* ── Scores page ─────────────────────────────────────────────── */
+function scoresPage() {
+	return {
+		get sequenceScores() {
+			return Alpine.store('scores').sequenceScores;
+		},
+
+		formatDate(iso) {
+			return new Date(iso).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
 		},
 	};
 }
