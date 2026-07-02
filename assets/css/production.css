@@ -10,6 +10,7 @@
     --color-white: #fff;
     --spacing: 0.25rem;
     --container-3xs: 16rem;
+    --container-xs: 20rem;
     --container-4xl: 56rem;
     --text-xs: 0.75rem;
     --text-xs--line-height: calc(1 / 0.75);
@@ -199,6 +200,9 @@
   }
 }
 @layer utilities {
+  .\@container {
+    container-type: inline-size;
+  }
   .collapse {
     visibility: collapse;
   }
@@ -217,11 +221,17 @@
   .top-1\/2 {
     top: calc(1 / 2 * 100%);
   }
+  .top-3 {
+    top: calc(var(--spacing) * 3);
+  }
   .top-full {
     top: 100%;
   }
   .right-0 {
     right: calc(var(--spacing) * 0);
+  }
+  .right-3 {
+    right: calc(var(--spacing) * 3);
   }
   .left-1 {
     left: calc(var(--spacing) * 1);
@@ -274,6 +284,10 @@
   .size-10 {
     width: calc(var(--spacing) * 10);
     height: calc(var(--spacing) * 10);
+  }
+  .size-16 {
+    width: calc(var(--spacing) * 16);
+    height: calc(var(--spacing) * 16);
   }
   .h-\[15px\] {
     height: 15px;
@@ -371,6 +385,9 @@
   }
   .resize {
     resize: both;
+  }
+  .grid-cols-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
   }
   .grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -820,6 +837,67 @@
   .md\:grid-cols-2 {
     @media (width >= 48rem) {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .\@sm\:size-20 {
+    @container (width >= 24rem) {
+      width: calc(var(--spacing) * 20);
+      height: calc(var(--spacing) * 20);
+    }
+  }
+  .\@sm\:max-w-xs {
+    @container (width >= 24rem) {
+      max-width: var(--container-xs);
+    }
+  }
+  .\@sm\:flex-1 {
+    @container (width >= 24rem) {
+      flex: 1;
+    }
+  }
+  .\@sm\:shrink-0 {
+    @container (width >= 24rem) {
+      flex-shrink: 0;
+    }
+  }
+  .\@sm\:grid-cols-2 {
+    @container (width >= 24rem) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .\@sm\:flex-row {
+    @container (width >= 24rem) {
+      flex-direction: row;
+    }
+  }
+  .\@sm\:items-center {
+    @container (width >= 24rem) {
+      align-items: center;
+    }
+  }
+  .\@sm\:justify-between {
+    @container (width >= 24rem) {
+      justify-content: space-between;
+    }
+  }
+  .\@sm\:gap-5 {
+    @container (width >= 24rem) {
+      gap: calc(var(--spacing) * 5);
+    }
+  }
+  .\@sm\:px-6 {
+    @container (width >= 24rem) {
+      padding-inline: calc(var(--spacing) * 6);
+    }
+  }
+  .\@sm\:py-6 {
+    @container (width >= 24rem) {
+      padding-block: calc(var(--spacing) * 6);
+    }
+  }
+  .\@sm\:text-left {
+    @container (width >= 24rem) {
+      text-align: left;
     }
   }
 }
