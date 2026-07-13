@@ -131,11 +131,20 @@
 
 		<button type="button" @click="page = 'sequence'"
 		        class="@container relative bg-white/5 border border-white/10 rounded-2.5xl text-white transition-all duration-200 hover:bg-white/[0.09] hover:border-white/[0.22] hover:scale-105 active:scale-95 cursor-pointer">
-			<div x-show="sequenceBest > 0" x-cloak class="absolute top-3 right-3 flex items-center gap-1.5 bg-white/5 border border-white/[0.08] rounded-2xl px-3 py-1">
-				<span class="text-[11px] text-gray font-bold tracking-px uppercase">Best</span>
-				<span class="text-sm font-black tabular-nums" x-text="sequenceBest"></span>
+			<div
+				x-show="sequenceBest > 0"
+				x-cloak
+				class="flex flex-wrap items-end gap-1 pl-3 pt-3"
+			>
+				<div class="flex items-center gap-1.5 bg-white/5 border border-white/[0.08] rounded-2xl px-3 py-1">
+					<span class="text-[11px] text-gray font-bold tracking-px uppercase">Best</span>
+					<span class="text-sm font-black tabular-nums" x-text="sequenceBest"></span>
+				</div>
 			</div>
-			<div class="grid grid-cols-1 items-center text-center gap-2.5 pt-12 px-5 pb-7 @sm:grid-cols-2 @sm:items-center @sm:text-left @sm:justify-between @sm:gap-5 @sm:py-6 @sm:px-6">
+			<div
+					class="grid grid-cols-1 items-center text-center gap-2.5 pt-12 px-5 pb-7 @sm:grid-cols-2 @sm:items-center @sm:text-left @sm:justify-between @sm:gap-5 @sm:py-6 @sm:px-6"
+					:class="sequenceBest > 0 ? 'pt-12' : 'pt-16'"
+			>
 				<div class="flex flex-col items-center gap-2.5 @sm:shrink-0">
 					<img src="assets/images/game_icons/sequence.svg" class="size-16 @sm:size-20" alt="">
 					<div class="font-barlow text-sm font-black tracking-medium uppercase">Sequence</div>
@@ -146,8 +155,11 @@
 
 		<button type="button" @click="page = 'match'"
 		        class="@container relative bg-white/5 border border-white/10 rounded-2.5xl text-white transition-all duration-200 hover:bg-white/[0.09] hover:border-white/[0.22] hover:scale-105 active:scale-95 cursor-pointer">
-			<div x-show="matchTimerBest > 0 || matchFastestBest > 0 || matchStreakBest > 0" x-cloak
-			     class="absolute top-3 right-3 flex flex-wrap items-end gap-1 pl-3">
+			<div
+				x-show="matchTimerBest > 0 || matchFastestBest > 0 || matchStreakBest > 0"
+				x-cloak
+				class="flex flex-wrap items-end gap-1 pl-3 pt-3"
+			>
 				<div x-show="matchTimerBest > 0" x-cloak class="flex items-center gap-1.5 bg-white/5 border border-white/[0.08] rounded-2xl px-3 py-1">
 					<span class="text-[11px] text-gray font-bold tracking-px uppercase">Timer</span>
 					<span class="text-sm font-black tabular-nums" x-text="matchTimerBest"></span>
@@ -161,7 +173,10 @@
 					<span class="text-sm font-black tabular-nums" x-text="matchStreakBest"></span>
 				</div>
 			</div>
-			<div class="grid grid-cols-1 items-center text-center gap-2.5 pt-12 px-5 pb-7 @sm:grid-cols-2 @sm:items-center @sm:text-left @sm:justify-between @sm:gap-5 @sm:py-6 @sm:px-6">
+			<div
+					class="grid grid-cols-1 items-center text-center gap-2.5 pt-12 px-5 pb-7 @sm:grid-cols-2 @sm:items-center @sm:text-left @sm:justify-between @sm:gap-5 @sm:py-6 @sm:px-6"
+					:class="matchTimerBest > 0 || matchTimerBest > 0 || matchTimerBest > 0 ? 'pt-12' : 'pt-16'"
+			>
 				<div class="flex flex-col items-center gap-2.5 @sm:shrink-0">
 					<img src="assets/images/game_icons/match.svg" class="size-16 @sm:size-20" alt="">
 					<div class="font-barlow text-sm font-black tracking-medium uppercase">Match</div>
@@ -172,8 +187,11 @@
 
 		<button type="button" @click="page = 'difference'"
 		        class="@container relative bg-white/5 border border-white/10 rounded-2.5xl text-white transition-all duration-200 hover:bg-white/[0.09] hover:border-white/[0.22] hover:scale-105 active:scale-95 cursor-pointer">
-			<div x-show="differenceLevelsBest > 0 || differenceTimerBest > 0 || differenceFastestBest > 0" x-cloak
-			     class="absolute top-3 right-3 flex flex-wrap items-end gap-1 pl-3">
+			<div
+				x-show="differenceLevelsBest > 0 || differenceTimerBest > 0 || differenceFastestBest > 0"
+				x-cloak
+				class="flex flex-wrap items-end gap-1 pl-3 pt-3"
+			>
 				<div x-show="differenceLevelsBest > 0" x-cloak class="flex items-center gap-1.5 bg-white/5 border border-white/[0.08] rounded-2xl px-3 py-1">
 					<span class="text-[11px] text-gray font-bold tracking-px uppercase">Levels</span>
 					<span class="text-sm font-black tabular-nums" x-text="differenceLevelsBest"></span>
@@ -187,7 +205,10 @@
 					<span class="text-sm font-black tabular-nums" x-text="differenceFastestBestLabel"></span>
 				</div>
 			</div>
-			<div class="grid grid-cols-1 items-center text-center gap-2.5 pt-12 px-5 pb-7 @sm:grid-cols-2 @sm:items-center @sm:text-left @sm:justify-between @sm:gap-5 @sm:py-6 @sm:px-6">
+			<div
+					class="grid grid-cols-1 items-center text-center gap-2.5 pt-12 px-5 pb-7 @sm:grid-cols-2 @sm:items-center @sm:text-left @sm:justify-between @sm:gap-5 @sm:py-6 @sm:px-6"
+					:class="differenceLevelsBest > 0 || differenceLevelsBest > 0 || differenceLevelsBest > 0 ? 'pt-12' : 'pt-16'"
+			>
 				<div class="flex flex-col items-center gap-2.5 @sm:shrink-0">
 					<img src="assets/images/game_icons/difference.svg" class="size-16 @sm:size-20" alt="">
 					<div class="font-barlow text-sm font-black tracking-medium uppercase">Difference</div>
@@ -198,8 +219,11 @@
 
 		<button type="button" @click="page = 'tray'"
 		        class="@container relative bg-white/5 border border-white/10 rounded-2.5xl text-white transition-all duration-200 hover:bg-white/[0.09] hover:border-white/[0.22] hover:scale-105 active:scale-95 cursor-pointer">
-			<div x-show="trayClassicBest > 0 || trayFastestBest > 0 || trayStreakBest > 0" x-cloak
-			     class="absolute top-3 right-3 flex flex-wrap items-end gap-1 pl-3">
+			<div
+				x-show="trayClassicBest > 0 || trayFastestBest > 0 || trayStreakBest > 0"
+				x-cloak
+				class="flex flex-wrap items-end gap-1 pl-3 pt-3"
+			>
 				<div x-show="trayClassicBest > 0" x-cloak class="flex items-center gap-1.5 bg-white/5 border border-white/[0.08] rounded-2xl px-3 py-1">
 					<span class="text-[11px] text-gray font-bold tracking-px uppercase">Classic</span>
 					<span class="text-sm font-black tabular-nums" x-text="trayClassicBest"></span>
@@ -213,7 +237,10 @@
 					<span class="text-sm font-black tabular-nums" x-text="trayStreakBest"></span>
 				</div>
 			</div>
-			<div class="grid grid-cols-1 items-center text-center gap-2.5 pt-12 px-5 pb-7 @sm:grid-cols-2 @sm:items-center @sm:text-left @sm:justify-between @sm:gap-5 @sm:py-6 @sm:px-6">
+			<div
+					class="grid grid-cols-1 items-center text-center gap-2.5 pt-12 px-5 pb-7 @sm:grid-cols-2 @sm:items-center @sm:text-left @sm:justify-between @sm:gap-5 @sm:py-6 @sm:px-6"
+					:class="trayClassicBest > 0 || trayFastestBest > 0 || trayStreakBest > 0 ? 'pt-12' : 'pt-16'"
+			>
 				<div class="flex flex-col items-center gap-2.5 @sm:shrink-0">
 					<img src="assets/images/game_icons/tray.svg" class="size-16 @sm:size-20" alt="">
 					<div class="font-barlow text-sm font-black tracking-medium uppercase">Tray</div>
