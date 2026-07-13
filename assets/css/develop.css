@@ -166,9 +166,129 @@ body {
 }
 .disc-shake { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97); }
 
+/* ── Match cards ─────────────────────────────────────────────── */
+.match-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(var(--card-min, 72px), 1fr));
+	gap: 10px;
+}
+
+.card-scene {
+	aspect-ratio: 1 / 1;
+	perspective: 1000px;
+}
+
+.card-inner {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+	transition: transform 0.45s cubic-bezier(0.4, 0.2, 0.2, 1);
+	transform-style: preserve-3d;
+}
+.card-inner.is-flipped { transform: rotateY(180deg); }
+.card-inner.is-matched { cursor: default; }
+
+.card-face {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	backface-visibility: hidden;
+	border-radius: 16px;
+	padding: 12%;
+}
+
+.card-back {
+	background: radial-gradient(circle at 50% 32%, hsl(214, 47%, 23%), hsl(237, 49%, 14%));
+	box-shadow: 0 4px 10px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.08);
+}
+.card-back img { width: 48%; height: 48%; opacity: 0.85; }
+
+.card-front {
+	background: #f7f3ea;
+	border: 1px solid #e9e1d0;
+	transform: rotateY(180deg);
+}
+.card-front img { width: 100%; height: 100%; }
+
+.card-inner.is-matched .card-front {
+	opacity: 0.55;
+	box-shadow: 0 0 0 2px var(--cyan-a) inset;
+}
+
+/* ── Tray ────────────────────────────────────────────────────── */
+.tray-stage {
+	position: relative;
+	width: 354px;
+	height: 354px;
+	margin: 0 auto;
+}
+
+.tray-surface {
+	position: absolute;
+	inset: 9px; /* (354 - 336) / 2, centers the 336px tray inside the 354px stage */
+	border-radius: 9999px;
+	background: radial-gradient(circle at 38% 30%, hsl(222,26%,34%), hsl(226,32%,20%) 55%, hsl(230,38%,13%) 100%);
+	box-shadow:
+		0 24px 50px rgba(0,0,0,0.45),
+		inset 0 3px 0 rgba(255,255,255,0.10),
+		inset 0 -18px 40px rgba(0,0,0,0.4),
+		0 0 0 8px rgba(255,255,255,0.03),
+		0 0 0 9px rgba(255,255,255,0.07);
+}
+
+.tray-object {
+	position: absolute;
+}
+
+.tray-cover {
+	position: absolute;
+	inset: 0;
+	width: 354px;
+	height: 354px;
+	transform-origin: 50% 50%;
+	transition: transform 0.6s cubic-bezier(.34, 1.2, .4, 1), opacity 0.45s ease;
+	transform: translateX(0) translateY(0) scale(1);
+	opacity: 1;
+	z-index: 5;
+	pointer-events: none;
+}
+.tray-cover.is-open {
+	transform: translateX(-140vw) translateY(-33%) scale(1.15);
+	opacity: 0;
+}
+
+.tray-picker {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(var(--tile-min, 64px), 1fr));
+	gap: 10px;
+}
+
+.tray-tile {
+	aspect-ratio: 1 / 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #f7f3ea;
+	border: 1px solid #e9e1d0;
+	border-radius: 16px;
+	padding: 14%;
+	cursor: pointer;
+	transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
+}
+.tray-tile img { width: 100%; height: 100%; }
+.tray-tile:hover { transform: translateY(-2px); }
+.tray-tile.is-selected { box-shadow: 0 0 0 3px var(--blue-a) inset; }
+.tray-tile.is-correct  { box-shadow: 0 0 0 3px var(--cyan-a) inset; opacity: 0.7;  cursor: default; }
+.tray-tile.is-correct:hover, .tray-tile.is-wrong:hover { transform: none; }
+.tray-tile.is-wrong    { box-shadow: 0 0 0 3px var(--red-a) inset;  opacity: 0.55; cursor: default; }
+
 /* ── Responsive ──────────────────────────────────────────────── */
 @media (max-height: 760px), (max-width: 440px) {
-	.disc    { width: 300px !important; height: 300px !important; }
-	.hub     { width: 138px !important; height: 138px !important; }
-	.hub-big { font-size: 38px !important; }
+	.disc       { width: 300px !important; height: 300px !important; }
+	.hub        { width: 138px !important; height: 138px !important; }
+	.hub-big    { font-size: 38px !important; }
+	.tray-stage { transform: scale(0.8); }
 }
