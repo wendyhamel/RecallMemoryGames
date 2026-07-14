@@ -314,6 +314,8 @@ const DIFF_POINTS_PER_FIND  = 2;
 const DIFF_TIMER_SECONDS    = 60;
 const DIFF_MAX_SCORES       = 3;
 const DIFF_MARK_RADIUS      = 24;
+const DIFF_SESSION_CAP_SECONDS   = 300; // Fastest Time: total session play time before a warning appears
+const DIFF_SESSION_GRACE_SECONDS = 30;  // seconds the warning stays up before auto-stopping
 
 function differenceGame() {
 	return {
@@ -323,7 +325,7 @@ function differenceGame() {
 		STAGES_PER_LEVEL: DIFF_STAGES_PER_LEVEL,
 		MAX_LEVEL: DIFF_MAX_LEVEL,
 
-		phase: 'setup', // setup | playing | stageclear | levelup | complete | roundclear | timeup
+		phase: 'setup', // setup | ready | playing | stageclear | levelup | complete | roundclear | timeup
 
 		level: 1,
 		stage: 1,
@@ -340,11 +342,19 @@ function differenceGame() {
 		elapsed:  0,                  // fastest mode stopwatch, seconds
 		timerRunning: false,
 
+		showTimeCapWarning: false,        // fastest mode: 5-minute session cap warning dialog
+		graceSecondsLeft: DIFF_SESSION_GRACE_SECONDS,
+
 		_interval:  null,
 		_startTs:   0,
 		_deadline:  0,
 		_lastSceneId: null,
 		_gen: 0,
+
+		// fastest mode: TOTAL session time (separate from the per-round `elapsed` stopwatch above)
+		_sessionStartTs: 0,
+		_sessionInterval: null,
+		_graceInterval: null,
 
 		init() {
 			this.$watch('page', (value) => { if (value !== 'difference') this.backToSetup(); });
@@ -393,25 +403,45 @@ function differenceGame() {
 		startGame() {
 			_ensureAudio();
 			this._clearTimer();
+			this._clearSessionTimer();
+			this._clearGraceTimer();
+			this.showTimeCapWarning = false;
 			this.score = 0;
 			this.hint  = '';
 			if (this.mode === 'levels') {
 				this.level = 1;
 				this.stage = 1;
 				this._loadRound(this._pickScene(), DIFF_LEVEL_COUNTS[0]);
+				this.phase = 'playing';
 			} else if (this.mode === 'timer') {
 				this._loadRound(this._pickScene(), this.diffCount);
 				this._startCountdown();
+				this.phase = 'playing';
 			} else {
+				// Fastest Time: round is loaded now (so Play reveals it instantly), but the
+				// panels stay hidden behind a "Ready?" screen until the player clicks Play —
+				// see playFastestRound().
 				this._loadRound(this._pickScene(), this.diffCount);
 				this.elapsed = 0;
 				this.timerRunning = false;
+				this.phase = 'ready';
 			}
+		},
+
+		// Fastest Time only: called once per session, when the player clicks Play on the
+		// Ready screen. Reveals the panels and starts both the per-round stopwatch and the
+		// total-session cap timer at the same moment the images appear.
+		playFastestRound() {
 			this.phase = 'playing';
+			this._startStopwatch();
+			this._startSessionTimer();
 		},
 
 		backToSetup() {
 			this._clearTimer();
+			this._clearSessionTimer();
+			this._clearGraceTimer();
+			this.showTimeCapWarning = false;
 			this._gen++;
 			if (this.phase === 'playing' && this.score > 0 && this.mode !== 'fastest') {
 				this._commitBest();
@@ -445,15 +475,26 @@ function differenceGame() {
 
 		_foundMarkersSvg() {
 			if (this.found.size === 0) return '';
+			const PAD = 6;
 			return window.SpotDiff.getActiveDiffs(this.scene, this.active)
 				.filter(d => this.found.has(d.id))
-				.map(d => `<circle cx="${d.x}" cy="${d.y}" r="16" fill="none" stroke="#fff" stroke-width="3"/><circle cx="${d.x}" cy="${d.y}" r="16" fill="none" stroke="hsl(189,59%,53%)" stroke-width="1.5" opacity="0.9"/>`)
+				.map(d => {
+					const b = window.SpotDiff.getDiffBounds(this.scene, d.id);
+					let cx = d.x, cy = d.y, rx = 16, ry = 16;
+					if (b) {
+						cx = (b.x0 + b.x1) / 2;
+						cy = (b.y0 + b.y1) / 2;
+						rx = Math.max(16, (b.x1 - b.x0) / 2 + PAD);
+						ry = Math.max(16, (b.y1 - b.y0) / 2 + PAD);
+					}
+					return `<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" fill="none" stroke="#fff" stroke-width="3"/><ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" fill="none" stroke="hsl(189,59%,53%)" stroke-width="1.5" opacity="0.9"/>`;
+				})
 				.join('');
 		},
 
 		/* ---- input ---- */
 		handlePanelClick(evt) {
-			if (this.phase !== 'playing' || !this.scene) return;
+			if (this.phase !== 'playing' || !this.scene || this.showTimeCapWarning) return;
 			const svg  = evt.currentTarget;
 			const rect = svg.getBoundingClientRect();
 			const [W, H] = this.scene.vb;
@@ -504,6 +545,67 @@ function differenceGame() {
 			_buzz(this.muted);
 			this._commitBest();
 			this._recordScore();
+			this.phase = 'timeup';
+		},
+
+		/* ---- fastest mode: total-session cap (separate from the per-round stopwatch) ---- */
+		_startSessionTimer() {
+			this._clearSessionTimer();
+			this._sessionStartTs = Date.now();
+			this._sessionInterval = setInterval(() => {
+				const total = (Date.now() - this._sessionStartTs) / 1000;
+				if (total >= DIFF_SESSION_CAP_SECONDS && !this.showTimeCapWarning) this._showSessionCapWarning();
+			}, 1000);
+		},
+
+		_clearSessionTimer() {
+			if (this._sessionInterval) { clearInterval(this._sessionInterval); this._sessionInterval = null; }
+		},
+
+		_clearGraceTimer() {
+			if (this._graceInterval) { clearInterval(this._graceInterval); this._graceInterval = null; }
+		},
+
+		_showSessionCapWarning() {
+			this.showTimeCapWarning = true;
+			this.graceSecondsLeft = DIFF_SESSION_GRACE_SECONDS;
+			this._clearGraceTimer();
+			this._graceInterval = setInterval(() => {
+				this.graceSecondsLeft -= 1;
+				if (this.graceSecondsLeft <= 0) { this._clearGraceTimer(); this._onSessionCapTimeout(); }
+			}, 1000);
+		},
+
+		// "Cancel" on the warning dialog: dismiss it and keep playing. The cap recurs —
+		// re-baseline the session clock so it fires again after another 5 minutes of play.
+		dismissTimeCapWarning() {
+			this.showTimeCapWarning = false;
+			this._clearGraceTimer();
+			this._sessionStartTs = Date.now();
+		},
+
+		// "Stop" on the warning dialog: end the session now.
+		stopSessionForTimeCap() {
+			this.showTimeCapWarning = false;
+			this._clearGraceTimer();
+			this._endFastestSession();
+		},
+
+		// No interaction within the grace period: auto-stop.
+		_onSessionCapTimeout() {
+			this.showTimeCapWarning = false;
+			this._endFastestSession();
+		},
+
+		// Ends the Fastest Time session the same way Timer mode's "time's up" does. The
+		// in-progress round wasn't completed, so nothing is recorded for it — only
+		// completed rounds are ever scored (see _commitFastest, called from _onRoundComplete).
+		_endFastestSession() {
+			_buzz(this.muted);
+			this._clearTimer();
+			this._clearSessionTimer();
+			this._clearGraceTimer();
+			this.timerRunning = false;
 			this.phase = 'timeup';
 		},
 
