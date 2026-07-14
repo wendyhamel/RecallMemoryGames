@@ -1517,16 +1517,6 @@ function scoresPage() {
 		get matchStreakScores() {
 			return Alpine.store('scores').matchStreakScores;
 		},
-		get trayClassicBestEntries() {
-			return Object.entries(Alpine.store('scores').trayClassicBest)
-				.map(([count, score]) => ({ count: Number(count), score }))
-				.sort((a, b) => a.count - b.count);
-		},
-		get trayFastestBestEntries() {
-			return Object.entries(Alpine.store('scores').trayFastestBest)
-				.map(([count, time]) => ({ count: Number(count), time }))
-				.sort((a, b) => a.count - b.count);
-		},
 		get trayClassicScores() {
 			return Alpine.store('scores').trayClassicScores;
 		},
@@ -1539,6 +1529,67 @@ function scoresPage() {
 
 		formatDate(iso) {
 			return new Date(iso).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+		},
+
+		clearSequence() {
+			if (!window.confirm("Clear all Sequence scores? This can't be undone.")) return;
+			const s = Alpine.store('scores');
+			s.sequenceBest = 0;
+			s.sequenceScores = [];
+		},
+		clearMatch() {
+			if (!window.confirm("Clear all Match scores? This can't be undone.")) return;
+			const s = Alpine.store('scores');
+			s.matchTimerBest = 0;
+			s.matchTimerScores = [];
+			s.matchFastestBest = 0;
+			s.matchFastestScores = [];
+			s.matchStreakBest = 0;
+			s.matchStreakScores = [];
+		},
+		clearDifference() {
+			if (!window.confirm("Clear all Difference scores? This can't be undone.")) return;
+			const s = Alpine.store('scores');
+			s.differenceLevelsBest = 0;
+			s.differenceLevelsScores = [];
+			s.differenceTimerBest = 0;
+			s.differenceTimerScores = [];
+			s.differenceFastestBest = 0;
+			s.differenceFastestScores = [];
+		},
+		clearTray() {
+			if (!window.confirm("Clear all Tray scores? This can't be undone.")) return;
+			const s = Alpine.store('scores');
+			s.trayClassicBest = {};
+			s.trayClassicScores = [];
+			s.trayFastestBest = {};
+			s.trayFastestScores = [];
+			s.trayStreakBest = 0;
+			s.trayStreakScores = [];
+		},
+		clearAll() {
+			if (!window.confirm("Clear all scores? This can't be undone.")) return;
+			const s = Alpine.store('scores');
+			s.sequenceBest = 0;
+			s.sequenceScores = [];
+			s.matchTimerBest = 0;
+			s.matchTimerScores = [];
+			s.matchFastestBest = 0;
+			s.matchFastestScores = [];
+			s.matchStreakBest = 0;
+			s.matchStreakScores = [];
+			s.differenceLevelsBest = 0;
+			s.differenceLevelsScores = [];
+			s.differenceTimerBest = 0;
+			s.differenceTimerScores = [];
+			s.differenceFastestBest = 0;
+			s.differenceFastestScores = [];
+			s.trayClassicBest = {};
+			s.trayClassicScores = [];
+			s.trayFastestBest = {};
+			s.trayFastestScores = [];
+			s.trayStreakBest = 0;
+			s.trayStreakScores = [];
 		},
 	};
 }
