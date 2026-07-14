@@ -39,6 +39,22 @@
     return '';
   }
 
+  // ---- target-id derivation ----
+  // Diff ids across scenes follow the convention <verb>_<objectId>, where objectId
+  // matches an id in scene.base (e.g. re_bar3 / gr_bar3 / rm_bar3 all target 'bar3').
+  // Stripping the verb lets us detect when multiple diffs act on the same underlying
+  // object, so a round never activates two diffs that fight over the same click target.
+  // Add-only diffs (no recognized prefix) fall back to their own id, i.e. they never
+  // collide with anything — which is correct, since they don't modify an existing object.
+  const VERB_PREFIXES = ['re_', 'rm_', 'gr_', 'sh_', 'mv_', 'off_', 'lit_', 'ant_'];
+  function targetOf(diffId) {
+    for (let i = 0; i < VERB_PREFIXES.length; i++) {
+      const p = VERB_PREFIXES[i];
+      if (diffId.indexOf(p) === 0 && diffId.length > p.length) return diffId.slice(p.length);
+    }
+    return diffId;
+  }
+
   // apply context for building the modified panel
   function makeCtx(base) {
     const arr = base.map(e => Object.assign({}, e));
@@ -710,12 +726,70 @@
     return scene.diffs.filter(d => activeSet.has(d.id))
       .map(d => `<circle cx="${d.mx}" cy="${d.my}" r="19" fill="none" stroke="${CYA}" stroke-width="3"/><circle cx="${d.mx}" cy="${d.my}" r="19" fill="none" stroke="#fff" stroke-width="1" opacity="0.5"/>`).join('');
   }
-  // pick a random subset of size n using a seeded rng (deterministic given seed)
+  // pick a random subset of size n using a seeded rng (deterministic given seed).
+  // Greedily takes diffs in shuffled order, skipping any whose target object already
+  // has an active diff — so at most one diff ever fires per underlying object. This
+  // means the resulting set can end up smaller than n if too many diffs collide onto
+  // few targets; callers should read the actual set size rather than assume it's n.
   function pickRound(scene, n, seed) {
     const rng = mulberry32(seed);
-    const ids = scene.diffs.map(d => d.id);
-    for (let i = ids.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [ids[i], ids[j]] = [ids[j], ids[i]]; }
-    return new Set(ids.slice(0, Math.min(n, ids.length)));
+    const diffs = scene.diffs.slice();
+    for (let i = diffs.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [diffs[i], diffs[j]] = [diffs[j], diffs[i]]; }
+    const usedTargets = new Set();
+    const active = new Set();
+    for (let i = 0; i < diffs.length && active.size < n; i++) {
+      const d = diffs[i], t = targetOf(d.id);
+      if (usedTargets.has(t)) continue;
+      usedTargets.add(t);
+      active.add(d.id);
+    }
+    return active;
+  }
+  // bounding box [x0,y0,x1,y1] for a base element, per type. Returns null for types
+  // without an easy bbox (e.g. 'path'), so callers can fall back to a fixed marker.
+  function bboxOfEl(e) {
+    if (!e) return null;
+    switch (e.type) {
+      case 'circle':
+      case 'ring':
+        return [e.cx - e.r, e.cy - e.r, e.cx + e.r, e.cy + e.r];
+      case 'rect':
+        return [e.x, e.y, e.x + e.w, e.y + e.h];
+      case 'ellipse':
+        return [e.cx - e.rx, e.cy - e.ry, e.cx + e.rx, e.cy + e.ry];
+      case 'poly': {
+        const xs = e.pts.map(p => p[0]), ys = e.pts.map(p => p[1]);
+        return [Math.min.apply(null, xs), Math.min.apply(null, ys), Math.max.apply(null, xs), Math.max.apply(null, ys)];
+      }
+      case 'line':
+        return [Math.min(e.x1, e.x2), Math.min(e.y1, e.y2), Math.max(e.x1, e.x2), Math.max(e.y1, e.y2)];
+      default:
+        return null; // 'path' — no easy bbox from the d string
+    }
+  }
+  function unionBbox(a, b) {
+    if (!a) return b;
+    if (!b) return a;
+    return [Math.min(a[0], b[0]), Math.min(a[1], b[1]), Math.max(a[2], b[2]), Math.max(a[3], b[3])];
+  }
+  // bounding box for a diff's target object, in scene viewBox coords, or null if
+  // unavailable (add-only diffs, path-type targets, or targets we can't resolve).
+  // For 'gr_' (grow) diffs, unions in the post-apply geometry so the box fully
+  // encloses the larger, modified shape.
+  function getDiffBounds(scene, diffId) {
+    const diff = scene.diffs.find(d => d.id === diffId);
+    if (!diff) return null;
+    const targetId = targetOf(diffId);
+    const baseEl = scene.base.find(e => e && e.id === targetId);
+    let bbox = baseEl ? bboxOfEl(baseEl) : null;
+    if (diffId.indexOf('gr_') === 0) {
+      const ctx = makeCtx(scene.base);
+      diff.apply(ctx);
+      const modBbox = bboxOfEl(ctx.get(targetId));
+      bbox = unionBbox(bbox, modBbox);
+    }
+    if (!bbox) return null;
+    return { x0: bbox[0], y0: bbox[1], x1: bbox[2], y1: bbox[3] };
   }
   // return the active differences as plain data: [{id, x, y}] in viewBox coords
   function getActiveDiffs(scene, activeSet) {
@@ -731,5 +805,5 @@
   }
   function sceneById(id) { return SCENES.find(s => s.id === id); }
 
-  window.SpotDiff = { SCENES, renderBase, renderModified, activeMarkers, getActiveDiffs, pickRound, hitTest, sceneById, PAL };
+  window.SpotDiff = { SCENES, renderBase, renderModified, activeMarkers, getActiveDiffs, getDiffBounds, pickRound, hitTest, sceneById, PAL };
 })();
