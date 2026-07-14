@@ -64,6 +64,12 @@ function _win(muted) {
 	});
 }
 
+/* Runs fn after ms, unless component._gen has moved on (e.g. the game was stopped) in the meantime. */
+function _guardedDelay(component, ms, fn) {
+	const gen = component._gen;
+	setTimeout(() => { if (component._gen === gen) fn(); }, ms);
+}
+
 /* 0=red(TL)  1=blue(TR)  2=yellow(BL)  3=cyan(BR) */
 const QUADS = [
 	{ freq: 329.63 },
@@ -143,6 +149,10 @@ function memoryGame() {
 
 		_runId:    0,
 		_inputIdx: 0,
+
+		init() {
+			this.$watch('page', (value) => { if (value !== 'sequence') this.stopGame(); });
+		},
 
 		get best() {
 			return Alpine.store('scores').sequenceBest;
@@ -254,15 +264,28 @@ function memoryGame() {
 					const doneLevel = this.sequence.length / this.LEVEL_LEN;
 					this.phase = 'levelup';
 					this.hint  = `Level ${doneLevel} complete! The sequence keeps growing…`;
-					const seq = this.sequence;
-					setTimeout(() => this._nextRound(seq), 1700);
+					const seq = this.sequence, myRun = this._runId;
+					setTimeout(() => { if (this._runId === myRun) this._nextRound(seq); }, 1700);
 				} else {
 					this.phase = 'watch';
 					this.hint  = 'Nice! Next sequence…';
-					const seq = this.sequence;
-					setTimeout(() => this._nextRound(seq), 700);
+					const seq = this.sequence, myRun = this._runId;
+					setTimeout(() => { if (this._runId === myRun) this._nextRound(seq); }, 700);
 				}
 			}
+		},
+
+		stopGame() {
+			if (this.phase === 'idle' || this.phase === 'gameover') return;
+			this._runId++;
+			if (this.phase === 'input' && this.roundCount > 0) this.score += this.roundCount;
+			if (this.score > 0) {
+				this._commitBest(this.score);
+				this._recordScore(this.score, this.level);
+			}
+			this.phase = 'idle';
+			this.hint  = 'Press Start, then repeat the sequence of lights.';
+			this.lit   = null;
 		},
 
 		handleKey(e) {
@@ -321,6 +344,11 @@ function differenceGame() {
 		_startTs:   0,
 		_deadline:  0,
 		_lastSceneId: null,
+		_gen: 0,
+
+		init() {
+			this.$watch('page', (value) => { if (value !== 'difference') this.backToSetup(); });
+		},
 
 		get levelsBest() { return Alpine.store('scores').differenceLevelsBest; },
 		set levelsBest(v) { Alpine.store('scores').differenceLevelsBest = v; },
@@ -384,6 +412,7 @@ function differenceGame() {
 
 		backToSetup() {
 			this._clearTimer();
+			this._gen++;
 			if (this.phase === 'playing' && this.score > 0 && this.mode !== 'fastest') {
 				this._commitBest();
 				this._recordScore();
@@ -486,21 +515,21 @@ function differenceGame() {
 					this.phase = 'stageclear';
 					this.hint  = `Stage ${this.stage} of ${DIFF_STAGES_PER_LEVEL} clear!`;
 					const nextStage = this.stage + 1, lvl = this.level;
-					setTimeout(() => {
+					_guardedDelay(this, 900, () => {
 						this.stage = nextStage;
 						this._loadRound(this._pickScene(this._lastSceneId), DIFF_LEVEL_COUNTS[lvl - 1]);
 						this.phase = 'playing';
-					}, 900);
+					});
 				} else if (this.level < DIFF_MAX_LEVEL) {
 					_win(this.muted);
 					this.phase = 'levelup';
 					const nextLevel = this.level + 1;
-					setTimeout(() => {
+					_guardedDelay(this, 1700, () => {
 						this.level = nextLevel;
 						this.stage = 1;
 						this._loadRound(this._pickScene(this._lastSceneId), DIFF_LEVEL_COUNTS[nextLevel - 1]);
 						this.phase = 'playing';
-					}, 1700);
+					});
 				} else {
 					_win(this.muted);
 					this._recordScore();
@@ -509,21 +538,21 @@ function differenceGame() {
 			} else if (this.mode === 'timer') {
 				this._commitBest();
 				this.phase = 'roundclear';
-				setTimeout(() => {
+				_guardedDelay(this, 700, () => {
 					this._loadRound(this._pickScene(this._lastSceneId), this.diffCount);
 					this._startCountdown();
 					this.phase = 'playing';
-				}, 700);
+				});
 			} else {
 				this._clearTimer();
 				this.timerRunning = false;
 				this._commitFastest(this.elapsed);
 				this.phase = 'roundclear';
-				setTimeout(() => {
+				_guardedDelay(this, 900, () => {
 					this._loadRound(this._pickScene(this._lastSceneId), this.diffCount);
 					this.elapsed = 0;
 					this.phase = 'playing';
-				}, 900);
+				});
 			}
 		},
 
@@ -604,6 +633,11 @@ function matchGame() {
 		_interval: null,
 		_startTs:  0,
 		_deadline: 0,
+		_gen: 0,
+
+		init() {
+			this.$watch('page', (value) => { if (value !== 'match') this.backToSetup(); });
+		},
 
 		get timerBest() { return Alpine.store('scores').matchTimerBest; },
 		set timerBest(v) { Alpine.store('scores').matchTimerBest = v; },
@@ -678,6 +712,7 @@ function matchGame() {
 
 		backToSetup() {
 			this._clearTimer();
+			this._gen++;
 			if (!['setup', 'complete', 'streakover'].includes(this.phase) && this.score > 0) {
 				if (this.mode === 'timer') { this._commitTimerBest(); this._recordTimerScore(); }
 				else if (this.mode === 'streak') { this._commitStreakBest(); this._recordStreakScore(); }
@@ -744,7 +779,7 @@ function matchGame() {
 			this.lock = true;
 			const [a, b] = this.selected;
 			if (a.frontId === b.frontId) {
-				setTimeout(() => {
+				_guardedDelay(this, 380, () => {
 					a.matched = true;
 					b.matched = true;
 					this.selected = [];
@@ -752,22 +787,22 @@ function matchGame() {
 					this.score += MATCH_POINTS_PER_PAIR;
 					_tone(700, 0.16, this.muted);
 					if (this.matchedCount >= this.pairCount) this._onRoundComplete();
-				}, 380);
+				});
 			} else if (this.mode === 'streak') {
-				setTimeout(() => {
+				_guardedDelay(this, 750, () => {
 					_buzz(this.muted);
 					this._commitStreakBest();
 					this._recordStreakScore();
 					this.phase = 'streakover';
-				}, 750);
+				});
 			} else {
-				setTimeout(() => {
+				_guardedDelay(this, 750, () => {
 					a.flipped = false;
 					b.flipped = false;
 					this.selected = [];
 					this.lock = false;
 					_buzz(this.muted);
-				}, 750);
+				});
 			}
 		},
 
@@ -808,38 +843,38 @@ function matchGame() {
 			if (this.mode === 'timer') {
 				this._commitTimerBest();
 				this.phase = 'roundclear';
-				setTimeout(() => {
+				_guardedDelay(this, 700, () => {
 					this._dealRound(this.cardCount);
 					this.phase = 'playing';
-				}, 700);
+				});
 			} else if (this.mode === 'fastest') {
 				this._clearTimer();
 				this.timerRunning = false;
 				this._commitFastest(this.elapsed);
 				this.phase = 'roundclear';
-				setTimeout(() => {
+				_guardedDelay(this, 900, () => {
 					this._dealRound(this.cardCount);
 					this.elapsed = 0;
 					this.timerRunning = false;
 					this.phase = 'playing';
-				}, 900);
+				});
 			} else {
 				this._commitStreakBest();
 				const level = this.level, stage = this.stage;
 				if (stage < MATCH_STREAK_STAGES_PER_LEVEL) {
 					this.phase = 'stageclear';
-					setTimeout(() => {
+					_guardedDelay(this, 900, () => {
 						this.stage = stage + 1;
 						this._startStreakStage();
-					}, 900);
+					});
 				} else if (level < MATCH_STREAK_MAX_LEVEL) {
 					_win(this.muted);
 					this.phase = 'levelup';
-					setTimeout(() => {
+					_guardedDelay(this, 1700, () => {
 						this.level = level + 1;
 						this.stage = 1;
 						this._startStreakStage();
-					}, 1700);
+					});
 				} else {
 					_win(this.muted);
 					this._recordStreakScore();
@@ -932,6 +967,11 @@ function trayGame() {
 		_interval: null,
 		_deadline: 0,
 		_startTs: 0,
+		_gen: 0,
+
+		init() {
+			this.$watch('page', (value) => { if (value !== 'tray') this.backToSetup(); });
+		},
 
 		get currentObjectCount() {
 			return this.mode === 'streak' ? TRAY_LEVEL_COUNTS[this.level - 1] : this.objectCount;
@@ -1078,6 +1118,7 @@ function trayGame() {
 
 		backToSetup() {
 			this._clearTimer();
+			this._gen++;
 			if (this.mode === 'streak' && !['setup', 'complete', 'streakover'].includes(this.phase) && this.score > 0) {
 				this._commitStreakBest();
 				this._recordStreakScore();
@@ -1229,18 +1270,18 @@ function trayGame() {
 			const level = this.level, stage = this.stage;
 			if (stage < TRAY_STREAK_STAGES_PER_LEVEL) {
 				this.phase = 'stageclear';
-				setTimeout(() => {
+				_guardedDelay(this, 900, () => {
 					this.stage = stage + 1;
 					this._beginRound();
-				}, 900);
+				});
 			} else if (level < TRAY_STREAK_MAX_LEVEL) {
 				_win(this.muted);
 				this.phase = 'levelup';
-				setTimeout(() => {
+				_guardedDelay(this, 1700, () => {
 					this.level = level + 1;
 					this.stage = 1;
 					this._beginRound();
-				}, 1700);
+				});
 			} else {
 				_win(this.muted);
 				this._recordStreakScore();
