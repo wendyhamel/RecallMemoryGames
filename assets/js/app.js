@@ -1171,6 +1171,12 @@ function trayGame() {
 			this.phase = 'coverin';
 		},
 
+		skipStudy() {
+			if (this.phase !== 'study') return;
+			this._clearTimer();
+			this._endStudyPhase();
+		},
+
 		_startAnswerCountdown() {
 			this._clearTimer();
 			this.answerTime = TRAY_ANSWER_SECONDS;

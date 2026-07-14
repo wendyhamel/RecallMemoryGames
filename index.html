@@ -1064,6 +1064,8 @@
 						     @transitionend="onCoverTransitionEnd($event)" alt="">
 					</div>
 					<div x-show="phase === 'study'" x-cloak class="text-[13px] text-yellow font-bold tracking-medium uppercase" x-text="`Memorize! ${Math.ceil(studyTime)}s`"></div>
+					<button type="button" x-show="phase === 'study'" x-cloak @click="skipStudy()"
+					        class="bg-white/5 border border-white/10 rounded-2.5xl px-4 py-2 cursor-pointer transition-colors text-gray hover:text-white hover:border-white/25 font-barlow text-xs font-bold tracking-px uppercase">Got it</button>
 				</div>
 			</template>
 
@@ -1075,7 +1077,7 @@
 							<button type="button"
 							        @click="mode === 'fastest' ? toggleTile(tile) : (mode === 'streak' ? handleStreakTileClick(tile) : handleTileClick(tile))"
 							        class="tray-tile" :class="{ 'is-selected': tile.state === 'selected', 'is-correct': tile.state === 'correct', 'is-wrong': tile.state === 'wrong' }">
-								<img :src="silhouetteSrc(tile.id)" alt="">
+								<img :src="tile.state === 'selected' ? colorSrc(tile.id) : silhouetteSrc(tile.id)" alt="">
 							</button>
 						</template>
 					</div>
