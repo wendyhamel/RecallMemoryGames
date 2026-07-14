@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Lamp</title>
+    <g id="Lamp" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(15.243041, 10.718935)">
+            <rect id="Rectangle" fill="#7C91AB" fill-rule="nonzero" x="22.55" y="21.6" width="4.1" height="28.8"></rect>
+            <ellipse id="Oval" fill="#834FE3" fill-rule="nonzero" cx="24.6" cy="52.2" rx="18.45" ry="5.4"></ellipse>
+            <circle id="Oval" fill="#7C91AB" cx="15.2569594" cy="31.7810647" r="2.5"></circle>
+            <circle id="Oval-Copy" fill="#7C91AB" cx="15.2569594" cy="22.7810647" r="1.5"></circle>
+            <circle id="Oval-Copy-2" fill="#7C91AB" cx="15.2569594" cy="26.7810647" r="1.5"></circle>
+            <circle id="Oval-Copy-3" fill="#7C91AB" cx="15.2569594" cy="24.7810647" r="1.5"></circle>
+            <circle id="Oval-Copy-4" fill="#7C91AB" cx="15.2569594" cy="28.7810647" r="1.5"></circle>
+            <polygon id="Path" fill="#EC9E0E" fill-rule="nonzero" points="10.25 0 38.95 0 49.2 21.6 0 21.6"></polygon>
+        </g>
+    </g>
+</svg>

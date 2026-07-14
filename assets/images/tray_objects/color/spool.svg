@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>spool</title>
+    <g id="spool" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Spool" transform="translate(16.000000, 13.000000)" fill-rule="nonzero">
+            <polygon id="Rectangle" fill="#834FE3" points="9 7 38.6 7 32.6 26.7790876 38.6 47.8 9 47.8 15 26.7790876"></polygon>
+            <rect id="Rectangle" fill="#4B67F1" x="0" y="0" width="47" height="8.5" rx="3"></rect>
+            <rect id="Rectangle" fill="#4B67F1" x="0" y="46" width="47" height="8.5" rx="3"></rect>
+            <line x1="10.5" y1="13.5" x2="38.5" y2="8.5" id="Path" stroke="#7C91AB" stroke-width="1.02" fill="#000000" stroke-linecap="round"></line>
+            <line x1="10.5" y1="13.5" x2="38.5" y2="8.5" id="Path-Copy" stroke="#7C91AB" stroke-width="1.02" fill="#000000" stroke-linecap="round"></line>
+            <line x1="13.5" y1="22.5" x2="35.5" y2="18.5" id="Path" stroke="#7C91AB" stroke-width="1.02" fill="#000000" stroke-linecap="round"></line>
+            <line x1="13.5" y1="30.5" x2="33.5" y2="25.5" id="Path" stroke="#7C91AB" stroke-width="1.02" fill="#000000" stroke-linecap="round"></line>
+            <line x1="11.5" y1="38.5" x2="34.5" y2="33.5" id="Path" stroke="#7C91AB" stroke-width="1.02" fill="#000000" stroke-linecap="round"></line>
+            <path d="M9.5,45.5 L37.5,42.5 C40.7536985,43.3157953 43.5973861,43.0896416 46.0310628,41.8215389 C48.4647396,40.5534363 50.7304292,41.3629233 52.8281318,44.25" id="Path" stroke="#7C91AB" stroke-width="1.02" stroke-linecap="round"></path>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Bulb</title>
+    <g id="Bulb" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(18.902788, 12.921942)">
+            <path d="M20.9633436,47 C30.45,42.6071568 42,27.2757739 42,17.5713727 C42,7.86697152 32.5979797,0 21,0 C9.40202025,0 0,7.86697152 0,17.5713727 C0,27.2757739 11.4766871,42.6071568 20.9633436,47 Z" id="Oval" fill="#834FE3" fill-rule="nonzero"></path>
+            <path d="M22.9721996,37.6056264 C19.3176957,36.541947 17.6102959,35.4020477 17.85,34.1859284 C18.0897041,32.9698092 20.0720724,32.191632 23.7971047,31.8513968 C20.4170603,30.2045597 18.7270381,28.6134466 18.7270381,27.0780576 C18.7270381,25.5426686 20.4170603,24.8443023 23.7971047,24.982959 L21,21.9631473 L21,39.6" id="Path" stroke="#7C91AB" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M14.4857495,39.6 L27.0421206,39.6 C28.698981,39.5999889 30.0421317,40.9431396 30.0421317,42.6 C30.0421317,42.746053 30.031466,42.8919111 30.0102197,43.0364105 C29.150671,48.8823422 27.9639311,52.536872 26.45,54 C23.7627517,56.5970722 20.16978,58.4647538 15.55,54 C12.9691697,51.5057747 11.6147401,47.7310954 11.4867112,42.675962 C11.4447554,41.0196353 12.7534673,39.6429107 14.4097942,39.6009617 C14.4351076,39.6003206 14.460428,39.6 14.4857495,39.6 Z" id="Rectangle" fill="#EC9E0E" fill-rule="nonzero"></path>
+            <line x1="12.0972124" y1="46.0780576" x2="29.5972124" y2="44.0780576" id="Path" stroke="#7C91AB" stroke-width="1.8" fill="#000000" fill-rule="nonzero" stroke-linecap="round"></line>
+            <line x1="14.0972124" y1="52.0780576" x2="28.0972124" y2="50.0780576" id="Path" stroke="#7C91AB" stroke-width="1.8" fill="#000000" fill-rule="nonzero" stroke-linecap="round"></line>
+            <line x1="20.5972124" y1="56.0780576" x2="21.5972124" y2="56.0780576" id="Path-Copy" stroke="#7C91AB" stroke-width="1.8" fill="#000000" fill-rule="nonzero" stroke-linecap="round"></line>
+            <ellipse id="Oval" fill-opacity="0.850000024" fill="#FFFFFF" fill-rule="nonzero" transform="translate(11.650000, 12.200000) rotate(21.000000) translate(-11.650000, -12.200000) " cx="11.65" cy="12.2" rx="4.2" ry="5.4"></ellipse>
+        </g>
+    </g>
+</svg>

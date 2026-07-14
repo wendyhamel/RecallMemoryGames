@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Mug</title>
+    <g id="Mug" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(15.000000, 17.000000)">
+            <path d="M36.2571429,6.2 C45.5904762,6.2 50.2571429,9.2 50.2571429,15.2 C50.2571429,21.2 45.5904762,24.2 36.2571429,24.2" id="Path" stroke="hsl(220,18%,40%)" stroke-width="7.2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <rect id="Rectangle" fill="hsl(220,15%,54%)" fill-rule="nonzero" x="1.13686838e-13" y="0" width="36.2571429" height="46" rx="6"></rect>
+            <path d="M3,2.27373675e-13 L33.2571429,2.27373675e-13 C34.9139971,2.26929586e-13 36.2571429,1.34314575 36.2571429,3 L36.2571429,10 L36.2571429,10 L1.13686838e-13,10 L1.13686838e-13,3 C1.13686838e-13,1.34314575 1.34314575,2.27817765e-13 3,2.27373675e-13 Z" id="Rectangle" fill="hsl(220,20%,80%)" fill-rule="nonzero"></path>
+        </g>
+    </g>
+</svg>

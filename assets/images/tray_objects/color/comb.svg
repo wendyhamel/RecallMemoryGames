@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Comb</title>
+    <g id="Comb" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="comb" transform="translate(4.708649, 18.207940)" fill="#EC9E0E" fill-rule="nonzero">
+            <path d="M3,0 L40.7685837,0 L40.7685837,0 L67.2674745,0 C68.911703,-4.88498131e-15 70.2446135,1.33291056 70.2446135,2.97713907 C70.2446135,4.62136758 68.911703,5.95427814 67.2674745,5.95427814 L43,5.95427814 L43,5.95427814 L43,6 C43,7.65685425 41.6568542,9 40,9 L3,9 C1.34314575,9 4.4408921e-16,7.65685425 0,6 L0,3 C0,1.34314575 1.34314575,4.4408921e-16 3,0 Z" id="Rectangle"></path>
+            <rect id="Rectangle" x="1.26153846" y="7.2" width="3.04615385" height="18" rx="1.5"></rect>
+            <rect id="Rectangle" x="7.30769231" y="7.2" width="3.04615385" height="18" rx="1.5"></rect>
+            <rect id="Rectangle" x="13.3538462" y="7.2" width="3.04615385" height="18" rx="1.5"></rect>
+            <rect id="Rectangle" x="19.4" y="7.2" width="3.04615385" height="18" rx="1.5"></rect>
+            <rect id="Rectangle" x="25.4461538" y="7.2" width="3.04615385" height="18" rx="1.5"></rect>
+            <rect id="Rectangle" x="31.4923077" y="7.2" width="3.04615385" height="18" rx="1.5"></rect>
+            <rect id="Rectangle" x="37.5384615" y="7.2" width="3.04615385" height="18" rx="1.5"></rect>
+        </g>
+    </g>
+</svg>

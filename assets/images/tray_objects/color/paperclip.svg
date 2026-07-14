@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Paperclip</title>
+    <g id="Paperclip" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="paperclip" transform="translate(25.522568, 13.890056)" stroke-width="4.8">
+            <path d="M10.9767782,0 C4.85162135,0 0,3.68956273 0,11.1562294 L0,41.5562294 C0,46.8448642 6.24110899,52.7562294 14.2,52.7562294 C22.158891,52.7562294 29.4,49.0228961 29.4,41.5562294 L29.4,17.7389018" id="Path" stroke="#EC9E0E"></path>
+            <path d="M10.0700313,11.1562294 C10.0700313,28.2556043 10.0700313,36.8052917 10.0700313,36.8052917 C10.0700313,41.3062576 13.1773597,42.3472545 15.3594818,42.3472545 C17.5416039,42.3472545 20.0856417,40.3590014 20.0856417,37.5562294 C20.0856417,36.8052917 20.0856417,10.3562294 20.0856417,10.3562294 C20.0856417,3.68956273 15.3613347,0 10.9767782,0" id="Path-Copy" stroke="#834FE3"></path>
+        </g>
+    </g>
+</svg>

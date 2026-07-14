@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Candle</title>
+    <g id="Candle" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(12.846919, 3.967669)" fill-rule="nonzero">
+            <ellipse id="Oval" fill="hsl(220,15%,54%)" cx="24.2666667" cy="70.2" rx="24.2666667" ry="5.4"></ellipse>
+            <rect id="Rectangle" fill="rgba(255,255,255,0.55)" x="18.2" y="18" width="12.1333333" height="48.6" rx="3"></rect>
+            <rect id="Rectangle" fill="hsl(220,20%,80%)" x="18.2" y="36" width="12.1333333" height="3.6"></rect>
+            <rect id="Rectangle-Copy" fill="hsl(220,15%,54%)" x="44.1530813" y="56.032331" width="2" height="12"></rect>
+            <line x1="24.2666667" y1="12.6" x2="24.2666667" y2="18" id="Path" stroke="hsl(220,18%,40%)" stroke-width="1.8" fill="none" stroke-linecap="round"></line>
+            <path d="M24.2666667,0 C28.3111111,5.4 28.3111111,10.8 24.2666667,16.2 C20.2222222,10.8 20.2222222,5.4 24.2666667,0 Z" id="Path" fill="hsl(220,20%,80%)"></path>
+            <path d="M43.7253279,56.832331 L52.2641925,56.832331 L52.2641925,56.832331 L49.0200021,49.9018848 C48.5517129,48.9014954 47.3611136,48.470143 46.3607242,48.9384323 C45.9367061,49.1369181 45.5957575,49.4778668 45.3972717,49.9018848 L42.8196453,55.4083746 C42.5855006,55.9085693 42.8011768,56.5038689 43.3013715,56.7380136 C43.4340739,56.8001325 43.5788059,56.832331 43.7253279,56.832331 Z" id="Path" fill="hsl(220,15%,54%)"></path>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Book</title>
+    <g id="Book" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(6.688869, 10.097745)" fill-rule="nonzero">
+            <path d="M33.4,5.7 C33.4,5.24606819 33.4,4.92843598 33.4,4.74710338 C32.6987056,4.74710338 32.1933645,5.09549335 31.9075319,5.44529736 C21.6820931,3.98925981 11.4439316,2.25282202 1.19304735,0.235983964 C0.651151136,0.129366558 0.125427324,0.482230281 0.0188104607,1.02412661 C0.00629977914,1.08771404 0,1.15236704 0,1.21717351 L0,57.7140189 C1.17763704e-06,58.266303 0.447715901,58.7140177 1,58.7140177 C1.05661512,58.7140177 1.11312797,58.7092098 1.16892942,58.6996458 C21.1632438,55.2727631 31.4077738,53.5240931 31.9025194,53.4536358 C32.2751903,53.9721373 33.096003,54.1953468 33.4,54.143467 C33.4,54.0784253 33.4,53.7639363 33.4,53.2 L33.4,5.7 Z" id="Path" fill="#DC2E4E"></path>
+            <path d="M33.4,5.7 C33.4,5.25751727 33.4,4.93988506 33.4,4.74710338 C33.9186615,4.74710338 34.4878678,4.96483916 34.8953983,5.44479729 C45.1194678,3.99166212 55.3565791,2.25550587 65.6067324,0.236328536 C66.1486008,0.129594136 66.6744023,0.482332204 66.7811447,1.02419898 C66.7936851,1.08785939 66.8,1.15258921 66.8,1.21747304 L66.8,57.713929 C66.7999952,58.2662111 66.3522821,58.7139242 65.8,58.7139242 C65.7433591,58.7139242 65.6868207,58.7091119 65.6309946,58.6995393 C45.6343119,55.2706512 35.3887636,53.5210021 34.8943495,53.450592 C34.44081,54.0160459 33.7407363,54.1742724 33.4,54.143467 C33.4,54.0133496 33.4,53.6988605 33.4,53.2 L33.4,5.7 Z" id="Path" fill="#EC9E0E"></path>
+            <line x1="33.4" y1="5.7" x2="33.4" y2="53.2" id="Path" stroke="#7C91AB" stroke-width="0.9" fill="#000000" stroke-linecap="round"></line>
+            <polygon id="Path-Copy-2" stroke="#7C91AB" stroke-width="0.4" fill="#F3F7EA" points="33.4 6.41612903 1.4 0.9 1.4 57.9 33.4 52.383871"></polygon>
+            <polygon id="Path-Copy-10" stroke="#7C91AB" stroke-width="0.4" fill="#F3F7EA" points="33.4 6.41612903 3.4 0.9 3.4 57.9 33.4 52.383871"></polygon>
+            <polygon id="Path-Copy-12" stroke="#7C91AB" stroke-width="0.4" fill="#F3F7EA" points="33.4 6.41612903 4.4 0.9 4.4 57.9 33.4 52.383871"></polygon>
+            <polygon id="Path-Copy-11" stroke="#7C91AB" stroke-width="0.4" points="33.4 6.41612903 2.4 0.9 2.4 57.9 33.4 52.383871"></polygon>
+            <polygon id="Path-Copy" stroke="#7C91AB" stroke-width="0.4" fill="#F3F7EA" points="33.4 6.51612903 65.4 1 65.4 58 33.4 52.483871"></polygon>
+            <polygon id="Path-Copy-3" stroke="#7C91AB" stroke-width="0.4" fill="#F3F7EA" points="33.4 6.51612903 64.4 1 64.4 58 33.4 52.483871"></polygon>
+            <polygon id="Path-Copy-4" stroke="#7C91AB" stroke-width="0.4" fill="#F3F7EA" points="33.4 6.51612903 63.4 1 63.4 58 33.4 52.483871"></polygon>
+            <polygon id="Path-Copy-5" stroke="#7C91AB" stroke-width="0.4" fill="#F3F7EA" points="33.4 6.51612903 62.4 1 62.4 58 33.4 52.483871"></polygon>
+            <line x1="39.8111312" y1="13.4022547" x2="57.8111312" y2="9.40225474" id="Path" stroke="#7C91AB" stroke-width="1.425" fill="#000000" stroke-linecap="round"></line>
+            <line x1="39.8111312" y1="22.4022547" x2="57.8111312" y2="19.4022547" id="Path" stroke="#7C91AB" stroke-width="1.425" fill="#000000" stroke-linecap="round"></line>
+            <line x1="39.8111312" y1="31.4022547" x2="57.8111312" y2="29.4022547" id="Path" stroke="#7C91AB" stroke-width="1.425" fill="#000000" stroke-linecap="round"></line>
+            <line x1="9.81113117" y1="9.40225474" x2="26.8111312" y2="13.4022547" id="Path-Copy-9" stroke="#7C91AB" stroke-width="1.425" fill="#000000" stroke-linecap="round"></line>
+            <line x1="9.81113117" y1="19.4022547" x2="26.8111312" y2="22.4022547" id="Path" stroke="#7C91AB" stroke-width="1.425" fill="#000000" stroke-linecap="round"></line>
+            <line x1="9.81113117" y1="29.4022547" x2="26.8111312" y2="31.4022547" id="Path" stroke="#7C91AB" stroke-width="1.425" fill="#000000" stroke-linecap="round"></line>
+        </g>
+    </g>
+</svg>

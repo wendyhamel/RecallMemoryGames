@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Coin</title>
+    <g id="Coin" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="coin" transform="translate(19.852428, 22.284257)">
+            <ellipse id="Oval" fill="hsl(220,15%,54%)" fill-rule="nonzero" cx="20.6" cy="17.6" rx="20.6" ry="17.6"></ellipse>
+            <ellipse id="Oval" stroke="hsl(220,18%,40%)" stroke-width="1.6" cx="20.6" cy="17.6" rx="20.6" ry="17.6"></ellipse>
+            <ellipse id="Oval" fill="hsl(220,20%,80%)" fill-rule="nonzero" cx="20.6" cy="17.6" rx="14.0454545" ry="12"></ellipse>
+            <line x1="20.6475715" y1="21.2157434" x2="20.6475715" y2="14.2157434" id="Path" stroke="hsl(220,18%,40%)" stroke-width="1.6" fill="none" fill-rule="nonzero" stroke-linecap="round"></line>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Envelope</title>
+    <g id="Envelope" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(10.449308, 21.225169)" fill-rule="nonzero">
+            <rect id="Rectangle" fill="hsl(220,15%,54%)" x="0" y="0.12374959" width="60" height="37.8" rx="4"></rect>
+            <path d="M1.42759618,1.06661714 C9.57123818,7.04279726 18.5855666,13.0214245 28.4705815,19.002499 L28.4705874,19.0024891 C29.4133439,19.5729179 30.5929381,19.5806076 31.5430513,19.0225183 C41.820626,12.9855489 50.8300799,7.00024856 58.5714128,1.06661714 C58.1949998,0.727145919 57.45735,0.12374959 55.8321391,0.12374959 C38.5355171,-0.154686988 22.0638186,0.12374959 4.09795822,0.12374959 C3.0285384,0.12374959 2.11009687,0.41988139 1.42759618,1.06661714 Z" id="Path" fill="hsl(220,20%,80%)"></path>
+            <ellipse id="Oval" fill="hsl(220,20%,80%)" cx="30" cy="10.9237496" rx="4" ry="3.6"></ellipse>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Glasses</title>
+    <g id="Glasses" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(8.990798, 27.585251)">
+            <path d="M0,17.996276 C0,18.1498704 1.50306731,13.5522281 4.50920194,4.20334918 C6.06140065,-1.40111639 9.11666667,-1.40111639 13.675,4.20334918" id="Path" stroke="hsl(220,18%,40%)" stroke-width="3.6" stroke-linecap="round" fill-rule="nonzero"></path>
+            <path d="M45,17.996276 C45,18.1498704 46.5030673,13.5522281 49.5092019,4.20334918 C51.0614006,-1.40111639 54.1166667,-1.40111639 58.675,4.20334918" id="Path-Copy-2" stroke="hsl(220,18%,40%)" stroke-width="3.6" stroke-linecap="round" fill-rule="nonzero" transform="translate(51.837500, 9.000000) scale(-1, 1) translate(-51.837500, -9.000000) "></path>
+            <ellipse id="Oval" stroke="hsl(220,18%,40%)" stroke-width="4.5" cx="13.675" cy="21.7606608" rx="12.675" ry="11.7"></ellipse>
+            <ellipse id="Oval" stroke="hsl(220,18%,40%)" stroke-width="4.5" cx="44.875" cy="21.7606608" rx="12.675" ry="11.7"></ellipse>
+            <path d="M26.35,16.7606608 C27.325,16.3800914 28.3,16.1898067 29.275,16.1898067 C30.25,16.1898067 31.225,16.3800914 32.2,16.7606608" id="Path" stroke="hsl(220,18%,40%)" stroke-width="3.6" fill="hsl(220,15%,54%)" fill-rule="nonzero" stroke-linecap="round"></path>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Padlock</title>
+    <g id="Padlock" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(22.009747, 12.392619)">
+            <path d="M6.1,23.8 L6.1,13.6 C6.1,4.53333333 10.1666667,0 18.3,0 C26.4333333,0 30.5,4.53333333 30.5,13.6 L30.5,23.8" id="Path" stroke="#7C91AB" stroke-width="5.95" stroke-linecap="round" stroke-linejoin="round"></path>
+            <rect id="Rectangle" fill="#40B9CE" fill-rule="nonzero" x="0" y="23.8" width="36.6" height="32.3" rx="7"></rect>
+            <ellipse id="Oval" fill="#DC2E4E" fill-rule="nonzero" cx="18.3" cy="37.4" rx="4.575" ry="3.825"></ellipse>
+            <rect id="Rectangle" fill="#DC2E4E" fill-rule="nonzero" x="16.2666667" y="37.4" width="4.06666667" height="9.35" rx="1"></rect>
+        </g>
+    </g>
+</svg>

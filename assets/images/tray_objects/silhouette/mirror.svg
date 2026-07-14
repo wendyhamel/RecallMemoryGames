@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>mirror</title>
+    <g id="mirror" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(19.325689, 8.824950)">
+            <ellipse id="Oval" fill="hsl(220,15%,54%)" fill-rule="nonzero" cx="21" cy="18" rx="21" ry="18"></ellipse>
+            <ellipse id="Oval" stroke="hsl(220,18%,40%)" stroke-width="4.5" cx="21" cy="18" rx="21" ry="18"></ellipse>
+            <rect id="Rectangle" fill="hsl(220,20%,80%)" fill-rule="nonzero" x="16.8" y="34.2" width="8.4" height="28.8" rx="4"></rect>
+        </g>
+    </g>
+</svg>

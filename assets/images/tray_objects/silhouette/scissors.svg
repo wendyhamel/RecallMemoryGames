@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>scissors</title>
+    <g id="scissors" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(4.078130, 15.924023)">
+            <g id="Group" transform="translate(36.854703, 22.858578) rotate(5.000000) translate(-36.854703, -22.858578) translate(1.902086, 12.075113)">
+                <path d="M48.433674,33.6399904 L54.7911432,32.7475868 C52.9552526,10.9425727 51.5539414,-0.622625379 50.5872094,-1.94800753 C49.3666047,-3.29163511 48.2527509,-3.93919201 47.2456479,-3.89067824 L48.433674,33.6399904 Z" id="Path" fill="hsl(220,15%,54%)" fill-rule="nonzero" transform="translate(51.018396, 14.873388) rotate(92.000000) translate(-51.018396, -14.873388) "></path>
+                <line x1="31.6100356" y1="17.6039311" x2="15.8148792" y2="9.30783204" id="Path" stroke="hsl(220,18%,40%)" stroke-width="6.25" fill="none" fill-rule="nonzero" stroke-linecap="round" transform="translate(23.507966, 13.698481) rotate(333.000000) translate(-23.507966, -13.698481) "></line>
+                <ellipse id="Oval" stroke="hsl(220,18%,40%)" stroke-width="5.95" cx="9" cy="7" rx="9" ry="7"></ellipse>
+            </g>
+            <g id="Group-2" transform="translate(36.787962, 25.140221) rotate(-24.000000) translate(-36.787962, -25.140221) translate(1.844072, 13.178845)">
+                <path d="M48.4162216,27.562895 L54.7736908,26.6704913 C52.9378002,4.86547726 51.536489,-6.69972084 50.569757,-8.02510299 C49.3491523,-9.36873056 48.2352985,-10.0162875 47.2281954,-9.9677737 L48.4162216,27.562895 Z" id="Path-Copy" fill="hsl(220,15%,54%)" fill-rule="nonzero" transform="translate(51.000943, 8.796293) scale(-1, 1) rotate(-88.000000) translate(-51.000943, -8.796293) "></path>
+                <line x1="30.7819643" y1="4.08246369" x2="16.7166003" y2="14.9694195" id="Path" stroke="hsl(220,18%,40%)" stroke-width="6.25" fill="none" fill-rule="nonzero" stroke-linecap="round" transform="translate(23.378320, 9.262491) rotate(36.000000) translate(-23.378320, -9.262491) "></line>
+                <ellipse id="Oval" stroke="hsl(220,18%,40%)" stroke-width="5.95" cx="9" cy="16.4227522" rx="9" ry="7.5"></ellipse>
+            </g>
+            <circle id="Oval" stroke="hsl(220,18%,40%)" fill="hsl(220,15%,54%)" fill-rule="nonzero" cx="36.4218704" cy="24.5759772" r="5.5"></circle>
+        </g>
+    </g>
+</svg>

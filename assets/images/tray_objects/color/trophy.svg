@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Trophy</title>
+    <g id="Trophy" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(16.242241, 15.000000)">
+            <path d="M35.9779377,3.47260187 C45.3779377,3.47260187 47.506671,0.127912169 47.506671,7.32791217 C47.506671,13.3279122 42.095802,21.4039303 33,22.8714123" id="Path" stroke="#DC2E4E" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M2.9779377,3.47260187 C12.3779377,3.47260187 14.506671,0.127912169 14.506671,7.32791217 C14.506671,13.3279122 9.09580204,21.4039303 0,22.8714123" id="Path-Copy" stroke="#DC2E4E" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" transform="translate(7.253336, 12.784096) scale(-1, 1) translate(-7.253336, -12.784096) "></path>
+            <path d="M9.75775889,0 L37.9577589,0 L33.9291875,25.2 C27.2149017,28.8 20.500616,28.8 13.7863303,25.2 L9.75775889,0 Z" id="Path" fill="#40B9CE" fill-rule="nonzero"></path>
+            <path d="M21.7577589,25 L25.8149017,25 C26.9194712,25 27.8149017,25.8954305 27.8149017,27 L27.8149017,38 L27.8149017,38 L19.7577589,38 L19.7577589,27 C19.7577589,25.8954305 20.6531894,25 21.7577589,25 Z" id="Rectangle" fill="#40B9CE" fill-rule="nonzero"></path>
+            <path d="M14.7577589,38 L32.9291875,38 C34.5860417,38 35.9291875,39.3431458 35.9291875,41 L35.9291875,43 L35.9291875,43 L11.7577589,43 L11.7577589,41 C11.7577589,39.3431458 13.1009046,38 14.7577589,38 Z" id="Rectangle" fill="#DC2E4E" fill-rule="nonzero"></path>
+            <rect id="Rectangle" fill="#40B9CE" fill-rule="nonzero" x="7.75775889" y="42.4" width="32.2285714" height="8" rx="2"></rect>
+        </g>
+    </g>
+</svg>

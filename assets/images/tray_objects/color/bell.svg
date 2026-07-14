@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Bell</title>
+    <g id="Bell" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(17.000000, 15.000000)">
+            <path d="M22.5,7 C8.83333333,9.5 2,19.5 2,37 L43,37 C43,19.5 36.1666667,9.5 22.5,7 Z" id="Path" fill="#834FE3" fill-rule="nonzero"></path>
+            <ellipse id="Oval" stroke="#834FE3" stroke-width="4" fill="#4B67F1" fill-rule="nonzero" cx="22.5" cy="37.5" rx="22.5" ry="3.5"></ellipse>
+            <ellipse id="Oval" fill="#7C91AB" fill-rule="nonzero" cx="22.5" cy="43.5" rx="4.5" ry="3.5"></ellipse>
+            <ellipse id="Oval" stroke="#7C91AB" stroke-width="2.7" cx="22.5" cy="3.5" rx="4.5" ry="3.5"></ellipse>
+            <line x1="22.5" y1="40.5" x2="22.5" y2="37.5" id="Line" stroke="#7C91AB" stroke-width="3" stroke-linecap="square"></line>
+        </g>
+    </g>
+</svg>

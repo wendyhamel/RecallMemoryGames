@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Needle</title>
+    <g id="Needle" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="needle" transform="translate(16.195828, 7.654273)">
+            <path d="M26,5.5 C13,11.9 7.94444444,20.86 10.8333333,32.38 C13.7222222,42.62 10.1111111,49.66 0,53.5" id="Path" stroke="#EC9E0E" stroke-width="2.55" stroke-linecap="round" stroke-linejoin="round"></path>
+            <rect id="Rectangle" fill="#7C91AB" fill-rule="nonzero" x="23" y="11" width="4.25714286" height="44"></rect>
+            <ellipse id="Oval" stroke="#7C91AB" stroke-width="2.125" cx="25.2571429" cy="5.5" rx="4.25714286" ry="5.5"></ellipse>
+            <polygon id="Path" fill="#7C91AB" fill-rule="nonzero" points="23 55 27.26 55 25.13 63.5"></polygon>
+        </g>
+    </g>
+</svg>

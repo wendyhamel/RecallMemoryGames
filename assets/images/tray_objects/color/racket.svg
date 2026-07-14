@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Racket</title>
+    <g id="Racket" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(29.200032, 15.957281)" fill-rule="nonzero">
+            <rect id="Rectangle" stroke="#DC2E4E" stroke-width="3" fill="#40B9CE" x="7.29996789" y="35.5427195" width="4" height="11" rx="2"></rect>
+            <ellipse id="Oval" stroke="#DC2E4E" stroke-width="2" fill="#7C91AB" cx="9" cy="11" rx="9" ry="11"></ellipse>
+            <rect id="Rectangle" fill="#DC2E4E" x="7.79996789" y="22.0427195" width="3" height="14"></rect>
+        </g>
+    </g>
+</svg>

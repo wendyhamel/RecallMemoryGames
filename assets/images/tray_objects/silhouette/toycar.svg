@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Toy car</title>
+    <g id="Toy-car" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(13.235389, 19.381250)" fill-rule="nonzero">
+            <rect id="Rectangle" fill="hsl(220,15%,54%)" x="0" y="14.4" width="52.8" height="16.2" rx="6"></rect>
+            <path d="M18.1846154,0 L34.6153846,0 C37.9290931,-1.77635684e-15 40.6153846,2.6862915 40.6153846,6 L40.6153846,16.2 L40.6153846,16.2 L12.1846154,16.2 L12.1846154,6 C12.1846154,2.6862915 14.8709069,1.77635684e-15 18.1846154,0 Z" id="Rectangle" fill="hsl(220,15%,54%)"></path>
+            <rect id="Rectangle" fill="rgba(255,255,255,0.55)" x="18.2769231" y="5.4" width="8.12307692" height="7.2" rx="2"></rect>
+            <rect id="Rectangle" fill="rgba(255,255,255,0.55)" x="28.4307692" y="5.4" width="8.12307692" height="7.2" rx="2"></rect>
+            <ellipse id="Oval" fill="hsl(220,20%,80%)" cx="12.1846154" cy="32.4" rx="10.1538462" ry="9"></ellipse>
+            <ellipse id="Oval" fill="hsl(220,20%,80%)" cx="40.6153846" cy="32.4" rx="10.1538462" ry="9"></ellipse>
+            <ellipse id="Oval" fill="hsl(220,20%,80%)" cx="12.1846154" cy="32.4" rx="4.06153846" ry="3.6"></ellipse>
+            <ellipse id="Oval" fill="hsl(220,20%,80%)" cx="40.6153846" cy="32.4" rx="4.06153846" ry="3.6"></ellipse>
+        </g>
+    </g>
+</svg>

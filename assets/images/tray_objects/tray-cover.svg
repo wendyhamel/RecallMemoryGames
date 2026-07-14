@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 354 354" width="354" height="354">
+  <defs>
+    <radialGradient id="coverBase" cx="36%" cy="30%" r="78%">
+      <stop offset="0%" stop-color="#f2f4f7"></stop>
+      <stop offset="16%" stop-color="#dfe2e7"></stop>
+      <stop offset="40%" stop-color="#b9bec7"></stop>
+      <stop offset="64%" stop-color="#8b909b"></stop>
+      <stop offset="86%" stop-color="#565b64"></stop>
+      <stop offset="100%" stop-color="#3a3e45"></stop>
+    </radialGradient>
+    <radialGradient id="knobBase" cx="38%" cy="30%" r="80%">
+      <stop offset="0%" stop-color="#fbfcfd"></stop>
+      <stop offset="55%" stop-color="#c3c8d0"></stop>
+      <stop offset="100%" stop-color="#6b707a"></stop>
+    </radialGradient>
+    <filter id="softBlurOuter" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="5"></feGaussianBlur>
+    </filter>
+    <filter id="softBlurSmall" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="2"></feGaussianBlur>
+    </filter>
+  </defs>
+
+  
+  <circle cx="177" cy="177" r="171.5" fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="6" filter="url(#softBlurOuter)"></circle>
+
+  
+  <circle cx="177" cy="177" r="168" fill="url(#coverBase)"></circle>
+
+  
+  <circle cx="177" cy="177" r="155" fill="none" stroke="rgba(255,255,255,0.30)" stroke-width="1"></circle>
+  <circle cx="177" cy="177" r="156.5" fill="none" stroke="rgba(0,0,0,0.12)" stroke-width="1"></circle>
+
+  
+  <circle cx="177" cy="177" r="25" fill="url(#knobBase)"></circle>
+  <ellipse cx="171" cy="168" rx="9" ry="5.5" fill="rgba(255,255,255,0.85)" filter="url(#softBlurSmall)"></ellipse>
+</svg>

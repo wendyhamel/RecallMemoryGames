@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Button</title>
+    <g id="Button" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(24.015609, 27.613580)" fill-rule="nonzero" id="Oval">
+            <ellipse fill="#4B67F1" cx="15.6" cy="12.6" rx="15.6" ry="12.6"></ellipse>
+            <ellipse fill="#171E36" cx="10.4" cy="8.4" rx="2.16666667" ry="1.75"></ellipse>
+            <ellipse fill="#171E36" cx="20.8" cy="8.4" rx="2.16666667" ry="1.75"></ellipse>
+            <ellipse fill="#171E36" cx="10.4" cy="16.8" rx="2.16666667" ry="1.75"></ellipse>
+            <ellipse fill="#171E36" cx="20.8" cy="16.8" rx="2.16666667" ry="1.75"></ellipse>
+        </g>
+    </g>
+</svg>

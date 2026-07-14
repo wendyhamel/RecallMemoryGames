@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>diamond ring</title>
+    <g id="diamond-ring" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(23.469088, 16.504056)">
+            <ellipse id="Oval" stroke="#40B9CE" stroke-width="6.8" cx="16.6" cy="32.3478699" rx="16.6" ry="14.5"></ellipse>
+            <polygon id="Path" stroke="#7C91AB" fill="#DC2E4E" fill-rule="nonzero" points="22.4342281 1.72909611e-14 27.7661068 7.44786989 21.5665528 17.1691642 11.7976584 17.34039 5.42614469 7.44786989 11.0066637 1.72909611e-14"></polygon>
+        </g>
+    </g>
+</svg>

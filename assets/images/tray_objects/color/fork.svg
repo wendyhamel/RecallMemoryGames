@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Fork</title>
+    <g id="Fork" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(24.916301, 8.100752)" fill="#4B67F1" fill-rule="nonzero" id="Rectangle">
+            <rect x="0.00369925532" y="0" width="4.35" height="20.4" rx="2"></rect>
+            <rect x="8.875" y="0" width="4.35" height="20.4" rx="2"></rect>
+            <rect x="17.575" y="0" width="4.35" height="20.4" rx="2"></rect>
+            <rect x="26.6836993" y="0" width="4.35" height="20.4" rx="2"></rect>
+            <path d="M0,18.6 L31,18.6 C31,22.5764502 27.7764502,25.8 23.8,25.8 L7.2,25.8 C3.2235498,25.8 0,22.5764502 0,18.6 L0,18.6 L0,18.6 Z"></path>
+            <path d="M11.05,25.4 L19.75,25.4 L19.75,62.4 C19.75,64.609139 17.959139,66.4 15.75,66.4 L15.05,66.4 C12.840861,66.4 11.05,64.609139 11.05,62.4 L11.05,25.4 L11.05,25.4 Z"></path>
+        </g>
+    </g>
+</svg>

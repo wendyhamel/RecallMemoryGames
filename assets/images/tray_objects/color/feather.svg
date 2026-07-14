@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Feather</title>
+    <g id="Feather" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="feather" transform="translate(40.500000, 40.000000) rotate(38.000000) translate(-40.500000, -40.000000) translate(24.986976, 2.000000)">
+            <path d="M17.0130237,1.24984021 C29.3225475,1.24984021 31.7229825,4.6464056 30.8713339,14.2464056 C30.0196854,23.8464056 27.2328062,45.5165069 17.0130237,57.2498402 L17.0130237,1.24984021 Z" id="Path" fill="#4B67F1" fill-rule="nonzero"></path>
+            <path d="M0,1.24984021 C12.3095238,1.24984021 14.7099588,4.6464056 13.8583103,14.2464056 C13.0066617,23.8464056 10.2197825,45.5165069 0,57.2498402 L0,1.24984021 Z" id="Path-Copy" fill="#834FE3" fill-rule="nonzero" transform="translate(7.006512, 29.249840) scale(-1, 1) translate(-7.006512, -29.249840) "></path>
+            <path d="M14.0130237,1.25572405 C14.525164,0.418574683 15.0292123,0 15.5251686,0 C16.021125,0 16.5170767,0.418574683 17.0130237,1.25572405 L17.0130237,72.6731778 C15.7479381,74.8910593 14.7479381,76 14.0130237,76 C14.0130237,64.369678 14.0130237,39.4549193 14.0130237,1.25572405 Z" id="Rectangle" fill="#7C91AB"></path>
+            <line x1="15.5130237" y1="42.3888889" x2="27.4177856" y2="32.6111111" id="Line-Copy-3" stroke="#7C91AB" stroke-linecap="square"></line>
+            <line x1="3.60826178" y1="42.3888889" x2="15.5130237" y2="32.6111111" id="Line-Copy-2" stroke="#7C91AB" stroke-linecap="square" transform="translate(9.560643, 37.500000) scale(-1, 1) translate(-9.560643, -37.500000) "></line>
+            <line x1="15.5130237" y1="30.3333333" x2="29.3225475" y2="19.6666667" id="Line-Copy-5" stroke="#7C91AB" stroke-linecap="square"></line>
+            <line x1="1.70349987" y1="30.3333333" x2="15.5130237" y2="19.6666667" id="Line-Copy-4" stroke="#7C91AB" stroke-linecap="square" transform="translate(8.608262, 25.000000) scale(-1, 1) translate(-8.608262, -25.000000) "></line>
+            <line x1="15.5130237" y1="19.2777778" x2="29.3225475" y2="7.72222222" id="Line-Copy-7" stroke="#7C91AB" stroke-linecap="square"></line>
+            <line x1="1.70349987" y1="19.2777778" x2="15.5130237" y2="7.72222222" id="Line-Copy-6" stroke="#7C91AB" stroke-linecap="square" transform="translate(8.608262, 13.500000) scale(-1, 1) translate(-8.608262, -13.500000) "></line>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Dice</title>
+    <g id="Dice" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="dice" transform="translate(4.578265, 4.578265)" fill-rule="nonzero">
+            <g id="die-5" transform="translate(19.421735, 19.421735)">
+                <rect id="Rectangle" stroke="hsl(220,18%,40%)" fill="hsl(220,15%,54%)" x="0" y="0" width="40" height="40" rx="8"></rect>
+                <circle id="Oval" fill="hsl(220,20%,80%)" cx="20" cy="20" r="3"></circle>
+                <circle id="Oval" fill="hsl(220,20%,80%)" cx="10" cy="30" r="3"></circle>
+                <circle id="Oval" fill="hsl(220,20%,80%)" cx="10" cy="10" r="3"></circle>
+                <circle id="Oval" fill="hsl(220,20%,80%)" cx="30" cy="30" r="3"></circle>
+                <circle id="Oval" fill="hsl(220,20%,80%)" cx="30" cy="10" r="3"></circle>
+            </g>
+            <g id="die-3" transform="translate(25.421735, 25.421735) rotate(19.000000) translate(-25.421735, -25.421735) translate(5.421735, 5.421735)">
+                <rect id="Rectangle" stroke="hsl(220,18%,40%)" fill="hsl(220,15%,54%)" x="0" y="0" width="40" height="40" rx="8"></rect>
+                <circle id="Oval" fill="hsl(220,20%,80%)" cx="20" cy="20" r="3"></circle>
+                <circle id="Oval" fill="hsl(220,20%,80%)" cx="10" cy="30" r="3"></circle>
+                <circle id="Oval" fill="hsl(220,20%,80%)" cx="30" cy="10" r="3"></circle>
+            </g>
+        </g>
+    </g>
+</svg>

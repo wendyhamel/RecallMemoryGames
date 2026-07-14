@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Anchor</title>
+    <g id="Anchor" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(8.416884, 8.565414)">
+            <rect id="Rectangle" fill="hsl(220,15%,54%)" fill-rule="nonzero" x="27.2541184" y="11.05" width="9.43457944" height="48" rx="3"></rect>
+            <path d="M7.4415016,36.55 C16.6761751,41.5234811 19.2561354,57.2018524 31.5831159,57.2018524 C43.9100963,57.2018524 46.9469898,41.5352689 56.5013147,36.55 C59.4060892,35.0343427 59.4060892,40.9007849 56.5013147,44.2 C46.9469898,55.0517111 43.786042,64.8518524 31.5831159,64.8518524 C19.3801898,64.8518524 16.6761751,55.0260518 7.4415016,44.2 C4.60536799,40.8751256 4.60536799,35.0225549 7.4415016,36.55 Z" id="Rectangle" fill="hsl(220,15%,54%)" fill-rule="nonzero"></path>
+            <ellipse id="Oval" stroke="hsl(220,18%,40%)" stroke-width="5.1" cx="31.9714081" cy="5.95" rx="6.60420561" ry="5.95"></ellipse>
+            <path d="M63.5756138,41.95 C63.5756138,39.7592705 61.3742119,37.7759372 56.9714081,36 C52.5686044,37.7759372 50.3672025,39.7592705 50.3672025,41.95" id="Oval-Copy" stroke="hsl(220,18%,40%)" stroke-width="5.1" stroke-linecap="round" stroke-linejoin="bevel" transform="translate(56.971408, 38.975000) rotate(40.000000) translate(-56.971408, -38.975000) "></path>
+            <path d="M13.5756138,41.95 C13.5756138,39.7592705 11.3742119,37.7759372 6.97140815,36 C2.56860441,37.7759372 0.367202538,39.7592705 0.367202538,41.95" id="Oval-Copy-2" stroke="hsl(220,18%,40%)" stroke-width="5.1" stroke-linecap="round" stroke-linejoin="round" transform="translate(6.971408, 38.975000) rotate(-40.000000) translate(-6.971408, -38.975000) "></path>
+        </g>
+    </g>
+</svg>

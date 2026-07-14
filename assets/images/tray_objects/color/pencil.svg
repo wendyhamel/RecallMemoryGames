@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Pencil</title>
+    <g id="Pencil" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group" transform="translate(17.897266, 7.613603)" fill-rule="nonzero">
+            <rect id="Rectangle" fill="#834FE3" transform="translate(21.382352, 32.956511) rotate(-30.000000) translate(-21.382352, -32.956511) " x="14.2444363" y="13.4565115" width="14.275832" height="39"></rect>
+            <polygon id="Path" fill="#4B67F1" transform="translate(9.382352, 12.171902) rotate(-30.000000) translate(-9.382352, -12.171902) " points="2.24443634 16.6719018 16.5202683 16.6719018 13.4611615 7.67190179 5.30354319 7.67190179"></polygon>
+            <polygon id="Path" fill="#7C91AB" transform="translate(5.332352, 5.157096) rotate(-30.000000) translate(-5.332352, -5.157096) " points="1.25354319 8.75709602 9.41116147 8.75709602 5.33235233 1.55709602"></polygon>
+            <rect id="Rectangle" fill="#7C91AB" transform="translate(31.732352, 50.883237) rotate(-30.000000) translate(-31.732352, -50.883237) " x="24.5944363" y="48.8832373" width="14.275832" height="4"></rect>
+            <path d="M28.0944363,51.9454152 L42.3702683,51.9454152 L42.3702683,58.9454152 C42.3702683,60.6022694 41.0271226,61.9454152 39.3702683,61.9454152 L31.0944363,61.9454152 C29.4375821,61.9454152 28.0944363,60.6022694 28.0944363,58.9454152 L28.0944363,51.9454152 L28.0944363,51.9454152 Z" id="Rectangle" fill="#4B67F1" transform="translate(35.232352, 56.945415) rotate(-30.000000) translate(-35.232352, -56.945415) "></path>
+        </g>
+    </g>
+</svg>

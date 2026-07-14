@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Sailboat</title>
+    <g id="Sailboat" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(11.809388, 9.000000)">
+            <polygon id="Path" fill="#40B9CE" fill-rule="nonzero" points="28.2 2.01395423 28.2 48.8139542 4.02857143 48.8139542"></polygon>
+            <polygon id="Rectangle" fill="#DC2E4E" points="29.1906121 0 37.6704302 3.77069859 29.1906121 7"></polygon>
+            <line x1="28.2" y1="0.213954227" x2="28.2" y2="52.4139542" id="Path" stroke="#7C91AB" stroke-width="2.7" fill="#000000" fill-rule="nonzero" stroke-linecap="round"></line>
+            <polygon id="Path" fill="#4B67F1" fill-rule="nonzero" points="0 52.4139542 56.4 52.4139542 44.3142857 61.4139542 12.0857143 61.4139542"></polygon>
+        </g>
+    </g>
+</svg>

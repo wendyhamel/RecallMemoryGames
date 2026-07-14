@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Bag</title>
+    <g id="Bag" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(9.900519, 11.951266)">
+            <path d="M10.0994806,18.814388 L50.0994806,18.814388 C57.5605427,33.8452263 60.893876,43.3895016 60.0994806,47.4472137 C58.9078874,53.5337818 58.1387784,54.4527733 51.0994806,55.628021 C30.4418291,58.5431769 30.0994806,58.5431769 11.0994806,55.628021 C5.73426737,54.6175477 1.20130934,53.7553468 0.0994805579,47.4472137 C-0.635071963,43.2417916 2.69826137,33.6975164 10.0994806,18.814388 Z" id="Path" fill="#DC2E4E" fill-rule="nonzero"></path>
+            <path d="M16.0918291,18 C16.0918291,6 20.8751624,0 30.4418291,0 C40.0084958,0 44.7918291,6 44.7918291,18" id="Path" stroke="#7C91AB" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            <rect id="Rectangle" fill="#EC9E0E" fill-rule="nonzero" x="24.2918291" y="18" width="12.3" height="7.2" rx="2"></rect>
+        </g>
+    </g>
+</svg>
