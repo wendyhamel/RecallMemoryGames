@@ -914,7 +914,7 @@
 			</div>
 			<div x-show="phase === 'roundclear'" x-cloak class="text-[13px] text-cyan font-bold tracking-medium uppercase">Round clear!</div>
 
-			<!-- Ready (fastest mode only, shown once at the start of a session) -->
+			<!-- Ready (fastest mode only, shown before every round so the stopwatch only starts on Play) -->
 			<template x-if="phase === 'ready'">
 				<div class="flex-1 flex flex-col items-center justify-center gap-3 py-16">
 					<div class="text-[13px] font-bold tracking-medium uppercase text-gray">Ready?</div>
@@ -924,7 +924,7 @@
 			</template>
 
 			<!-- Panels -->
-			<template x-if="!['complete', 'timeup', 'ready'].includes(phase)">
+			<template x-if="!['complete', 'ready'].includes(phase)">
 				<div class="flex flex-col items-center gap-3 w-full">
 					<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-3xl">
 						<div class="relative rounded-2xl overflow-hidden border border-white/10 bg-white/5">
@@ -969,10 +969,10 @@
 				</div>
 			</template>
 
-			<!-- Time's up (timer mode) -->
-			<template x-if="phase === 'timeup'">
+			<!-- Time's up (timer mode) / Gave up (levels, fastest) -->
+			<template x-if="phase === 'timeup' || phase === 'gaveup'">
 				<div class="result-screen">
-					<div class="text-[13px] font-bold text-red tracking-medium uppercase">Time's Up</div>
+					<div class="text-[13px] font-bold text-red tracking-medium uppercase" x-text="phase === 'gaveup' ? 'Gave Up' : `Time's Up`"></div>
 					<div class="result-score" x-text="score"></div>
 					<div class="result-caption">final score</div>
 					<button type="button" @click="startGame()"
@@ -981,7 +981,7 @@
 			</template>
 
 			<!-- Controls -->
-			<div x-show="!['complete', 'timeup'].includes(phase)" x-cloak class="flex gap-2.5 items-center">
+			<div x-show="!['complete', 'timeup', 'gaveup'].includes(phase)" x-cloak class="flex gap-2.5 items-center">
 				<button type="button" @click="muted = !muted"
 				        class="control-btn">
 					<svg data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24"
@@ -994,6 +994,8 @@
 					</svg>
 					<span x-text="muted ? 'Sound off' : 'Sound on'"></span>
 				</button>
+				<button type="button" @click="giveUp()" x-show="phase === 'playing' && mode !== 'timer'" x-cloak
+				        class="control-btn">Give Up</button>
 				<button type="button" @click="backToSetup()"
 				        class="control-btn">Restart</button>
 			</div>

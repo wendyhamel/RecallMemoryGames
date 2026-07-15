@@ -332,6 +332,7 @@ function differenceGame() {
 		score: 0,
 		found: new Set(),
 		active: new Set(),
+		revealRemaining: false, // true once the round has ended (give up / time up) so missed diffs are shown
 		scene: null,
 		baseSvgInner: '',
 		modSvgInner:  '',
@@ -428,9 +429,9 @@ function differenceGame() {
 			}
 		},
 
-		// Fastest Time only: called once per session, when the player clicks Play on the
-		// Ready screen. Reveals the panels and starts both the per-round stopwatch and the
-		// total-session cap timer at the same moment the images appear.
+		// Fastest Time only: called every round, when the player clicks Play on the
+		// Ready screen. Reveals the panels and (re)starts both the per-round stopwatch and
+		// the total-session cap timer at the same moment the images appear.
 		playFastestRound() {
 			this.phase = 'playing';
 			this._startStopwatch();
@@ -464,31 +465,43 @@ function differenceGame() {
 			const seed = Math.floor(Math.random() * 1e9);
 			this.active = window.SpotDiff.pickRound(scene, diffCount, seed);
 			this.found  = new Set();
+			this.revealRemaining = false;
 			this._renderPanels();
 		},
 
 		_renderPanels() {
 			const { renderBase, renderModified } = window.SpotDiff;
 			this.baseSvgInner = renderBase(this.scene);
-			this.modSvgInner  = renderModified(this.scene, this.active) + this._foundMarkersSvg();
+			this.modSvgInner  = renderModified(this.scene, this.active) + this._foundMarkersSvg()
+				+ (this.revealRemaining ? this._missedMarkersSvg() : '');
+		},
+
+		_markerSvg(d, stroke) {
+			const PAD = 6;
+			const b = window.SpotDiff.getDiffBounds(this.scene, d.id);
+			let cx = d.x, cy = d.y, rx = 16, ry = 16;
+			if (b) {
+				cx = (b.x0 + b.x1) / 2;
+				cy = (b.y0 + b.y1) / 2;
+				rx = Math.max(16, (b.x1 - b.x0) / 2 + PAD);
+				ry = Math.max(16, (b.y1 - b.y0) / 2 + PAD);
+			}
+			return `<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" fill="none" stroke="#fff" stroke-width="3"/><ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" fill="none" stroke="${stroke}" stroke-width="1.5" opacity="0.9"/>`;
 		},
 
 		_foundMarkersSvg() {
 			if (this.found.size === 0) return '';
-			const PAD = 6;
 			return window.SpotDiff.getActiveDiffs(this.scene, this.active)
 				.filter(d => this.found.has(d.id))
-				.map(d => {
-					const b = window.SpotDiff.getDiffBounds(this.scene, d.id);
-					let cx = d.x, cy = d.y, rx = 16, ry = 16;
-					if (b) {
-						cx = (b.x0 + b.x1) / 2;
-						cy = (b.y0 + b.y1) / 2;
-						rx = Math.max(16, (b.x1 - b.x0) / 2 + PAD);
-						ry = Math.max(16, (b.y1 - b.y0) / 2 + PAD);
-					}
-					return `<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" fill="none" stroke="#fff" stroke-width="3"/><ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" fill="none" stroke="hsl(189,59%,53%)" stroke-width="1.5" opacity="0.9"/>`;
-				})
+				.map(d => this._markerSvg(d, 'hsl(189,59%,53%)'))
+				.join('');
+		},
+
+		// un-found differences, revealed once the round has ended (give up / time up)
+		_missedMarkersSvg() {
+			return window.SpotDiff.getActiveDiffs(this.scene, this.active)
+				.filter(d => !this.found.has(d.id))
+				.map(d => this._markerSvg(d, 'hsl(349,71%,52%)'))
 				.join('');
 		},
 
@@ -545,7 +558,25 @@ function differenceGame() {
 			_buzz(this.muted);
 			this._commitBest();
 			this._recordScore();
+			this.revealRemaining = true;
+			this._renderPanels();
 			this.phase = 'timeup';
+		},
+
+		/* ---- give up (levels / fastest modes only) ---- */
+		giveUp() {
+			if (this.phase !== 'playing' || this.mode === 'timer') return;
+			this._clearTimer();
+			this._clearSessionTimer();
+			this._clearGraceTimer();
+			this.timerRunning = false;
+			if (this.mode === 'levels') {
+				this._commitBest();
+				this._recordScore();
+			}
+			this.revealRemaining = true;
+			this._renderPanels();
+			this.phase = 'gaveup';
 		},
 
 		/* ---- fastest mode: total-session cap (separate from the per-round stopwatch) ---- */
@@ -653,7 +684,7 @@ function differenceGame() {
 				_guardedDelay(this, 900, () => {
 					this._loadRound(this._pickScene(this._lastSceneId), this.diffCount);
 					this.elapsed = 0;
-					this.phase = 'playing';
+					this.phase = 'ready';
 				});
 			}
 		},
