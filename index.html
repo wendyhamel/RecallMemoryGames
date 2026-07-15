@@ -22,7 +22,7 @@
 <body
 	x-data="app()"
 	x-cloak
-	class="font-barlow text-white min-h-screen flex flex-col items-center gap-8 px-5 py-7 !overflow-auto"
+	class="text-white min-h-screen flex flex-col items-center gap-8 px-5 py-7 !overflow-auto"
 >
 
 <!-- Header -->
@@ -65,20 +65,20 @@
 	<!-- Full navigation -->
 	<nav class="flex items-center gap-2 flex-wrap justify-center">
 		<button type="button" @click="page = 'dashboard'"
-		        :class="page === 'dashboard' ? 'bg-gradient-to-r from-blue to-purple border-white/25' : 'bg-white/5 border-white/10 hover:border-white/25'"
-		        class="flex items-center gap-2 border rounded-2.5xl px-4 py-2 text-white cursor-pointer transition-colors font-barlow text-xs font-bold tracking-px uppercase">
+		        :class="{ 'is-active': page === 'dashboard' }"
+		        class="toggle-pill">
 			Dashboard
 		</button>
 		<button type="button" @click="page = 'scores'"
-		        :class="page === 'scores' ? 'bg-gradient-to-r from-blue to-purple border-white/25' : 'bg-white/5 border-white/10 hover:border-white/25'"
-		        class="flex items-center gap-2 border rounded-2.5xl px-4 py-2 text-white cursor-pointer transition-colors font-barlow text-xs font-bold tracking-px uppercase">
+		        :class="{ 'is-active': page === 'scores' }"
+		        class="toggle-pill">
 			Scores
 		</button>
 		<div class="relative" x-data="{ open: false }" @click.outside="open = false" @keydown.escape="open = false">
 			<button @click="open = !open" type="button" :aria-expanded="open"
-			        :class="['sequence', 'match', 'difference', 'tray'].includes(page) ? 'bg-gradient-to-r from-blue to-purple border-white/25' : 'bg-white/5 border-white/10 hover:border-white/25'"
-			        class="flex items-center gap-2 border rounded-2.5xl px-4 py-2 cursor-pointer transition-colors text-white">
-				<span class="font-barlow text-xs font-bold tracking-px uppercase" x-text="page === 'sequence' ? 'Sequence' : page === 'match' ? 'Match' : page === 'difference' ? 'Difference' : page === 'tray' ? 'Tray' : 'Games'"></span>
+			        :class="{ 'is-active': ['sequence', 'match', 'difference', 'tray'].includes(page) }"
+			        class="toggle-pill">
+				<span x-text="page === 'sequence' ? 'Sequence' : page === 'match' ? 'Match' : page === 'difference' ? 'Difference' : page === 'tray' ? 'Tray' : 'Games'"></span>
 				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
 				     class="size-3 transition-transform" :class="open && 'rotate-180'">
 					<path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
@@ -88,32 +88,32 @@
 			    class="absolute left-1/2 top-full -translate-x-1/2 mt-2 min-w-44 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-sm overflow-hidden z-20 py-1 sm:left-auto sm:right-0 sm:translate-x-0">
 				<li>
 					<button type="button" @click="page = 'sequence'; open = false"
-					        :class="page === 'sequence' ? 'bg-white/10' : 'hover:bg-white/[0.08]'"
-					        class="w-full flex items-center gap-3 px-4 py-2.5 text-left text-white cursor-pointer transition-colors font-barlow text-xs font-bold tracking-px uppercase">
+					        :class="{ 'is-active': page === 'sequence' }"
+					        class="dropdown-item">
 						<img src="assets/images/game_icons/sequence.svg" width="24" height="24" alt="">
 						Sequence
 					</button>
 				</li>
 				<li>
 					<button type="button" @click="page = 'match'; open = false"
-					        :class="page === 'match' ? 'bg-white/10' : 'hover:bg-white/[0.08]'"
-					        class="w-full flex items-center gap-3 px-4 py-2.5 text-left text-white cursor-pointer transition-colors font-barlow text-xs font-bold tracking-px uppercase">
+					        :class="{ 'is-active': page === 'match' }"
+					        class="dropdown-item">
 						<img src="assets/images/game_icons/match.svg" width="24" height="24" alt="">
 						Match
 					</button>
 				</li>
 				<li>
 					<button type="button" @click="page = 'difference'; open = false"
-					        :class="page === 'difference' ? 'bg-white/10' : 'hover:bg-white/[0.08]'"
-					        class="w-full flex items-center gap-3 px-4 py-2.5 text-left text-white cursor-pointer transition-colors font-barlow text-xs font-bold tracking-px uppercase">
+					        :class="{ 'is-active': page === 'difference' }"
+					        class="dropdown-item">
 						<img src="assets/images/game_icons/difference.svg" width="24" height="24" alt="">
 						Difference
 					</button>
 				</li>
 				<li>
 					<button type="button" @click="page = 'tray'; open = false"
-					        :class="page === 'tray' ? 'bg-white/10' : 'hover:bg-white/[0.08]'"
-					        class="w-full flex items-center gap-3 px-4 py-2.5 text-left text-white cursor-pointer transition-colors font-barlow text-xs font-bold tracking-px uppercase">
+					        :class="{ 'is-active': page === 'tray' }"
+					        class="dropdown-item">
 						<img src="assets/images/game_icons/tray.svg" width="24" height="24" alt="">
 						Tray
 					</button>
@@ -130,120 +130,120 @@
 	<div class="grid md:grid-cols-2 gap-6 w-full">
 
 		<button type="button" @click="page = 'sequence'"
-		        class="@container relative bg-white/5 border border-white/10 rounded-2.5xl text-white transition-all duration-200 hover:bg-white/[0.09] hover:border-white/[0.22] hover:scale-105 active:scale-95 cursor-pointer">
+		        class="dashboard-card">
 			<div
 				x-show="sequenceBest > 0"
 				x-cloak
 				class="flex flex-wrap items-end gap-1 pl-3 pt-3"
 			>
-				<div class="flex items-center gap-1.5 bg-white/5 border border-white/[0.08] rounded-2xl px-3 py-1">
-					<span class="text-[11px] text-gray font-bold tracking-px uppercase">Best</span>
+				<div class="chip">
+					<span class="label-xs">Best</span>
 					<span class="text-sm font-black tabular-nums" x-text="sequenceBest"></span>
 				</div>
 			</div>
 			<div
-					class="grid grid-cols-1 items-center text-center gap-2.5 pt-12 px-5 pb-7 @sm:grid-cols-2 @sm:items-center @sm:text-left @sm:justify-between @sm:gap-5 @sm:py-6 @sm:px-6"
+					class="dashboard-card-body"
 					:class="sequenceBest > 0 ? 'pt-12' : 'pt-16'"
 			>
 				<div class="flex flex-col items-center gap-2.5 @sm:shrink-0">
 					<img src="assets/images/game_icons/sequence.svg" class="size-16 @sm:size-20" alt="">
-					<div class="font-barlow text-sm font-black tracking-medium uppercase">Sequence</div>
+					<div class="card-title">Sequence</div>
 				</div>
 				<div class="text-[13px] text-gray font-semibold leading-snug @sm:max-w-xs">Repeat the growing sequence of lights</div>
 			</div>
 		</button>
 
 		<button type="button" @click="page = 'match'"
-		        class="@container relative bg-white/5 border border-white/10 rounded-2.5xl text-white transition-all duration-200 hover:bg-white/[0.09] hover:border-white/[0.22] hover:scale-105 active:scale-95 cursor-pointer">
+		        class="dashboard-card">
 			<div
 				x-show="matchTimerBest > 0 || matchFastestBest > 0 || matchStreakBest > 0"
 				x-cloak
 				class="flex flex-wrap items-end gap-1 pl-3 pt-3"
 			>
-				<div x-show="matchTimerBest > 0" x-cloak class="flex items-center gap-1.5 bg-white/5 border border-white/[0.08] rounded-2xl px-3 py-1">
-					<span class="text-[11px] text-gray font-bold tracking-px uppercase">Timer</span>
+				<div x-show="matchTimerBest > 0" x-cloak class="chip">
+					<span class="label-xs">Timer</span>
 					<span class="text-sm font-black tabular-nums" x-text="matchTimerBest"></span>
 				</div>
-				<div x-show="matchFastestBest > 0" x-cloak class="flex items-center gap-1.5 bg-white/5 border border-white/[0.08] rounded-2xl px-3 py-1">
-					<span class="text-[11px] text-gray font-bold tracking-px uppercase">Fastest</span>
+				<div x-show="matchFastestBest > 0" x-cloak class="chip">
+					<span class="label-xs">Fastest</span>
 					<span class="text-sm font-black tabular-nums" x-text="matchFastestBestLabel"></span>
 				</div>
-				<div x-show="matchStreakBest > 0" x-cloak class="flex items-center gap-1.5 bg-white/5 border border-white/[0.08] rounded-2xl px-3 py-1">
-					<span class="text-[11px] text-gray font-bold tracking-px uppercase">Streak</span>
+				<div x-show="matchStreakBest > 0" x-cloak class="chip">
+					<span class="label-xs">Streak</span>
 					<span class="text-sm font-black tabular-nums" x-text="matchStreakBest"></span>
 				</div>
 			</div>
 			<div
-					class="grid grid-cols-1 items-center text-center gap-2.5 pt-12 px-5 pb-7 @sm:grid-cols-2 @sm:items-center @sm:text-left @sm:justify-between @sm:gap-5 @sm:py-6 @sm:px-6"
+					class="dashboard-card-body"
 					:class="matchTimerBest > 0 || matchTimerBest > 0 || matchTimerBest > 0 ? 'pt-12' : 'pt-16'"
 			>
 				<div class="flex flex-col items-center gap-2.5 @sm:shrink-0">
 					<img src="assets/images/game_icons/match.svg" class="size-16 @sm:size-20" alt="">
-					<div class="font-barlow text-sm font-black tracking-medium uppercase">Match</div>
+					<div class="card-title">Match</div>
 				</div>
 				<div class="text-[13px] text-gray font-semibold leading-snug @sm:max-w-xs">Flip cards to find the matching pairs</div>
 			</div>
 		</button>
 
 		<button type="button" @click="page = 'difference'"
-		        class="@container relative bg-white/5 border border-white/10 rounded-2.5xl text-white transition-all duration-200 hover:bg-white/[0.09] hover:border-white/[0.22] hover:scale-105 active:scale-95 cursor-pointer">
+		        class="dashboard-card">
 			<div
 				x-show="differenceLevelsBest > 0 || differenceTimerBest > 0 || differenceFastestBest > 0"
 				x-cloak
 				class="flex flex-wrap items-end gap-1 pl-3 pt-3"
 			>
-				<div x-show="differenceLevelsBest > 0" x-cloak class="flex items-center gap-1.5 bg-white/5 border border-white/[0.08] rounded-2xl px-3 py-1">
-					<span class="text-[11px] text-gray font-bold tracking-px uppercase">Levels</span>
+				<div x-show="differenceLevelsBest > 0" x-cloak class="chip">
+					<span class="label-xs">Levels</span>
 					<span class="text-sm font-black tabular-nums" x-text="differenceLevelsBest"></span>
 				</div>
-				<div x-show="differenceTimerBest > 0" x-cloak class="flex items-center gap-1.5 bg-white/5 border border-white/[0.08] rounded-2xl px-3 py-1">
-					<span class="text-[11px] text-gray font-bold tracking-px uppercase">Timer</span>
+				<div x-show="differenceTimerBest > 0" x-cloak class="chip">
+					<span class="label-xs">Timer</span>
 					<span class="text-sm font-black tabular-nums" x-text="differenceTimerBest"></span>
 				</div>
-				<div x-show="differenceFastestBest > 0" x-cloak class="flex items-center gap-1.5 bg-white/5 border border-white/[0.08] rounded-2xl px-3 py-1">
-					<span class="text-[11px] text-gray font-bold tracking-px uppercase">Fastest</span>
+				<div x-show="differenceFastestBest > 0" x-cloak class="chip">
+					<span class="label-xs">Fastest</span>
 					<span class="text-sm font-black tabular-nums" x-text="differenceFastestBestLabel"></span>
 				</div>
 			</div>
 			<div
-					class="grid grid-cols-1 items-center text-center gap-2.5 pt-12 px-5 pb-7 @sm:grid-cols-2 @sm:items-center @sm:text-left @sm:justify-between @sm:gap-5 @sm:py-6 @sm:px-6"
+					class="dashboard-card-body"
 					:class="differenceLevelsBest > 0 || differenceLevelsBest > 0 || differenceLevelsBest > 0 ? 'pt-12' : 'pt-16'"
 			>
 				<div class="flex flex-col items-center gap-2.5 @sm:shrink-0">
 					<img src="assets/images/game_icons/difference.svg" class="size-16 @sm:size-20" alt="">
-					<div class="font-barlow text-sm font-black tracking-medium uppercase">Difference</div>
+					<div class="card-title">Difference</div>
 				</div>
 				<div class="text-[13px] text-gray font-semibold leading-snug @sm:max-w-xs">Spot what changed between two images</div>
 			</div>
 		</button>
 
 		<button type="button" @click="page = 'tray'"
-		        class="@container relative bg-white/5 border border-white/10 rounded-2.5xl text-white transition-all duration-200 hover:bg-white/[0.09] hover:border-white/[0.22] hover:scale-105 active:scale-95 cursor-pointer">
+		        class="dashboard-card">
 			<div
 				x-show="trayClassicBest > 0 || trayFastestBest > 0 || trayStreakBest > 0"
 				x-cloak
 				class="flex flex-wrap items-end gap-1 pl-3 pt-3"
 			>
-				<div x-show="trayClassicBest > 0" x-cloak class="flex items-center gap-1.5 bg-white/5 border border-white/[0.08] rounded-2xl px-3 py-1">
-					<span class="text-[11px] text-gray font-bold tracking-px uppercase">Classic</span>
+				<div x-show="trayClassicBest > 0" x-cloak class="chip">
+					<span class="label-xs">Classic</span>
 					<span class="text-sm font-black tabular-nums" x-text="trayClassicBest"></span>
 				</div>
-				<div x-show="trayFastestBest > 0" x-cloak class="flex items-center gap-1.5 bg-white/5 border border-white/[0.08] rounded-2xl px-3 py-1">
-					<span class="text-[11px] text-gray font-bold tracking-px uppercase">Fastest</span>
+				<div x-show="trayFastestBest > 0" x-cloak class="chip">
+					<span class="label-xs">Fastest</span>
 					<span class="text-sm font-black tabular-nums" x-text="trayFastestBestLabel"></span>
 				</div>
-				<div x-show="trayStreakBest > 0" x-cloak class="flex items-center gap-1.5 bg-white/5 border border-white/[0.08] rounded-2xl px-3 py-1">
-					<span class="text-[11px] text-gray font-bold tracking-px uppercase">Streak</span>
+				<div x-show="trayStreakBest > 0" x-cloak class="chip">
+					<span class="label-xs">Streak</span>
 					<span class="text-sm font-black tabular-nums" x-text="trayStreakBest"></span>
 				</div>
 			</div>
 			<div
-					class="grid grid-cols-1 items-center text-center gap-2.5 pt-12 px-5 pb-7 @sm:grid-cols-2 @sm:items-center @sm:text-left @sm:justify-between @sm:gap-5 @sm:py-6 @sm:px-6"
+					class="dashboard-card-body"
 					:class="trayClassicBest > 0 || trayFastestBest > 0 || trayStreakBest > 0 ? 'pt-12' : 'pt-16'"
 			>
 				<div class="flex flex-col items-center gap-2.5 @sm:shrink-0">
 					<img src="assets/images/game_icons/tray.svg" class="size-16 @sm:size-20" alt="">
-					<div class="font-barlow text-sm font-black tracking-medium uppercase">Tray</div>
+					<div class="card-title">Tray</div>
 				</div>
 				<div class="text-[13px] text-gray font-semibold leading-snug @sm:max-w-xs">Memorize the objects, then recall them</div>
 			</div>
@@ -255,31 +255,31 @@
 <!-- Scores -->
 <section x-show="page === 'scores'" x-cloak x-data="scoresPage()" class="w-full flex flex-col items-center gap-6 pb-8">
 	<div class="w-full flex items-center justify-between gap-4">
-		<div class="font-barlow text-[20px] font-black tracking-large uppercase">Player Scores</div>
+		<div class="section-title">Player Scores</div>
 		<button type="button" @click="clearAll()"
-		        class="flex items-center gap-1.5 bg-white/5 border border-white/10 rounded-2.5xl px-4 py-2 cursor-pointer transition-colors text-gray hover:text-red hover:bg-red/10 hover:border-white/25">
+		        class="control-btn control-btn-danger">
 			<svg data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="size-4">
 				<path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"></path>
 			</svg>
-			<span class="font-barlow text-xs font-bold tracking-px uppercase">Clear all scores</span>
+			<span>Clear all scores</span>
 		</button>
 	</div>
 
 	<div class="w-full flex flex-col gap-6">
 
 		<!-- Sequence -->
-		<section class="group @container relative bg-white/5 border border-white/10 rounded-2.5xl p-6">
+		<section class="group score-card">
 			<button type="button" @click="clearSequence()" title="Clear Sequence scores"
-			        class="absolute top-3 right-3 flex items-center justify-center size-8 bg-white/5 border border-white/10 rounded-full cursor-pointer transition-colors text-gray opacity-0 group-hover:opacity-100 hover:text-red hover:bg-red/10 hover:border-white/25">
+			        class="score-card-clear-btn">
 				<svg data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="size-4">
 					<path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"></path>
 				</svg>
 			</button>
 
 			<div class="flex flex-col gap-4 @lg:flex-row @lg:gap-6">
-				<div class="flex items-center gap-3 @lg:flex-col @lg:text-center @lg:gap-2 @lg:w-32 @lg:shrink-0">
+				<div class="score-card-header">
 					<img src="assets/images/game_icons/sequence.svg" class="size-10 @lg:size-14" alt="">
-					<div class="font-barlow text-sm font-black tracking-medium uppercase">Sequence</div>
+					<div class="card-title">Sequence</div>
 				</div>
 
 				<div class="flex-1 min-w-0 flex flex-col gap-4">
@@ -289,15 +289,15 @@
 
 					<div class="flex flex-col gap-2">
 						<template x-for="(entry, index) in sequenceScores" :key="entry.date">
-							<div class="flex items-center justify-between gap-4 bg-white/5 border border-white/[0.08] rounded-2xl px-4 py-3">
+							<div class="score-row">
 								<div class="flex items-center gap-3">
-									<div class="flex items-center justify-center size-7 rounded-full bg-white/10 text-xs font-bold tracking-px" x-text="index + 1"></div>
+									<div class="score-rank" x-text="index + 1"></div>
 									<div class="flex flex-col">
-										<div class="text-lg font-black tabular-nums leading-none" x-text="entry.score"></div>
-										<div class="mt-1 text-[11px] text-gray font-bold tracking-px uppercase" x-text="'Level ' + entry.level"></div>
+										<div class="score-value" x-text="entry.score"></div>
+										<div class="label-xs mt-1" x-text="'Level ' + entry.level"></div>
 									</div>
 								</div>
-								<div class="text-[12px] text-gray font-semibold" x-text="formatDate(entry.date)"></div>
+								<div class="score-date" x-text="formatDate(entry.date)"></div>
 							</div>
 						</template>
 					</div>
@@ -306,79 +306,79 @@
 		</section>
 
 		<!-- Match -->
-		<section class="group @container relative bg-white/5 border border-white/10 rounded-2.5xl p-6">
+		<section class="group score-card">
 			<button type="button" @click="clearMatch()" title="Clear Match scores"
-			        class="absolute top-3 right-3 flex items-center justify-center size-8 bg-white/5 border border-white/10 rounded-full cursor-pointer transition-colors text-gray opacity-0 group-hover:opacity-100 hover:text-red hover:bg-red/10 hover:border-white/25">
+			        class="score-card-clear-btn">
 				<svg data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="size-4">
 					<path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"></path>
 				</svg>
 			</button>
 
 			<div class="flex flex-col gap-5 @lg:flex-row @lg:gap-6">
-				<div class="flex items-center gap-3 @lg:flex-col @lg:text-center @lg:gap-2 @lg:w-32 @lg:shrink-0">
+				<div class="score-card-header">
 					<img src="assets/images/game_icons/match.svg" class="size-10 @lg:size-14" alt="">
-					<div class="font-barlow text-sm font-black tracking-medium uppercase">Match</div>
+					<div class="card-title">Match</div>
 				</div>
 
 				<div class="flex-1 min-w-0 flex flex-col gap-5">
 					<div class="flex flex-col gap-2">
-						<div class="text-[11px] text-gray font-bold tracking-px uppercase">Against Timer</div>
+						<div class="label-xs">Against Timer</div>
 						<template x-if="matchTimerScores.length === 0">
 							<p class="text-[13px] text-gray font-semibold">No games played yet</p>
 						</template>
 						<div class="flex flex-col gap-2">
 							<template x-for="(entry, index) in matchTimerScores" :key="entry.date">
-								<div class="flex items-center justify-between gap-4 bg-white/5 border border-white/[0.08] rounded-2xl px-4 py-3">
+								<div class="score-row">
 									<div class="flex items-center gap-3">
-										<div class="flex items-center justify-center size-7 rounded-full bg-white/10 text-xs font-bold tracking-px" x-text="index + 1"></div>
+										<div class="score-rank" x-text="index + 1"></div>
 										<div class="flex flex-col">
-											<div class="text-lg font-black tabular-nums leading-none" x-text="entry.score"></div>
-											<div class="mt-1 text-[11px] text-gray font-bold tracking-px uppercase" x-text="entry.cardCount + ' cards'"></div>
+											<div class="score-value" x-text="entry.score"></div>
+											<div class="label-xs mt-1" x-text="entry.cardCount + ' cards'"></div>
 										</div>
 									</div>
-									<div class="text-[12px] text-gray font-semibold" x-text="formatDate(entry.date)"></div>
+									<div class="score-date" x-text="formatDate(entry.date)"></div>
 								</div>
 							</template>
 						</div>
 					</div>
 
 					<div class="flex flex-col gap-2">
-						<div class="text-[11px] text-gray font-bold tracking-px uppercase">Fastest Time</div>
+						<div class="label-xs">Fastest Time</div>
 						<template x-if="matchFastestScores.length === 0">
 							<p class="text-[13px] text-gray font-semibold">No games played yet</p>
 						</template>
 						<div class="flex flex-col gap-2">
 							<template x-for="(entry, index) in matchFastestScores" :key="entry.date">
-								<div class="flex items-center justify-between gap-4 bg-white/5 border border-white/[0.08] rounded-2xl px-4 py-3">
+								<div class="score-row">
 									<div class="flex items-center gap-3">
-										<div class="flex items-center justify-center size-7 rounded-full bg-white/10 text-xs font-bold tracking-px" x-text="index + 1"></div>
+										<div class="score-rank" x-text="index + 1"></div>
 										<div class="flex flex-col">
-											<div class="text-lg font-black tabular-nums leading-none" x-text="entry.time.toFixed(1) + 's'"></div>
-											<div class="mt-1 text-[11px] text-gray font-bold tracking-px uppercase" x-text="entry.cardCount + ' cards'"></div>
+											<div class="score-value" x-text="entry.time.toFixed(1) + 's'"></div>
+											<div class="label-xs mt-1" x-text="entry.cardCount + ' cards'"></div>
 										</div>
 									</div>
-									<div class="text-[12px] text-gray font-semibold" x-text="formatDate(entry.date)"></div>
+									<div class="score-date" x-text="formatDate(entry.date)"></div>
 								</div>
 							</template>
 						</div>
 					</div>
 
 					<div class="flex flex-col gap-2">
-						<div class="text-[11px] text-gray font-bold tracking-px uppercase">Perfect Streak</div>
+						<div class="label-xs">Perfect Streak</div>
 						<template x-if="matchStreakScores.length === 0">
 							<p class="text-[13px] text-gray font-semibold">No games played yet</p>
 						</template>
 						<div class="flex flex-col gap-2">
 							<template x-for="(entry, index) in matchStreakScores" :key="entry.date">
-								<div class="flex items-center justify-between gap-4 bg-white/5 border border-white/[0.08] rounded-2xl px-4 py-3">
+								<div class="score-row">
 									<div class="flex items-center gap-3">
-										<div class="flex items-center justify-center size-7 rounded-full bg-white/10 text-xs font-bold tracking-px" x-text="index + 1"></div>
+										<div class="score-rank" x-text="index + 1"></div>
 										<div class="flex flex-col">
-											<div class="text-lg font-black tabular-nums leading-none" x-text="entry.score"></div>
-											<div class="mt-1 text-[11px] text-gray font-bold tracking-px uppercase" x-text="'Level ' + entry.level"></div>
+											<div class="score-value" x-text="entry.score"></div>
+											<div class="label-xs mt-1" x-text="'Level ' + entry.level"></div>
 										</div>
 									</div>
-									<div class="text-[12px] text-gray font-semibold" x-text="formatDate(entry.date)"></div>
+									<div class="score-date" x-text="formatDate(entry.date)"></div>
 								</div>
 							</template>
 						</div>
@@ -388,79 +388,79 @@
 		</section>
 
 		<!-- Difference -->
-		<section class="group @container relative bg-white/5 border border-white/10 rounded-2.5xl p-6">
+		<section class="group score-card">
 			<button type="button" @click="clearDifference()" title="Clear Difference scores"
-			        class="absolute top-3 right-3 flex items-center justify-center size-8 bg-white/5 border border-white/10 rounded-full cursor-pointer transition-colors text-gray opacity-0 group-hover:opacity-100 hover:text-red hover:bg-red/10 hover:border-white/25">
+			        class="score-card-clear-btn">
 				<svg data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="size-4">
 					<path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"></path>
 				</svg>
 			</button>
 
 			<div class="flex flex-col gap-5 @lg:flex-row @lg:gap-6">
-				<div class="flex items-center gap-3 @lg:flex-col @lg:text-center @lg:gap-2 @lg:w-32 @lg:shrink-0">
+				<div class="score-card-header">
 					<img src="assets/images/game_icons/difference.svg" class="size-10 @lg:size-14" alt="">
-					<div class="font-barlow text-sm font-black tracking-medium uppercase">Difference</div>
+					<div class="card-title">Difference</div>
 				</div>
 
 				<div class="flex-1 min-w-0 flex flex-col gap-5">
 					<div class="flex flex-col gap-2">
-						<div class="text-[11px] text-gray font-bold tracking-px uppercase">Levels</div>
+						<div class="label-xs">Levels</div>
 						<template x-if="differenceLevelsScores.length === 0">
 							<p class="text-[13px] text-gray font-semibold">No games played yet</p>
 						</template>
 						<div class="flex flex-col gap-2">
 							<template x-for="(entry, index) in differenceLevelsScores" :key="entry.date">
-								<div class="flex items-center justify-between gap-4 bg-white/5 border border-white/[0.08] rounded-2xl px-4 py-3">
+								<div class="score-row">
 									<div class="flex items-center gap-3">
-										<div class="flex items-center justify-center size-7 rounded-full bg-white/10 text-xs font-bold tracking-px" x-text="index + 1"></div>
+										<div class="score-rank" x-text="index + 1"></div>
 										<div class="flex flex-col">
-											<div class="text-lg font-black tabular-nums leading-none" x-text="entry.score"></div>
-											<div class="mt-1 text-[11px] text-gray font-bold tracking-px uppercase" x-text="'Level ' + entry.level"></div>
+											<div class="score-value" x-text="entry.score"></div>
+											<div class="label-xs mt-1" x-text="'Level ' + entry.level"></div>
 										</div>
 									</div>
-									<div class="text-[12px] text-gray font-semibold" x-text="formatDate(entry.date)"></div>
+									<div class="score-date" x-text="formatDate(entry.date)"></div>
 								</div>
 							</template>
 						</div>
 					</div>
 
 				<div class="flex flex-col gap-2">
-					<div class="text-[11px] text-gray font-bold tracking-px uppercase">Against Timer</div>
+					<div class="label-xs">Against Timer</div>
 					<template x-if="differenceTimerScores.length === 0">
 						<p class="text-[13px] text-gray font-semibold">No games played yet</p>
 					</template>
 					<div class="flex flex-col gap-2">
 						<template x-for="(entry, index) in differenceTimerScores" :key="entry.date">
-							<div class="flex items-center justify-between gap-4 bg-white/5 border border-white/[0.08] rounded-2xl px-4 py-3">
+							<div class="score-row">
 								<div class="flex items-center gap-3">
-									<div class="flex items-center justify-center size-7 rounded-full bg-white/10 text-xs font-bold tracking-px" x-text="index + 1"></div>
+									<div class="score-rank" x-text="index + 1"></div>
 									<div class="flex flex-col">
-										<div class="text-lg font-black tabular-nums leading-none" x-text="entry.score"></div>
-										<div class="mt-1 text-[11px] text-gray font-bold tracking-px uppercase" x-text="entry.diffCount + ' diffs'"></div>
+										<div class="score-value" x-text="entry.score"></div>
+										<div class="label-xs mt-1" x-text="entry.diffCount + ' diffs'"></div>
 									</div>
 								</div>
-								<div class="text-[12px] text-gray font-semibold" x-text="formatDate(entry.date)"></div>
+								<div class="score-date" x-text="formatDate(entry.date)"></div>
 							</div>
 						</template>
 					</div>
 				</div>
 
 				<div class="flex flex-col gap-2">
-					<div class="text-[11px] text-gray font-bold tracking-px uppercase">Fastest Time</div>
+					<div class="label-xs">Fastest Time</div>
 					<template x-if="differenceFastestScores.length === 0">
 						<p class="text-[13px] text-gray font-semibold">No games played yet</p>
 					</template>
 					<div class="flex flex-col gap-2">
 						<template x-for="(entry, index) in differenceFastestScores" :key="entry.date">
-							<div class="flex items-center justify-between gap-4 bg-white/5 border border-white/[0.08] rounded-2xl px-4 py-3">
+							<div class="score-row">
 								<div class="flex items-center gap-3">
-									<div class="flex items-center justify-center size-7 rounded-full bg-white/10 text-xs font-bold tracking-px" x-text="index + 1"></div>
+									<div class="score-rank" x-text="index + 1"></div>
 									<div class="flex flex-col">
-										<div class="text-lg font-black tabular-nums leading-none" x-text="entry.time.toFixed(1) + 's'"></div>
-										<div class="mt-1 text-[11px] text-gray font-bold tracking-px uppercase" x-text="entry.diffCount + ' diffs'"></div>
+										<div class="score-value" x-text="entry.time.toFixed(1) + 's'"></div>
+										<div class="label-xs mt-1" x-text="entry.diffCount + ' diffs'"></div>
 									</div>
 								</div>
-								<div class="text-[12px] text-gray font-semibold" x-text="formatDate(entry.date)"></div>
+								<div class="score-date" x-text="formatDate(entry.date)"></div>
 							</div>
 						</template>
 					</div>
@@ -470,79 +470,79 @@
 		</section>
 
 		<!-- Tray -->
-		<section class="group @container relative bg-white/5 border border-white/10 rounded-2.5xl p-6">
+		<section class="group score-card">
 			<button type="button" @click="clearTray()" title="Clear Tray scores"
-			        class="absolute top-3 right-3 flex items-center justify-center size-8 bg-white/5 border border-white/10 rounded-full cursor-pointer transition-colors text-gray opacity-0 group-hover:opacity-100 hover:text-red hover:bg-red/10 hover:border-white/25">
+			        class="score-card-clear-btn">
 				<svg data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="size-4">
 					<path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"></path>
 				</svg>
 			</button>
 
 			<div class="flex flex-col gap-5 @lg:flex-row @lg:gap-6">
-				<div class="flex items-center gap-3 @lg:flex-col @lg:text-center @lg:gap-2 @lg:w-32 @lg:shrink-0">
+				<div class="score-card-header">
 					<img src="assets/images/game_icons/tray.svg" class="size-10 @lg:size-14" alt="">
-					<div class="font-barlow text-sm font-black tracking-medium uppercase">Tray</div>
+					<div class="card-title">Tray</div>
 				</div>
 
 				<div class="flex-1 min-w-0 flex flex-col gap-5">
 					<div class="flex flex-col gap-2">
-						<div class="text-[11px] text-gray font-bold tracking-px uppercase">Classic</div>
+						<div class="label-xs">Classic</div>
 						<template x-if="trayClassicScores.length === 0">
 							<p class="text-[13px] text-gray font-semibold">No games played yet</p>
 						</template>
 						<div class="flex flex-col gap-2">
 							<template x-for="(entry, index) in trayClassicScores" :key="entry.date">
-								<div class="flex items-center justify-between gap-4 bg-white/5 border border-white/[0.08] rounded-2xl px-4 py-3">
+								<div class="score-row">
 									<div class="flex items-center gap-3">
-										<div class="flex items-center justify-center size-7 rounded-full bg-white/10 text-xs font-bold tracking-px" x-text="index + 1"></div>
+										<div class="score-rank" x-text="index + 1"></div>
 										<div class="flex flex-col">
-											<div class="text-lg font-black tabular-nums leading-none" x-text="entry.score"></div>
-											<div class="mt-1 text-[11px] text-gray font-bold tracking-px uppercase" x-text="entry.objectCount + ' objects'"></div>
+											<div class="score-value" x-text="entry.score"></div>
+											<div class="label-xs mt-1" x-text="entry.objectCount + ' objects'"></div>
 										</div>
 									</div>
-									<div class="text-[12px] text-gray font-semibold" x-text="formatDate(entry.date)"></div>
+									<div class="score-date" x-text="formatDate(entry.date)"></div>
 								</div>
 							</template>
 						</div>
 					</div>
 
 					<div class="flex flex-col gap-2">
-						<div class="text-[11px] text-gray font-bold tracking-px uppercase">Fastest Time</div>
+						<div class="label-xs">Fastest Time</div>
 						<template x-if="trayFastestScores.length === 0">
 							<p class="text-[13px] text-gray font-semibold">No games played yet</p>
 						</template>
 						<div class="flex flex-col gap-2">
 							<template x-for="(entry, index) in trayFastestScores" :key="entry.date">
-								<div class="flex items-center justify-between gap-4 bg-white/5 border border-white/[0.08] rounded-2xl px-4 py-3">
+								<div class="score-row">
 									<div class="flex items-center gap-3">
-										<div class="flex items-center justify-center size-7 rounded-full bg-white/10 text-xs font-bold tracking-px" x-text="index + 1"></div>
+										<div class="score-rank" x-text="index + 1"></div>
 										<div class="flex flex-col">
-											<div class="text-lg font-black tabular-nums leading-none" x-text="entry.time.toFixed(1) + 's'"></div>
-											<div class="mt-1 text-[11px] text-gray font-bold tracking-px uppercase" x-text="entry.objectCount + ' objects'"></div>
+											<div class="score-value" x-text="entry.time.toFixed(1) + 's'"></div>
+											<div class="label-xs mt-1" x-text="entry.objectCount + ' objects'"></div>
 										</div>
 									</div>
-									<div class="text-[12px] text-gray font-semibold" x-text="formatDate(entry.date)"></div>
+									<div class="score-date" x-text="formatDate(entry.date)"></div>
 								</div>
 							</template>
 						</div>
 					</div>
 
 					<div class="flex flex-col gap-2">
-						<div class="text-[11px] text-gray font-bold tracking-px uppercase">Perfect Streak</div>
+						<div class="label-xs">Perfect Streak</div>
 						<template x-if="trayStreakScores.length === 0">
 							<p class="text-[13px] text-gray font-semibold">No games played yet</p>
 						</template>
 						<div class="flex flex-col gap-2">
 							<template x-for="(entry, index) in trayStreakScores" :key="entry.date">
-								<div class="flex items-center justify-between gap-4 bg-white/5 border border-white/[0.08] rounded-2xl px-4 py-3">
+								<div class="score-row">
 									<div class="flex items-center gap-3">
-										<div class="flex items-center justify-center size-7 rounded-full bg-white/10 text-xs font-bold tracking-px" x-text="index + 1"></div>
+										<div class="score-rank" x-text="index + 1"></div>
 										<div class="flex flex-col">
-											<div class="text-lg font-black tabular-nums leading-none" x-text="entry.score"></div>
-											<div class="mt-1 text-[11px] text-gray font-bold tracking-px uppercase" x-text="'Level ' + entry.level"></div>
+											<div class="score-value" x-text="entry.score"></div>
+											<div class="label-xs mt-1" x-text="'Level ' + entry.level"></div>
 										</div>
 									</div>
-									<div class="text-[12px] text-gray font-semibold" x-text="formatDate(entry.date)"></div>
+									<div class="score-date" x-text="formatDate(entry.date)"></div>
 								</div>
 							</template>
 						</div>
@@ -558,17 +558,17 @@
 <section x-show="page === 'sequence'" x-cloak x-data="memoryGame()" @keydown.window="handleKey($event)" class="flex-1 flex flex-col items-center justify-center gap-8">
 	<!-- Stats -->
 	<div class="flex gap-2.5">
-		<div class="min-w-22 px-5 pt-3 pb-3 text-center bg-white/5 border border-white/[0.08] rounded-2xl backdrop-blur-sm">
-			<div class="text-xs font-bold tracking-large uppercase text-gray">Level</div>
-			<div class="mt-1.5 text-3xl font-black leading-none tabular-nums" x-text="level"></div>
+		<div class="stat-tile">
+			<div class="stat-label">Level</div>
+			<div class="stat-value" x-text="level"></div>
 		</div>
-		<div class="min-w-22 px-5 pt-3 pb-3 text-center bg-white/5 border border-white/[0.08] rounded-2xl backdrop-blur-sm">
-			<div class="text-xs font-bold tracking-large uppercase text-gray">Score</div>
+		<div class="stat-tile">
+			<div class="stat-label">Score</div>
 			<div :class="['mt-1.5 text-3xl font-black leading-none tabular-nums', scorePop && 'score-pop']" x-text="score"></div>
 		</div>
-		<div class="min-w-22 px-5 pt-3 pb-3 text-center bg-white/5 border border-white/[0.08] rounded-2xl backdrop-blur-sm">
-			<div class="text-xs font-bold tracking-large uppercase text-gray">Best</div>
-			<div class="mt-1.5 text-3xl font-black leading-none tabular-nums" x-text="best"></div>
+		<div class="stat-tile">
+			<div class="stat-label">Best</div>
+			<div class="stat-value" x-text="best"></div>
 		</div>
 	</div>
 
@@ -602,26 +602,26 @@
 		</div>
 
 		<!-- Hub -->
-		<div class="hub absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[168px] h-[168px] rounded-full border-2 border-[var(--header-line)] z-10 flex flex-col items-center justify-center text-center p-3">
+		<div class="hub">
 
 			<!-- idle -->
 			<div x-show="phase === 'idle'" class="flex flex-col items-center gap-2">
 				<div class="text-[13px] font-bold tracking-medium uppercase text-gray">Ready?</div>
-				<button @click="startGame()" class="start-btn font-barlow text-[19px] font-black tracking-medium uppercase text-white border-none rounded-[40px] px-[22px] py-[13px] cursor-pointer">Start</button>
+				<button @click="startGame()" class="start-btn start-btn-lg">Start</button>
 			</div>
 
 			<!-- gameover -->
 			<div x-show="phase === 'gameover'" class="flex flex-col items-center gap-1">
 				<div class="text-[13px] font-bold text-red tracking-medium uppercase">Game Over</div>
-				<div class="hub-big text-[46px] font-black leading-[0.95] tabular-nums" x-text="score"></div>
-				<button @click="startGame()" class="start-btn font-barlow text-sm font-black tracking-medium uppercase text-white border-none rounded-[40px] px-5 py-2.5 cursor-pointer">Retry</button>
+				<div class="hub-big" x-text="score"></div>
+				<button @click="startGame()" class="start-btn">Retry</button>
 			</div>
 
 			<!-- levelup -->
 			<div x-show="phase === 'levelup'" class="flex flex-col items-center gap-1">
 				<div class="text-[13px] text-cyan font-bold tracking-medium uppercase">Level Up!</div>
-				<div class="hub-big text-[46px] font-black leading-[0.95] tabular-nums" x-text="level"></div>
-				<div class="text-xs text-gray font-semibold tracking-[0.5px]">cleared</div>
+				<div class="hub-big" x-text="level"></div>
+				<div class="result-caption">cleared</div>
 			</div>
 
 			<!-- watch / input -->
@@ -629,8 +629,8 @@
 				<div class="text-[13px] font-bold tracking-medium uppercase"
 				     :class="phase === 'watch' ? 'text-yellow' : 'text-cyan'"
 				     x-text="phase === 'watch' ? 'Watch' : 'Your Turn'"></div>
-				<div class="hub-big text-[46px] font-black leading-[0.95] tabular-nums" x-text="roundCount"></div>
-				<div class="text-xs text-gray font-semibold tracking-[0.5px]"
+				<div class="hub-big" x-text="roundCount"></div>
+				<div class="result-caption"
 				     x-text="roundCount === 1 ? 'press' : 'presses'"></div>
 			</div>
 
@@ -649,7 +649,7 @@
 	<!-- Controls -->
 	<div class="flex gap-2.5 items-center">
 		<button @click="muted = !muted"
-		        class="flex gap-1 items-center bg-white/5 border border-white/10 rounded-2.5xl px-4 py-2 cursor-pointer transition-colors text-gray hover:text-white hover:border-white/25"
+		        class="control-btn"
 		>
 			<svg data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24"
 			     xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="size-4" x-show="!muted" x-cloak>
@@ -659,10 +659,10 @@
 			     xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="size-4" x-show="muted" x-cloak>
 				<path stroke-linecap="round" stroke-linejoin="round" d="M17.25 9.75 19.5 12m0 0 2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25m-10.5-6 4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z"></path>
 			</svg>
-			<span class="font-barlow text-xs font-bold tracking-px uppercase" x-text="muted ? 'Sound off' : 'Sound on'"></span>
+			<span x-text="muted ? 'Sound off' : 'Sound on'"></span>
 		</button>
 		<button @click="stopGame()"
-		        class="flex items-center gap-1.5 bg-white/5 border border-white/10 rounded-2.5xl px-4 py-2 cursor-pointer transition-colors text-gray hover:text-white hover:border-white/25 font-barlow text-xs font-bold tracking-px uppercase">Restart</button>
+		        class="control-btn">Restart</button>
 	</div>
 
 	<!-- Hint -->
@@ -678,40 +678,40 @@
 	<template x-if="phase === 'setup'">
 		<div class="flex-1 flex flex-col items-center justify-center gap-5 w-full max-w-sm text-center">
 			<img src="assets/images/game_icons/match.svg" width="56" height="56" alt="">
-			<div class="font-barlow text-[20px] font-black tracking-large uppercase">Match</div>
+			<div class="section-title">Match</div>
 
 			<div class="flex gap-2 flex-wrap justify-center">
 				<button type="button" @click="mode = 'timer'"
-				        :class="mode === 'timer' ? 'bg-gradient-to-r from-blue to-purple border-white/25' : 'bg-white/5 border-white/10 hover:border-white/25'"
-				        class="border rounded-2.5xl px-4 py-2 text-white cursor-pointer transition-colors font-barlow text-xs font-bold tracking-px uppercase">Against Timer</button>
+				        :class="{ 'is-active': mode === 'timer' }"
+				        class="toggle-pill">Against Timer</button>
 				<button type="button" @click="mode = 'fastest'"
-				        :class="mode === 'fastest' ? 'bg-gradient-to-r from-blue to-purple border-white/25' : 'bg-white/5 border-white/10 hover:border-white/25'"
-				        class="border rounded-2.5xl px-4 py-2 text-white cursor-pointer transition-colors font-barlow text-xs font-bold tracking-px uppercase">Fastest Time</button>
+				        :class="{ 'is-active': mode === 'fastest' }"
+				        class="toggle-pill">Fastest Time</button>
 				<button type="button" @click="mode = 'streak'"
-				        :class="mode === 'streak' ? 'bg-gradient-to-r from-blue to-purple border-white/25' : 'bg-white/5 border-white/10 hover:border-white/25'"
-				        class="border rounded-2.5xl px-4 py-2 text-white cursor-pointer transition-colors font-barlow text-xs font-bold tracking-px uppercase">Perfect Streak</button>
+				        :class="{ 'is-active': mode === 'streak' }"
+				        class="toggle-pill">Perfect Streak</button>
 			</div>
 
 			<div x-show="mode !== 'streak'" x-cloak class="flex flex-col items-center gap-2.5">
-				<div class="text-[11px] text-gray font-bold tracking-px uppercase">Cards</div>
+				<div class="label-xs">Cards</div>
 				<div class="flex gap-1.5 flex-wrap justify-center max-w-xs">
 					<template x-for="n in cardCountOptions" :key="n">
 						<button type="button" @click="cardCount = n"
-						        :class="cardCount === n ? 'bg-gradient-to-r from-blue to-purple border-white/25' : 'bg-white/5 border-white/10 hover:border-white/25'"
-						        class="min-w-9 h-9 px-2 flex items-center justify-center border rounded-full text-white cursor-pointer transition-colors text-xs font-bold tabular-nums" x-text="n"></button>
+						        :class="{ 'is-active': cardCount === n }"
+						        class="toggle-circle" x-text="n"></button>
 					</template>
 				</div>
 			</div>
 
 			<p class="text-[13px] text-gray font-semibold leading-snug" x-text="modeDescription"></p>
 
-			<div class="flex items-center gap-1.5 bg-white/5 border border-white/[0.08] rounded-2xl px-3 py-1">
-				<span class="text-[11px] text-gray font-bold tracking-px uppercase">Best</span>
+			<div class="chip">
+				<span class="label-xs">Best</span>
 				<span class="text-sm font-black tabular-nums" x-text="statsBest"></span>
 			</div>
 
 			<button type="button" @click="startGame()"
-			        class="start-btn font-barlow text-[19px] font-black tracking-medium uppercase text-white border-none rounded-[40px] px-[22px] py-[13px] cursor-pointer">Start</button>
+			        class="start-btn start-btn-lg">Start</button>
 		</div>
 	</template>
 
@@ -721,25 +721,25 @@
 
 			<!-- Stats -->
 			<div class="flex gap-2.5 flex-wrap justify-center">
-				<div x-show="mode === 'timer'" x-cloak class="min-w-22 px-5 pt-3 pb-3 text-center bg-white/5 border border-white/[0.08] rounded-2xl backdrop-blur-sm">
-					<div class="text-xs font-bold tracking-large uppercase text-gray">Time</div>
-					<div class="mt-1.5 text-3xl font-black leading-none tabular-nums" :class="timeLeft <= 10 && 'text-red'" x-text="timeLeftLabel"></div>
+				<div x-show="mode === 'timer'" x-cloak class="stat-tile">
+					<div class="stat-label">Time</div>
+					<div class="stat-value" :class="timeLeft <= 10 && 'text-red'" x-text="timeLeftLabel"></div>
 				</div>
-				<div x-show="mode === 'fastest'" x-cloak class="min-w-22 px-5 pt-3 pb-3 text-center bg-white/5 border border-white/[0.08] rounded-2xl backdrop-blur-sm">
-					<div class="text-xs font-bold tracking-large uppercase text-gray">Time</div>
-					<div class="mt-1.5 text-3xl font-black leading-none tabular-nums" x-text="elapsedLabel"></div>
+				<div x-show="mode === 'fastest'" x-cloak class="stat-tile">
+					<div class="stat-label">Time</div>
+					<div class="stat-value" x-text="elapsedLabel"></div>
 				</div>
-				<div x-show="mode === 'streak'" x-cloak class="min-w-22 px-5 pt-3 pb-3 text-center bg-white/5 border border-white/[0.08] rounded-2xl backdrop-blur-sm">
-					<div class="text-xs font-bold tracking-large uppercase text-gray">Level</div>
-					<div class="mt-1.5 text-3xl font-black leading-none tabular-nums" x-text="level"></div>
+				<div x-show="mode === 'streak'" x-cloak class="stat-tile">
+					<div class="stat-label">Level</div>
+					<div class="stat-value" x-text="level"></div>
 				</div>
-				<div class="min-w-22 px-5 pt-3 pb-3 text-center bg-white/5 border border-white/[0.08] rounded-2xl backdrop-blur-sm">
-					<div class="text-xs font-bold tracking-large uppercase text-gray">Score</div>
-					<div class="mt-1.5 text-3xl font-black leading-none tabular-nums" x-text="score"></div>
+				<div class="stat-tile">
+					<div class="stat-label">Score</div>
+					<div class="stat-value" x-text="score"></div>
 				</div>
-				<div class="min-w-22 px-5 pt-3 pb-3 text-center bg-white/5 border border-white/[0.08] rounded-2xl backdrop-blur-sm">
-					<div class="text-xs font-bold tracking-large uppercase text-gray">Best</div>
-					<div class="mt-1.5 text-3xl font-black leading-none tabular-nums" x-text="statsBest"></div>
+				<div class="stat-tile">
+					<div class="stat-label">Best</div>
+					<div class="stat-value" x-text="statsBest"></div>
 				</div>
 			</div>
 
@@ -756,7 +756,7 @@
 			<div x-show="phase === 'stageclear'" x-cloak class="text-[13px] text-cyan font-bold tracking-medium uppercase">Stage clear!</div>
 			<div x-show="phase === 'levelup'" x-cloak class="flex flex-col items-center gap-1">
 				<div class="text-[13px] text-cyan font-bold tracking-medium uppercase">Level Up!</div>
-				<div class="text-[32px] font-black leading-[0.95] tabular-nums" x-text="level"></div>
+				<div class="banner-value" x-text="level"></div>
 			</div>
 			<div x-show="phase === 'roundclear'" x-cloak class="text-[13px] text-cyan font-bold tracking-medium uppercase">Set clear!</div>
 
@@ -783,30 +783,30 @@
 
 			<!-- Complete (streak mode, level 4 stage 5 cleared) -->
 			<template x-if="phase === 'complete'">
-				<div class="flex flex-col items-center gap-2 py-8">
+				<div class="result-screen">
 					<div class="text-[13px] text-cyan font-bold tracking-medium uppercase">Perfect Streak Complete!</div>
-					<div class="text-[46px] font-black leading-[0.95] tabular-nums" x-text="score"></div>
-					<div class="text-xs text-gray font-semibold tracking-[0.5px]">final score</div>
+					<div class="result-score" x-text="score"></div>
+					<div class="result-caption">final score</div>
 					<button type="button" @click="phase = 'setup'"
-					        class="start-btn font-barlow text-sm font-black tracking-medium uppercase text-white border-none rounded-[40px] px-5 py-2.5 cursor-pointer mt-2">Play Again</button>
+					        class="start-btn mt-2">Play Again</button>
 				</div>
 			</template>
 
 			<!-- Time's up (timer mode) -->
 			<template x-if="phase === 'timeup'">
-				<div class="flex flex-col items-center gap-2 py-8">
+				<div class="result-screen">
 					<div class="text-[13px] font-bold text-red tracking-medium uppercase">Time is up!</div>
-					<div class="text-[46px] font-black leading-[0.95] tabular-nums" x-text="score"></div>
-					<div class="text-xs text-gray font-semibold tracking-[0.5px]">final score, banked in best</div>
+					<div class="result-score" x-text="score"></div>
+					<div class="result-caption">final score, banked in best</div>
 					<button type="button" @click="startGame()"
-					        class="start-btn font-barlow text-sm font-black tracking-medium uppercase text-white border-none rounded-[40px] px-5 py-2.5 cursor-pointer mt-2">Retry</button>
+					        class="start-btn mt-2">Retry</button>
 				</div>
 			</template>
 
 			<!-- Controls -->
 			<div x-show="!['complete', 'timeup'].includes(phase)" x-cloak class="flex gap-2.5 items-center">
 				<button type="button" @click="muted = !muted"
-				        class="flex gap-1 items-center bg-white/5 border border-white/10 rounded-2.5xl px-4 py-2 cursor-pointer transition-colors text-gray hover:text-white hover:border-white/25">
+				        class="control-btn">
 					<svg data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24"
 					     xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="size-4" x-show="!muted" x-cloak>
 						<path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z"></path>
@@ -815,10 +815,10 @@
 					     xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="size-4" x-show="muted" x-cloak>
 						<path stroke-linecap="round" stroke-linejoin="round" d="M17.25 9.75 19.5 12m0 0 2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25m-10.5-6 4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z"></path>
 					</svg>
-					<span class="font-barlow text-xs font-bold tracking-px uppercase" x-text="muted ? 'Sound off' : 'Sound on'"></span>
+					<span x-text="muted ? 'Sound off' : 'Sound on'"></span>
 				</button>
 				<button type="button" @click="backToSetup()"
-				        class="flex items-center gap-1.5 bg-white/5 border border-white/10 rounded-2.5xl px-4 py-2 cursor-pointer transition-colors text-gray hover:text-white hover:border-white/25 font-barlow text-xs font-bold tracking-px uppercase">Restart</button>
+				        class="control-btn">Restart</button>
 			</div>
 
 		</div>
@@ -833,40 +833,40 @@
 	<template x-if="phase === 'setup'">
 		<div class="flex-1 flex flex-col items-center justify-center gap-5 w-full max-w-sm text-center">
 			<img src="assets/images/game_icons/difference.svg" width="56" height="56" alt="">
-			<div class="font-barlow text-[20px] font-black tracking-large uppercase">Spot the Difference</div>
+			<div class="section-title">Spot the Difference</div>
 
 			<div class="flex gap-2 flex-wrap justify-center">
 				<button type="button" @click="mode = 'levels'"
-				        :class="mode === 'levels' ? 'bg-gradient-to-r from-blue to-purple border-white/25' : 'bg-white/5 border-white/10 hover:border-white/25'"
-				        class="border rounded-2.5xl px-4 py-2 text-white cursor-pointer transition-colors font-barlow text-xs font-bold tracking-px uppercase">Levels</button>
+				        :class="{ 'is-active': mode === 'levels' }"
+				        class="toggle-pill">Levels</button>
 				<button type="button" @click="mode = 'timer'"
-				        :class="mode === 'timer' ? 'bg-gradient-to-r from-blue to-purple border-white/25' : 'bg-white/5 border-white/10 hover:border-white/25'"
-				        class="border rounded-2.5xl px-4 py-2 text-white cursor-pointer transition-colors font-barlow text-xs font-bold tracking-px uppercase">Against Timer</button>
+				        :class="{ 'is-active': mode === 'timer' }"
+				        class="toggle-pill">Against Timer</button>
 				<button type="button" @click="mode = 'fastest'"
-				        :class="mode === 'fastest' ? 'bg-gradient-to-r from-blue to-purple border-white/25' : 'bg-white/5 border-white/10 hover:border-white/25'"
-				        class="border rounded-2.5xl px-4 py-2 text-white cursor-pointer transition-colors font-barlow text-xs font-bold tracking-px uppercase">Fastest Time</button>
+				        :class="{ 'is-active': mode === 'fastest' }"
+				        class="toggle-pill">Fastest Time</button>
 			</div>
 
 			<div x-show="mode !== 'levels'" x-cloak class="flex flex-col items-center gap-2.5">
-				<div class="text-[11px] text-gray font-bold tracking-px uppercase">Differences</div>
+				<div class="label-xs">Differences</div>
 				<div class="flex gap-1.5 flex-wrap justify-center max-w-xs">
 					<template x-for="n in diffOptions" :key="n">
 						<button type="button" @click="diffCount = n"
-						        :class="diffCount === n ? 'bg-gradient-to-r from-blue to-purple border-white/25' : 'bg-white/5 border-white/10 hover:border-white/25'"
-						        class="size-9 flex items-center justify-center border rounded-full text-white cursor-pointer transition-colors text-xs font-bold tabular-nums" x-text="n"></button>
+						        :class="{ 'is-active': diffCount === n }"
+						        class="toggle-circle" x-text="n"></button>
 					</template>
 				</div>
 			</div>
 
 			<p class="text-[13px] text-gray font-semibold leading-snug" x-text="modeDescription"></p>
 
-			<div class="flex items-center gap-1.5 bg-white/5 border border-white/[0.08] rounded-2xl px-3 py-1">
-				<span class="text-[11px] text-gray font-bold tracking-px uppercase">Best</span>
+			<div class="chip">
+				<span class="label-xs">Best</span>
 				<span class="text-sm font-black tabular-nums" x-text="statsBest"></span>
 			</div>
 
 			<button type="button" @click="startGame()"
-			        class="start-btn font-barlow text-[19px] font-black tracking-medium uppercase text-white border-none rounded-[40px] px-[22px] py-[13px] cursor-pointer">Start</button>
+			        class="start-btn start-btn-lg">Start</button>
 		</div>
 	</template>
 
@@ -876,25 +876,25 @@
 
 			<!-- Stats -->
 			<div class="flex gap-2.5 flex-wrap justify-center">
-				<div x-show="mode === 'levels'" x-cloak class="min-w-22 px-5 pt-3 pb-3 text-center bg-white/5 border border-white/[0.08] rounded-2xl backdrop-blur-sm">
-					<div class="text-xs font-bold tracking-large uppercase text-gray">Level</div>
-					<div class="mt-1.5 text-3xl font-black leading-none tabular-nums" x-text="level"></div>
+				<div x-show="mode === 'levels'" x-cloak class="stat-tile">
+					<div class="stat-label">Level</div>
+					<div class="stat-value" x-text="level"></div>
 				</div>
-				<div x-show="mode === 'timer'" x-cloak class="min-w-22 px-5 pt-3 pb-3 text-center bg-white/5 border border-white/[0.08] rounded-2xl backdrop-blur-sm">
-					<div class="text-xs font-bold tracking-large uppercase text-gray">Time</div>
-					<div class="mt-1.5 text-3xl font-black leading-none tabular-nums" :class="timeLeft <= 10 && 'text-red'" x-text="timeLeftLabel"></div>
+				<div x-show="mode === 'timer'" x-cloak class="stat-tile">
+					<div class="stat-label">Time</div>
+					<div class="stat-value" :class="timeLeft <= 10 && 'text-red'" x-text="timeLeftLabel"></div>
 				</div>
-				<div x-show="mode === 'fastest'" x-cloak class="min-w-22 px-5 pt-3 pb-3 text-center bg-white/5 border border-white/[0.08] rounded-2xl backdrop-blur-sm">
-					<div class="text-xs font-bold tracking-large uppercase text-gray">Time</div>
-					<div class="mt-1.5 text-3xl font-black leading-none tabular-nums" x-text="elapsedLabel"></div>
+				<div x-show="mode === 'fastest'" x-cloak class="stat-tile">
+					<div class="stat-label">Time</div>
+					<div class="stat-value" x-text="elapsedLabel"></div>
 				</div>
-				<div class="min-w-22 px-5 pt-3 pb-3 text-center bg-white/5 border border-white/[0.08] rounded-2xl backdrop-blur-sm">
-					<div class="text-xs font-bold tracking-large uppercase text-gray">Score</div>
-					<div class="mt-1.5 text-3xl font-black leading-none tabular-nums" x-text="score"></div>
+				<div class="stat-tile">
+					<div class="stat-label">Score</div>
+					<div class="stat-value" x-text="score"></div>
 				</div>
-				<div class="min-w-22 px-5 pt-3 pb-3 text-center bg-white/5 border border-white/[0.08] rounded-2xl backdrop-blur-sm">
-					<div class="text-xs font-bold tracking-large uppercase text-gray">Best</div>
-					<div class="mt-1.5 text-3xl font-black leading-none tabular-nums" x-text="statsBest"></div>
+				<div class="stat-tile">
+					<div class="stat-label">Best</div>
+					<div class="stat-value" x-text="statsBest"></div>
 				</div>
 			</div>
 
@@ -910,7 +910,7 @@
 			<div x-show="phase === 'stageclear'" x-cloak class="text-[13px] text-cyan font-bold tracking-medium uppercase">Stage clear!</div>
 			<div x-show="phase === 'levelup'" x-cloak class="flex flex-col items-center gap-1">
 				<div class="text-[13px] text-cyan font-bold tracking-medium uppercase">Level Up!</div>
-				<div class="text-[32px] font-black leading-[0.95] tabular-nums" x-text="level"></div>
+				<div class="banner-value" x-text="level"></div>
 			</div>
 			<div x-show="phase === 'roundclear'" x-cloak class="text-[13px] text-cyan font-bold tracking-medium uppercase">Round clear!</div>
 
@@ -919,7 +919,7 @@
 				<div class="flex-1 flex flex-col items-center justify-center gap-3 py-16">
 					<div class="text-[13px] font-bold tracking-medium uppercase text-gray">Ready?</div>
 					<button type="button" @click="playFastestRound()"
-					        class="start-btn font-barlow text-[19px] font-black tracking-medium uppercase text-white border-none rounded-[40px] px-[22px] py-[13px] cursor-pointer">Play</button>
+					        class="start-btn start-btn-lg">Play</button>
 				</div>
 			</template>
 
@@ -928,7 +928,7 @@
 				<div class="flex flex-col items-center gap-3 w-full">
 					<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-3xl">
 						<div class="relative rounded-2xl overflow-hidden border border-white/10 bg-white/5">
-							<div class="absolute top-2 left-2 z-10 text-[10px] text-gray font-bold tracking-px uppercase bg-black/30 rounded-full px-2 py-0.5">Original</div>
+							<div class="absolute top-2 left-2 z-10 text-[10px] text-gray font-bold tracking-wide uppercase bg-black/30 rounded-full px-2 py-0.5">Original</div>
 							<svg viewBox="0 0 440 340" class="w-full h-auto block cursor-crosshair" @click="handlePanelClick($event)">
 								<defs>
 									<linearGradient id="sd-ground-a" x1="0" y1="0" x2="0" y2="1">
@@ -941,7 +941,7 @@
 							</svg>
 						</div>
 						<div class="relative rounded-2xl overflow-hidden border border-white/10 bg-white/5">
-							<div class="absolute top-2 left-2 z-10 text-[10px] text-gray font-bold tracking-px uppercase bg-black/30 rounded-full px-2 py-0.5">Spot the changes</div>
+							<div class="absolute top-2 left-2 z-10 text-[10px] text-gray font-bold tracking-wide uppercase bg-black/30 rounded-full px-2 py-0.5">Spot the changes</div>
 							<svg viewBox="0 0 440 340" class="w-full h-auto block cursor-crosshair" @click="handlePanelClick($event)">
 								<defs>
 									<linearGradient id="sd-ground-b" x1="0" y1="0" x2="0" y2="1">
@@ -960,30 +960,30 @@
 
 			<!-- Complete (levels mode, all 10 levels cleared) -->
 			<template x-if="phase === 'complete'">
-				<div class="flex flex-col items-center gap-2 py-8">
+				<div class="result-screen">
 					<div class="text-[13px] text-cyan font-bold tracking-medium uppercase">All 10 Levels Cleared!</div>
-					<div class="text-[46px] font-black leading-[0.95] tabular-nums" x-text="score"></div>
-					<div class="text-xs text-gray font-semibold tracking-[0.5px]">final score</div>
+					<div class="result-score" x-text="score"></div>
+					<div class="result-caption">final score</div>
 					<button type="button" @click="phase = 'setup'"
-					        class="start-btn font-barlow text-sm font-black tracking-medium uppercase text-white border-none rounded-[40px] px-5 py-2.5 cursor-pointer mt-2">Play Again</button>
+					        class="start-btn mt-2">Play Again</button>
 				</div>
 			</template>
 
 			<!-- Time's up (timer mode) -->
 			<template x-if="phase === 'timeup'">
-				<div class="flex flex-col items-center gap-2 py-8">
+				<div class="result-screen">
 					<div class="text-[13px] font-bold text-red tracking-medium uppercase">Time's Up</div>
-					<div class="text-[46px] font-black leading-[0.95] tabular-nums" x-text="score"></div>
-					<div class="text-xs text-gray font-semibold tracking-[0.5px]">final score</div>
+					<div class="result-score" x-text="score"></div>
+					<div class="result-caption">final score</div>
 					<button type="button" @click="startGame()"
-					        class="start-btn font-barlow text-sm font-black tracking-medium uppercase text-white border-none rounded-[40px] px-5 py-2.5 cursor-pointer mt-2">Retry</button>
+					        class="start-btn mt-2">Retry</button>
 				</div>
 			</template>
 
 			<!-- Controls -->
 			<div x-show="!['complete', 'timeup'].includes(phase)" x-cloak class="flex gap-2.5 items-center">
 				<button type="button" @click="muted = !muted"
-				        class="flex gap-1 items-center bg-white/5 border border-white/10 rounded-2.5xl px-4 py-2 cursor-pointer transition-colors text-gray hover:text-white hover:border-white/25">
+				        class="control-btn">
 					<svg data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24"
 					     xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="size-4" x-show="!muted" x-cloak>
 						<path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z"></path>
@@ -992,10 +992,10 @@
 					     xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="size-4" x-show="muted" x-cloak>
 						<path stroke-linecap="round" stroke-linejoin="round" d="M17.25 9.75 19.5 12m0 0 2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25m-10.5-6 4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z"></path>
 					</svg>
-					<span class="font-barlow text-xs font-bold tracking-px uppercase" x-text="muted ? 'Sound off' : 'Sound on'"></span>
+					<span x-text="muted ? 'Sound off' : 'Sound on'"></span>
 				</button>
 				<button type="button" @click="backToSetup()"
-				        class="flex items-center gap-1.5 bg-white/5 border border-white/10 rounded-2.5xl px-4 py-2 cursor-pointer transition-colors text-gray hover:text-white hover:border-white/25 font-barlow text-xs font-bold tracking-px uppercase">Restart</button>
+				        class="control-btn">Restart</button>
 			</div>
 
 		</div>
@@ -1005,14 +1005,14 @@
 	<div x-show="showTimeCapWarning" x-cloak
 	     class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4">
 		<div class="w-full max-w-sm bg-[hsl(233,44%,13%)] border border-white/10 rounded-2.5xl p-6 flex flex-col items-center gap-4 text-center">
-			<div class="font-barlow text-[18px] font-black tracking-large uppercase">Still playing?</div>
+			<div class="text-[18px] font-black tracking-large uppercase">Still playing?</div>
 			<p class="text-[13px] text-gray font-semibold leading-snug">Your session will end soon.</p>
-			<div class="text-xs text-gray font-bold tracking-px uppercase">Ending in <span class="tabular-nums" x-text="graceSecondsLeft"></span>s</div>
+			<div class="text-xs text-gray font-bold tracking-wide uppercase">Ending in <span class="tabular-nums" x-text="graceSecondsLeft"></span>s</div>
 			<div class="flex gap-2.5">
 				<button type="button" @click="dismissTimeCapWarning()"
-				        class="bg-white/5 border border-white/10 hover:border-white/25 rounded-2.5xl px-4 py-2 text-white cursor-pointer transition-colors font-barlow text-xs font-bold tracking-px uppercase">Cancel</button>
+				        class="toggle-pill">Cancel</button>
 				<button type="button" @click="stopSessionForTimeCap()"
-				        class="bg-gradient-to-r from-blue to-purple border border-white/25 rounded-2.5xl px-4 py-2 text-white cursor-pointer transition-colors font-barlow text-xs font-bold tracking-px uppercase">Stop</button>
+				        class="toggle-pill is-active">Stop</button>
 			</div>
 		</div>
 	</div>
@@ -1026,40 +1026,40 @@
 	<template x-if="phase === 'setup'">
 		<div class="flex-1 flex flex-col items-center justify-center gap-5 w-full max-w-sm text-center">
 			<img src="assets/images/game_icons/tray.svg" width="56" height="56" alt="">
-			<div class="font-barlow text-[20px] font-black tracking-large uppercase">Tray</div>
+			<div class="section-title">Tray</div>
 
 			<div class="flex gap-2 flex-wrap justify-center">
 				<button type="button" @click="mode = 'classic'"
-				        :class="mode === 'classic' ? 'bg-gradient-to-r from-blue to-purple border-white/25' : 'bg-white/5 border-white/10 hover:border-white/25'"
-				        class="border rounded-2.5xl px-4 py-2 text-white cursor-pointer transition-colors font-barlow text-xs font-bold tracking-px uppercase">Classic</button>
+				        :class="{ 'is-active': mode === 'classic' }"
+				        class="toggle-pill">Classic</button>
 				<button type="button" @click="mode = 'fastest'"
-				        :class="mode === 'fastest' ? 'bg-gradient-to-r from-blue to-purple border-white/25' : 'bg-white/5 border-white/10 hover:border-white/25'"
-				        class="border rounded-2.5xl px-4 py-2 text-white cursor-pointer transition-colors font-barlow text-xs font-bold tracking-px uppercase">Fastest Time</button>
+				        :class="{ 'is-active': mode === 'fastest' }"
+				        class="toggle-pill">Fastest Time</button>
 				<button type="button" @click="mode = 'streak'"
-				        :class="mode === 'streak' ? 'bg-gradient-to-r from-blue to-purple border-white/25' : 'bg-white/5 border-white/10 hover:border-white/25'"
-				        class="border rounded-2.5xl px-4 py-2 text-white cursor-pointer transition-colors font-barlow text-xs font-bold tracking-px uppercase">Perfect Streak</button>
+				        :class="{ 'is-active': mode === 'streak' }"
+				        class="toggle-pill">Perfect Streak</button>
 			</div>
 
 			<div x-show="mode !== 'streak'" x-cloak class="flex flex-col items-center gap-2.5">
-				<div class="text-[11px] text-gray font-bold tracking-px uppercase">Objects</div>
+				<div class="label-xs">Objects</div>
 				<div class="flex gap-1.5 flex-wrap justify-center max-w-xs">
 					<template x-for="n in objectCountOptions" :key="n">
 						<button type="button" @click="objectCount = n"
-						        :class="objectCount === n ? 'bg-gradient-to-r from-blue to-purple border-white/25' : 'bg-white/5 border-white/10 hover:border-white/25'"
-						        class="min-w-9 h-9 px-2 flex items-center justify-center border rounded-full text-white cursor-pointer transition-colors text-xs font-bold tabular-nums" x-text="n"></button>
+						        :class="{ 'is-active': objectCount === n }"
+						        class="toggle-circle" x-text="n"></button>
 					</template>
 				</div>
 			</div>
 
 			<p class="text-[13px] text-gray font-semibold leading-snug" x-text="modeDescription"></p>
 
-			<div class="flex items-center gap-1.5 bg-white/5 border border-white/[0.08] rounded-2xl px-3 py-1">
-				<span class="text-[11px] text-gray font-bold tracking-px uppercase">Best</span>
+			<div class="chip">
+				<span class="label-xs">Best</span>
 				<span class="text-sm font-black tabular-nums" x-text="statsBest"></span>
 			</div>
 
 			<button type="button" @click="startGame()"
-			        class="start-btn font-barlow text-[19px] font-black tracking-medium uppercase text-white border-none rounded-[40px] px-[22px] py-[13px] cursor-pointer">Start</button>
+			        class="start-btn start-btn-lg">Start</button>
 		</div>
 	</template>
 
@@ -1069,33 +1069,33 @@
 
 			<!-- Stats -->
 			<div class="flex gap-2.5 flex-wrap justify-center">
-				<div x-show="mode === 'streak'" x-cloak class="min-w-22 px-5 pt-3 pb-3 text-center bg-white/5 border border-white/[0.08] rounded-2xl backdrop-blur-sm">
-					<div class="text-xs font-bold tracking-large uppercase text-gray">Level</div>
-					<div class="mt-1.5 text-3xl font-black leading-none tabular-nums" x-text="level"></div>
+				<div x-show="mode === 'streak'" x-cloak class="stat-tile">
+					<div class="stat-label">Level</div>
+					<div class="stat-value" x-text="level"></div>
 				</div>
-				<div x-show="['coverout', 'study', 'coverin'].includes(phase)" x-cloak class="min-w-22 px-5 pt-3 pb-3 text-center bg-white/5 border border-white/[0.08] rounded-2xl backdrop-blur-sm">
-					<div class="text-xs font-bold tracking-large uppercase text-gray">Study</div>
-					<div class="mt-1.5 text-3xl font-black leading-none tabular-nums" x-text="studyTimeLabel"></div>
+				<div x-show="['coverout', 'study', 'coverin'].includes(phase)" x-cloak class="stat-tile">
+					<div class="stat-label">Study</div>
+					<div class="stat-value" x-text="studyTimeLabel"></div>
 				</div>
-				<div x-show="mode === 'classic' && phase === 'picking'" x-cloak class="min-w-22 px-5 pt-3 pb-3 text-center bg-white/5 border border-white/[0.08] rounded-2xl backdrop-blur-sm">
-					<div class="text-xs font-bold tracking-large uppercase text-gray">Time</div>
-					<div class="mt-1.5 text-3xl font-black leading-none tabular-nums" :class="answerTime <= 30 && 'text-red'" x-text="answerTimeLabel"></div>
+				<div x-show="mode === 'classic' && phase === 'picking'" x-cloak class="stat-tile">
+					<div class="stat-label">Time</div>
+					<div class="stat-value" :class="answerTime <= 30 && 'text-red'" x-text="answerTimeLabel"></div>
 				</div>
-				<div x-show="mode === 'fastest' && phase === 'picking'" x-cloak class="min-w-22 px-5 pt-3 pb-3 text-center bg-white/5 border border-white/[0.08] rounded-2xl backdrop-blur-sm">
-					<div class="text-xs font-bold tracking-large uppercase text-gray">Time</div>
-					<div class="mt-1.5 text-3xl font-black leading-none tabular-nums" x-text="elapsedLabel"></div>
+				<div x-show="mode === 'fastest' && phase === 'picking'" x-cloak class="stat-tile">
+					<div class="stat-label">Time</div>
+					<div class="stat-value" x-text="elapsedLabel"></div>
 				</div>
-				<div x-show="mode === 'fastest' && phase === 'picking'" x-cloak class="min-w-22 px-5 pt-3 pb-3 text-center bg-white/5 border border-white/[0.08] rounded-2xl backdrop-blur-sm">
-					<div class="text-xs font-bold tracking-large uppercase text-gray">Attempts</div>
-					<div class="mt-1.5 text-3xl font-black leading-none tabular-nums" x-text="`${attemptsUsed} / ${MAX_ATTEMPTS}`"></div>
+				<div x-show="mode === 'fastest' && phase === 'picking'" x-cloak class="stat-tile">
+					<div class="stat-label">Attempts</div>
+					<div class="stat-value" x-text="`${attemptsUsed} / ${MAX_ATTEMPTS}`"></div>
 				</div>
-				<div x-show="mode !== 'fastest'" x-cloak class="min-w-22 px-5 pt-3 pb-3 text-center bg-white/5 border border-white/[0.08] rounded-2xl backdrop-blur-sm">
-					<div class="text-xs font-bold tracking-large uppercase text-gray">Score</div>
-					<div class="mt-1.5 text-3xl font-black leading-none tabular-nums" x-text="score"></div>
+				<div x-show="mode !== 'fastest'" x-cloak class="stat-tile">
+					<div class="stat-label">Score</div>
+					<div class="stat-value" x-text="score"></div>
 				</div>
-				<div class="min-w-22 px-5 pt-3 pb-3 text-center bg-white/5 border border-white/[0.08] rounded-2xl backdrop-blur-sm">
-					<div class="text-xs font-bold tracking-large uppercase text-gray">Best</div>
-					<div class="mt-1.5 text-3xl font-black leading-none tabular-nums" x-text="statsBest"></div>
+				<div class="stat-tile">
+					<div class="stat-label">Best</div>
+					<div class="stat-value" x-text="statsBest"></div>
 				</div>
 			</div>
 
@@ -1111,7 +1111,7 @@
 			<div x-show="phase === 'stageclear'" x-cloak class="text-[13px] text-cyan font-bold tracking-medium uppercase">Stage clear!</div>
 			<div x-show="phase === 'levelup'" x-cloak class="flex flex-col items-center gap-1">
 				<div class="text-[13px] text-cyan font-bold tracking-medium uppercase">Level Up!</div>
-				<div class="text-[32px] font-black leading-[0.95] tabular-nums" x-text="level"></div>
+				<div class="banner-value" x-text="level"></div>
 			</div>
 
 			<!-- Tray stage: cover-out / study / cover-in -->
@@ -1129,7 +1129,7 @@
 					</div>
 					<div x-show="phase === 'study'" x-cloak class="text-[13px] text-yellow font-bold tracking-medium uppercase" x-text="`Memorize! ${Math.ceil(studyTime)}s`"></div>
 					<button type="button" x-show="phase === 'study'" x-cloak @click="skipStudy()"
-					        class="start-btn font-barlow text-sm font-black tracking-medium uppercase text-white border-none rounded-[40px] px-5 py-2.5 cursor-pointer">Got it!</button>
+					        class="start-btn">Got it!</button>
 				</div>
 			</template>
 
@@ -1141,7 +1141,7 @@
 							<button type="button"
 							        @click="mode === 'fastest' ? toggleTile(tile) : (mode === 'streak' ? handleStreakTileClick(tile) : handleTileClick(tile))"
 							        class="tray-tile" :class="{ 'is-selected': tile.state === 'selected', 'is-correct': tile.state === 'correct', 'is-wrong': tile.state === 'wrong' }">
-								<img :src="tile.state === 'selected' ? colorSrc(tile.id) : silhouetteSrc(tile.id)" alt="">
+								<img :src="tile.state === 'idle' ? silhouetteSrc(tile.id) : colorSrc(tile.id)" alt="">
 							</button>
 						</template>
 					</div>
@@ -1149,74 +1149,74 @@
 					<div x-show="mode === 'fastest'" x-cloak class="flex flex-col items-center gap-2">
 						<div class="text-xs text-gray font-bold tracking-medium uppercase" x-text="feedback"></div>
 						<button type="button" @click="submit()"
-						        class="start-btn font-barlow text-sm font-black tracking-medium uppercase text-white border-none rounded-[40px] px-5 py-2.5 cursor-pointer">Submit</button>
+						        class="start-btn">Submit</button>
 					</div>
 				</div>
 			</template>
 
 			<!-- Classic terminal -->
 			<template x-if="phase === 'roundclear'">
-				<div class="flex flex-col items-center gap-2 py-8">
+				<div class="result-screen">
 					<div class="text-[13px] text-cyan font-bold tracking-medium uppercase">All Found!</div>
-					<div class="text-[46px] font-black leading-[0.95] tabular-nums" x-text="score"></div>
-					<div class="text-xs text-gray font-semibold tracking-[0.5px]">final score, banked in best</div>
+					<div class="result-score" x-text="score"></div>
+					<div class="result-caption">final score, banked in best</div>
 					<button type="button" @click="startGame()"
-					        class="start-btn font-barlow text-sm font-black tracking-medium uppercase text-white border-none rounded-[40px] px-5 py-2.5 cursor-pointer mt-2">Play Again</button>
+					        class="start-btn mt-2">Play Again</button>
 				</div>
 			</template>
 			<template x-if="phase === 'timeup'">
-				<div class="flex flex-col items-center gap-2 py-8">
+				<div class="result-screen">
 					<div class="text-[13px] font-bold text-red tracking-medium uppercase">Time's Up</div>
-					<div class="text-[46px] font-black leading-[0.95] tabular-nums" x-text="score"></div>
-					<div class="text-xs text-gray font-semibold tracking-[0.5px]">final score, banked in best</div>
+					<div class="result-score" x-text="score"></div>
+					<div class="result-caption">final score, banked in best</div>
 					<button type="button" @click="startGame()"
-					        class="start-btn font-barlow text-sm font-black tracking-medium uppercase text-white border-none rounded-[40px] px-5 py-2.5 cursor-pointer mt-2">Retry</button>
+					        class="start-btn mt-2">Retry</button>
 				</div>
 			</template>
 
 			<!-- Fastest terminal -->
 			<template x-if="phase === 'success'">
-				<div class="flex flex-col items-center gap-2 py-8">
+				<div class="result-screen">
 					<div class="text-[13px] text-cyan font-bold tracking-medium uppercase">Nailed It!</div>
-					<div class="text-[46px] font-black leading-[0.95] tabular-nums" x-text="elapsedLabel"></div>
-					<div class="text-xs text-gray font-semibold tracking-[0.5px]">your time, banked if it's a new best</div>
+					<div class="result-score" x-text="elapsedLabel"></div>
+					<div class="result-caption">your time, banked if it's a new best</div>
 					<button type="button" @click="startGame()"
-					        class="start-btn font-barlow text-sm font-black tracking-medium uppercase text-white border-none rounded-[40px] px-5 py-2.5 cursor-pointer mt-2">Play Again</button>
+					        class="start-btn mt-2">Play Again</button>
 				</div>
 			</template>
 			<template x-if="phase === 'failed'">
-				<div class="flex flex-col items-center gap-2 py-8">
+				<div class="result-screen">
 					<div class="text-[13px] font-bold text-red tracking-medium uppercase">Out of Attempts</div>
-					<div class="text-xs text-gray font-semibold tracking-[0.5px]">3 attempts used without a perfect answer</div>
+					<div class="result-caption">3 attempts used without a perfect answer</div>
 					<button type="button" @click="startGame()"
-					        class="start-btn font-barlow text-sm font-black tracking-medium uppercase text-white border-none rounded-[40px] px-5 py-2.5 cursor-pointer mt-2">Retry</button>
+					        class="start-btn mt-2">Retry</button>
 				</div>
 			</template>
 
 			<!-- Streak terminal -->
 			<template x-if="phase === 'streakover'">
-				<div class="flex flex-col items-center gap-2 py-8">
+				<div class="result-screen">
 					<div class="text-[13px] font-bold text-red tracking-medium uppercase">Streak Ended</div>
-					<div class="text-[46px] font-black leading-[0.95] tabular-nums" x-text="score"></div>
-					<div class="text-xs text-gray font-semibold tracking-[0.5px]">final score, banked in best</div>
+					<div class="result-score" x-text="score"></div>
+					<div class="result-caption">final score, banked in best</div>
 					<button type="button" @click="startGame()"
-					        class="start-btn font-barlow text-sm font-black tracking-medium uppercase text-white border-none rounded-[40px] px-5 py-2.5 cursor-pointer mt-2">Retry</button>
+					        class="start-btn mt-2">Retry</button>
 				</div>
 			</template>
 			<template x-if="phase === 'complete'">
-				<div class="flex flex-col items-center gap-2 py-8">
+				<div class="result-screen">
 					<div class="text-[13px] text-cyan font-bold tracking-medium uppercase">All 10 Levels Cleared!</div>
-					<div class="text-[46px] font-black leading-[0.95] tabular-nums" x-text="score"></div>
-					<div class="text-xs text-gray font-semibold tracking-[0.5px]">final score</div>
+					<div class="result-score" x-text="score"></div>
+					<div class="result-caption">final score</div>
 					<button type="button" @click="phase = 'setup'"
-					        class="start-btn font-barlow text-sm font-black tracking-medium uppercase text-white border-none rounded-[40px] px-5 py-2.5 cursor-pointer mt-2">Play Again</button>
+					        class="start-btn mt-2">Play Again</button>
 				</div>
 			</template>
 
 			<!-- Controls -->
 			<div x-show="!['roundclear', 'timeup', 'success', 'failed', 'streakover', 'complete'].includes(phase)" x-cloak class="flex gap-2.5 items-center">
 				<button type="button" @click="muted = !muted"
-				        class="flex gap-1 items-center bg-white/5 border border-white/10 rounded-2.5xl px-4 py-2 cursor-pointer transition-colors text-gray hover:text-white hover:border-white/25">
+				        class="control-btn">
 					<svg data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24"
 					     xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="size-4" x-show="!muted" x-cloak>
 						<path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z"></path>
@@ -1225,10 +1225,10 @@
 					     xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="size-4" x-show="muted" x-cloak>
 						<path stroke-linecap="round" stroke-linejoin="round" d="M17.25 9.75 19.5 12m0 0 2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25m-10.5-6 4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z"></path>
 					</svg>
-					<span class="font-barlow text-xs font-bold tracking-px uppercase" x-text="muted ? 'Sound off' : 'Sound on'"></span>
+					<span x-text="muted ? 'Sound off' : 'Sound on'"></span>
 				</button>
 				<button type="button" @click="backToSetup()"
-				        class="flex items-center gap-1.5 bg-white/5 border border-white/10 rounded-2.5xl px-4 py-2 cursor-pointer transition-colors text-gray hover:text-white hover:border-white/25 font-barlow text-xs font-bold tracking-px uppercase">Restart</button>
+				        class="control-btn">Restart</button>
 			</div>
 
 		</div>
