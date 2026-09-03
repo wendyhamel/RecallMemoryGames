@@ -138,6 +138,18 @@ body {
 }
 .hub-big { @apply text-[46px] font-black leading-[0.95] tabular-nums; }
 
+/* ── Difference: stage/level/round-clear overlay ────────────────
+   Centered in front of the two panels, same layered-in-front idea as .hub. */
+.diff-overlay {
+	@apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex flex-col items-center justify-center text-center px-8 py-6 rounded-2xl border-2 border-[var(--header-line)];
+	background: radial-gradient(circle at 50% 38%, hsl(216,40%,20%), hsl(237,46%,12%));
+	box-shadow: 0 14px 36px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.08);
+}
+.diff-dimmed {
+	filter: blur(4px) brightness(0.55);
+	pointer-events: none;
+}
+
 /* ── Start / Retry button ────────────────────────────────────── */
 .start-btn {
 	@apply font-black tracking-medium uppercase text-white border-none rounded-[40px] cursor-pointer text-sm px-5 py-2.5;
@@ -148,6 +160,14 @@ body {
 .start-btn:hover  { filter: brightness(1.08); transform: translateY(-1px); }
 .start-btn:active { transform: translateY(1px) scale(0.97); box-shadow: 0 4px 10px rgba(40,70,220,0.4); }
 .start-btn-lg { @apply text-[19px] px-[22px] py-[13px]; }
+
+.start-btn-secondary {
+	background: transparent;
+	box-shadow: none;
+	border: 1px solid rgba(255,255,255,0.18);
+}
+.start-btn-secondary:hover  { filter: none; background: rgba(255,255,255,0.06); }
+.start-btn-secondary:active { box-shadow: none; }
 
 /* ── Stat tiles (Level / Score / Time / Best readouts) ─────────── */
 .stat-tile  { @apply min-w-22 px-5 pt-3 pb-3 text-center bg-white/5 border border-white/[0.08] rounded-2xl backdrop-blur-sm; }
@@ -244,14 +264,18 @@ body {
 .disc-shake { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97); }
 
 /* ── Match cards ─────────────────────────────────────────────── */
+/* Flexbox (not grid) so a partially-filled last row centers itself instead of
+   leaving empty trailing cells. Card size is computed in JS (matchGame().cardPx)
+   to fit the available space with the fewest rows, then applied per-card below. */
 .match-grid {
-	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(var(--card-min, 72px), 1fr));
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
 	gap: 10px;
 }
 
 .card-scene {
-	aspect-ratio: 1 / 1;
+	flex: 0 0 auto;
 	perspective: 1000px;
 }
 

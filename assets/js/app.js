@@ -182,6 +182,7 @@ function memoryGame() {
 		async _playBack(seq) {
 			const myRun = ++this._runId;
 			this.phase = 'watch';
+			this.roundCount = 0;
 			this.hint  = 'Watch carefully…';
 			const onDur  = Math.max(230, 560 - (this.level - 1) * 70);
 			const offDur = Math.max(120, 250 - (this.level - 1) * 30);
@@ -192,7 +193,6 @@ function memoryGame() {
 			}
 			if (this._runId !== myRun) return;
 			this._inputIdx  = 0;
-			this.roundCount = 0;
 			this.phase = 'input';
 			this.hint  = 'Your turn — repeat it!';
 		},
@@ -295,10 +295,8 @@ function memoryGame() {
 			};
 			const k = e.key.toLowerCase();
 			if (k === ' ' || k === 'enter') {
-				if (this.phase === 'idle' || this.phase === 'gameover') {
-					e.preventDefault();
-					this.startGame();
-				}
+				e.preventDefault();
+				if (this.phase === 'idle' || this.phase === 'gameover') this.startGame();
 				return;
 			}
 			if (k in keyMap) { e.preventDefault(); this.handlePress(keyMap[k]); }
@@ -314,6 +312,7 @@ const DIFF_POINTS_PER_FIND  = 2;
 const DIFF_TIMER_SECONDS    = 60;
 const DIFF_MAX_SCORES       = 3;
 const DIFF_MARK_RADIUS      = 24;
+const DIFF_MIN_TAP_PX       = 22; // half of the ~44px minimum recommended touch target, in physical pixels
 const DIFF_SESSION_CAP_SECONDS   = 300; // Fastest Time: total session play time before a warning appears
 const DIFF_SESSION_GRACE_SECONDS = 30;  // seconds the warning stays up before auto-stopping
 
@@ -397,7 +396,7 @@ function differenceGame() {
 		get modeDescription() {
 			if (this.mode === 'levels')  return 'Clear 5 stages per level to advance. Differences per stage grow from 4 up to 22 across 10 levels.';
 			if (this.mode === 'timer')   return 'Find every difference before the 60 second clock runs out. Keep clearing rounds to build your score.';
-			return 'Timing starts on your first find and stops on your last. Keep playing rounds to beat your best time.';
+			return 'Timing starts when you press Play and stops on your last find. Keep playing rounds to beat your best time.';
 		},
 
 		/* ---- setup / lifecycle ---- */
@@ -513,7 +512,9 @@ function differenceGame() {
 			const [W, H] = this.scene.vb;
 			const x = (evt.clientX - rect.left) / rect.width  * W;
 			const y = (evt.clientY - rect.top)  / rect.height * H;
-			const hit = window.SpotDiff.hitTest(this.scene, this.active, x, y, DIFF_MARK_RADIUS);
+			// Keep the tap target at least ~44 physical px even as the panel scales down on narrow viewports.
+			const radius = Math.max(DIFF_MARK_RADIUS, DIFF_MIN_TAP_PX * W / rect.width);
+			const hit = window.SpotDiff.hitTest(this.scene, this.active, x, y, radius);
 			if (!hit || this.found.has(hit.id)) return;
 
 			this.found.add(hit.id);
@@ -647,22 +648,9 @@ function differenceGame() {
 				if (this.stage < DIFF_STAGES_PER_LEVEL) {
 					this.phase = 'stageclear';
 					this.hint  = `Stage ${this.stage} of ${DIFF_STAGES_PER_LEVEL} clear!`;
-					const nextStage = this.stage + 1, lvl = this.level;
-					_guardedDelay(this, 900, () => {
-						this.stage = nextStage;
-						this._loadRound(this._pickScene(this._lastSceneId), DIFF_LEVEL_COUNTS[lvl - 1]);
-						this.phase = 'playing';
-					});
 				} else if (this.level < DIFF_MAX_LEVEL) {
 					_win(this.muted);
 					this.phase = 'levelup';
-					const nextLevel = this.level + 1;
-					_guardedDelay(this, 1700, () => {
-						this.level = nextLevel;
-						this.stage = 1;
-						this._loadRound(this._pickScene(this._lastSceneId), DIFF_LEVEL_COUNTS[nextLevel - 1]);
-						this.phase = 'playing';
-					});
 				} else {
 					_win(this.muted);
 					this._recordScore();
@@ -670,12 +658,8 @@ function differenceGame() {
 				}
 			} else if (this.mode === 'timer') {
 				this._commitBest();
+				this._clearTimer(); // freeze timeLeft while the round-clear overlay waits on the player
 				this.phase = 'roundclear';
-				_guardedDelay(this, 700, () => {
-					this._loadRound(this._pickScene(this._lastSceneId), this.diffCount);
-					this._startCountdown();
-					this.phase = 'playing';
-				});
 			} else {
 				this._clearTimer();
 				this.timerRunning = false;
@@ -687,6 +671,27 @@ function differenceGame() {
 					this.phase = 'ready';
 				});
 			}
+		},
+
+		/* ---- manual continue (levels: stage/level clear; timer: round clear) ---- */
+		continueStage() {
+			if (this.phase !== 'stageclear') return;
+			this.stage += 1;
+			this._loadRound(this._pickScene(this._lastSceneId), DIFF_LEVEL_COUNTS[this.level - 1]);
+			this.phase = 'playing';
+		},
+		continueLevel() {
+			if (this.phase !== 'levelup') return;
+			this.level += 1;
+			this.stage = 1;
+			this._loadRound(this._pickScene(this._lastSceneId), DIFF_LEVEL_COUNTS[this.level - 1]);
+			this.phase = 'playing';
+		},
+		continueRound() {
+			if (this.phase !== 'roundclear' || this.mode !== 'timer') return;
+			this._loadRound(this._pickScene(this._lastSceneId), this.diffCount);
+			this._startCountdown();
+			this.phase = 'playing';
 		},
 
 		/* ---- persistence ---- */
@@ -767,9 +772,23 @@ function matchGame() {
 		_startTs:  0,
 		_deadline: 0,
 		_gen: 0,
+		_gridW: 0,
+		_gridH: 0,
 
 		init() {
 			this.$watch('page', (value) => { if (value !== 'match') this.backToSetup(); });
+			window.addEventListener('resize', () => this._measureGrid());
+		},
+
+		// Available space for the card grid: its own container width, plus a rough
+		// height budget (viewport minus the stats/controls chrome above and below it),
+		// so the grid can pick a card size that keeps every card on screen at once.
+		_measureGrid() {
+			this.$nextTick(() => {
+				const el = this.$refs.grid;
+				this._gridW = el ? el.clientWidth : 0;
+				this._gridH = Math.max(240, window.innerHeight - 360);
+			});
 		},
 
 		get timerBest() { return Alpine.store('scores').matchTimerBest; },
@@ -817,6 +836,22 @@ function matchGame() {
 			if (n <= 32) return 66;
 			if (n <= 40) return 56;
 			return 48;
+		},
+
+		// Picks the card size (any column count from 1..n) that fits both the grid's
+		// available width and height, maximizing card size — which naturally favors
+		// fewer, wider rows without hardcoding a target aspect ratio. Cards render in a
+		// flex-wrap row so a partially-filled last row centers itself automatically.
+		get cardPx() {
+			const n = this.currentCardCount, gap = 10, ceiling = this.cardMinPx;
+			const w = this._gridW || 600, h = this._gridH || 400;
+			let best = 44;
+			for (let cols = 1; cols <= n; cols++) {
+				const rows = Math.ceil(n / cols);
+				const size = Math.min(ceiling, (w - (cols - 1) * gap) / cols, (h - (rows - 1) * gap) / rows);
+				if (size > best) best = size;
+			}
+			return Math.max(44, Math.floor(best));
 		},
 
 		/* ---- setup / lifecycle ---- */
@@ -870,6 +905,7 @@ function matchGame() {
 			this.cards   = deck.map((frontId, uid) => ({ uid, frontId, flipped: false, matched: false }));
 			this.selected = [];
 			this.lock = false;
+			this._measureGrid();
 		},
 
 		frontSrc(frontId) {
@@ -1169,7 +1205,7 @@ function trayGame() {
 		get modeDescription() {
 			if (this.mode === 'classic') return 'Memorize the objects on the tray in 60 seconds, then pick them out from the silhouettes. 2 points per correct pick, -1 for a wrong one. You have 3 minutes to answer.';
 			if (this.mode === 'fastest') return 'Memorize the objects, then select every one you remember and submit. Only a fully correct answer stops the clock — you get up to 3 attempts.';
-			return 'Memorize a growing tray of objects each stage. One wrong pick ends the run. 10 levels, 5 stages each, 6 up to 24 objects — clear level 10 stage 5 to win.';
+			return 'Memorize a growing tray of objects each level. One wrong pick ends the run. 10 levels, 5 stages each, 6 up to 24 objects — clear level 10 stage 5 to win.';
 		},
 
 		/* ---- asset helpers ---- */

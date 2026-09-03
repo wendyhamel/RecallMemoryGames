@@ -142,14 +142,17 @@
         const id = `w${bi}_${r}_${col}`;
         base.push({ id, type: 'rect', x: wx, y: wy, w: 8, h: 10, rx: 1.5, fill: lit ? YEL : 'rgba(255,255,255,0.16)' });
       }
-      // window diffs — sample some to toggle off, some recolor
+      // window diffs — sample some to toggle off, some recolor. Only generate an "off"
+      // diff for a window that's actually lit — recoloring an already-off window to the
+      // same off color is a real, must-be-found diff with zero visible change.
       for (let r = 0; r < rows; r++) for (let col = 0; col < cols; col++) {
         const id = `w${bi}_${r}_${col}`, wx = b.x + 6 + col * gw, wy = top + 12 + r * 20;
-        if ((r * 3 + col + bi) % 7 === 0) diffs.push({ id: 'off_' + id, mx: wx + 4, my: wy + 5, apply: c => c.recolor(id, 'rgba(255,255,255,0.16)') });
+        const wLit = ((r + col + bi) % 3 !== 0);
+        if (wLit && (r * 3 + col + bi) % 7 === 0) diffs.push({ id: 'off_' + id, mx: wx + 4, my: wy + 5, apply: c => c.recolor(id, 'rgba(255,255,255,0.16)') });
         if ((r * 2 + col + bi) % 9 === 0) diffs.push({ id: 'lit_' + id, mx: wx + 4, my: wy + 5, apply: c => c.recolor(id, CYA) });
       }
       // antenna add on tall buildings
-      if (b.h > 150) { const ax = b.x + b.w / 2; diffs.push({ id: 'ant_' + bi, mx: ax, my: top - 16, apply: c => { c.add({ id: 'ant_' + bi, type: 'line', x1: ax, y1: top, x2: ax, y2: top - 26, stroke: LINE, sw: 3 }); c.add({ id: 'antd_' + bi, type: 'circle', cx: ax, cy: top - 28, r: 4, fill: RED }); } }); }
+      if (b.h > 150) { const ax = b.x + b.w / 2; diffs.push({ id: 'ant_' + bi, mx: ax, my: top - 16, apply: c => { c.add({ id: 'ant_' + bi, type: 'line', x1: ax, y1: top, x2: ax, y2: top - 26, stroke: LINE, sw: 3 }); c.add({ id: 'antd_' + bi, type: 'circle', cx: ax, cy: top - 28, r: 6, fill: RED }); } }); }
     });
     return { id: 'skyline', name: 'Skyline', vb: [W, H], base, diffs };
   }
@@ -337,8 +340,9 @@
       const x = Math.round(30 + rng() * 380), y = Math.round(38 + rng() * 236), r = 3 + Math.round(rng() * 5), id = 'bu' + i;
       base.push({ id, type: 'circle', cx: x, cy: y, r, fill: 'none', stroke: 'rgba(255,255,255,0.4)', sw: 2 });
       if (i % 2 === 0) diffs.push({ id: 'rm_bu' + i, mx: x, my: y, apply: c => c.remove(id) });
+      else diffs.push({ id: 'gr_bu' + i, mx: x, my: y, apply: c => { const g = c.get(id); if (g) g.r = r + 6; } });
     }
-    [[150, 285, YEL], [270, 290, PUR]].forEach(([x, y, col], i) => {
+    [[150, 285, YEL], [270, 290, PUR], [210, 60, CYA]].forEach(([x, y, col], i) => {
       diffs.push({ id: 'star' + i, mx: x, my: y, apply: c => { const pts = []; for (let k = 0; k < 5; k++) { const a = (-90 + k * 72) * Math.PI / 180; pts.push([+(x + 12 * Math.cos(a)).toFixed(1), +(y + 12 * Math.sin(a)).toFixed(1)]); const a2 = (-90 + k * 72 + 36) * Math.PI / 180; pts.push([+(x + 5 * Math.cos(a2)).toFixed(1), +(y + 5 * Math.sin(a2)).toFixed(1)]); } c.add({ id: 'star' + i, type: 'poly', pts, fill: col }); } });
     });
     return { id: 'reef', name: 'Reef', vb: [W, H], base, diffs };
@@ -368,8 +372,13 @@
       diffs.push({ id: 're_wg' + i, mx: dcx + dr * 0.6 * Math.cos(mid), my: dcy + dr * 0.6 * Math.sin(mid), apply: c => c.recolor('wg' + i, rotate(col)) });
     });
     base.push({ id: 'hole', type: 'circle', cx: dcx, cy: dcy, r: 18, fill: 'hsl(233,44%,13%)' });
-    const lpts = [[250, 272], [288, 250], [326, 262], [364, 234], [402, 248]];
-    lpts.forEach((p, i) => { if (i < lpts.length - 1) base.push({ id: 'ln' + i, type: 'line', x1: p[0], y1: p[1], x2: lpts[i + 1][0], y2: lpts[i + 1][1], stroke: CYA, sw: 3, opacity: 0.75 }); });
+    const lpts = [[250, 272], [276, 254], [302, 266], [328, 240], [354, 252], [380, 228], [406, 244], [428, 232]];
+    lpts.forEach((p, i) => {
+      if (i >= lpts.length - 1) return;
+      const id = 'ln' + i, next = lpts[i + 1];
+      base.push({ id, type: 'line', x1: p[0], y1: p[1], x2: next[0], y2: next[1], stroke: CYA, sw: 3, opacity: 0.75 });
+      diffs.push({ id: 're_' + id, mx: (p[0] + next[0]) / 2, my: (p[1] + next[1]) / 2, apply: c => { const g = c.get(id); if (g) g.stroke = rotate(CYA); } });
+    });
     lpts.forEach((p, i) => {
       base.push({ id: 'lp' + i, type: 'circle', cx: p[0], cy: p[1], r: 5, fill: PUR });
       diffs.push({ id: 're_lp' + i, mx: p[0], my: p[1], apply: c => c.recolor('lp' + i, YEL) });
@@ -546,6 +555,7 @@
       base.push({ id, type: 'ellipse', cx: x, cy: y, rx: 22, ry: 27, rot: 0, fill: col });
       base.push({ id: 'knot' + i, type: 'poly', pts: [[x - 4, y + 26], [x + 4, y + 26], [x, y + 32]], fill: col });
       base.push({ id: 'hl' + i, type: 'ellipse', cx: x - 7, cy: y - 9, rx: 5, ry: 7, rot: -20, fill: 'rgba(255,255,255,0.5)' });
+      diffs.push({ id: 're_str' + i, mx: (x + (x + (i % 2 ? 8 : -8))) / 2, my: (y + 26 + 300) / 2, apply: c => { const g = c.get('str' + i); if (g) g.stroke = YEL; } });
       diffs.push({ id: 're_' + id, mx: x, my: y, apply: c => { c.recolor(id, rotate(col)); c.recolor('knot' + i, rotate(col)); } });
       diffs.push({ id: 'gr_' + id, mx: x, my: y, apply: c => { const g = c.get(id); if (g) { g.rx = 26; g.ry = 32; } } });
       diffs.push({ id: 'rm_hl' + i, mx: x - 7, my: y - 9, apply: c => c.remove('hl' + i) });
@@ -565,6 +575,7 @@
     const W = 440, H = 340, base = [], diffs = [];
     base.push({ id: 'head', type: 'rect', x: 150, y: 70, w: 140, h: 120, rx: 20, fill: 'rgba(255,255,255,0.06)', stroke: 'rgba(255,255,255,0.18)', sw: 3 });
     base.push({ id: 'ant', type: 'line', x1: 220, y1: 70, x2: 220, y2: 44, stroke: LINE, sw: 4 });
+    diffs.push({ id: 're_ant', mx: 220, my: 57, apply: c => { const g = c.get('ant'); if (g) g.stroke = CYA; } });
     base.push({ id: 'antb', type: 'circle', cx: 220, cy: 38, r: 9, fill: RED });
     diffs.push({ id: 're_antb', mx: 220, my: 38, apply: c => c.recolor('antb', CYA) });
     base.push({ id: 'earL', type: 'rect', x: 138, y: 112, w: 12, h: 30, rx: 3, fill: PUR });
@@ -587,6 +598,8 @@
     diffs.push({ id: 're_armL', mx: 145, my: 217, apply: c => c.recolor('armL', rotate(PUR)) });
     diffs.push({ id: 'rm_armR', mx: 295, my: 217, apply: c => c.remove('armR') });
     diffs.push({ id: 'gauge', mx: 220, my: 285, apply: c => c.add({ id: 'gauge', type: 'ring', cx: 220, cy: 285, r: 12, stroke: CYA, sw: 3 }) });
+    diffs.push({ id: 'led0', mx: 182, my: 208, apply: c => c.add({ id: 'led0', type: 'circle', cx: 182, cy: 208, r: 5, fill: YEL }) });
+    diffs.push({ id: 'led1', mx: 258, my: 208, apply: c => c.add({ id: 'led1', type: 'circle', cx: 258, cy: 208, r: 5, fill: RED }) });
     return { id: 'robot', name: 'Robot', vb: [W, H], base, diffs };
   }
 
@@ -595,8 +608,11 @@
   // =====================================================================
   function buildMusic() {
     const W = 440, H = 340, base = [], diffs = [];
-    [110, 140, 170, 200, 230].forEach((y, i) => base.push({ id: 'staff' + i, type: 'line', x1: 40, y1: y, x2: 400, y2: y, stroke: 'rgba(255,255,255,0.22)', sw: 2 }));
-    [[90, 200, RED], [140, 170, BLUE], [190, 140, YEL], [240, 200, CYA], [290, 170, PUR], [340, 110, RED]].forEach(([x, y, col], i) => {
+    [110, 140, 170, 200, 230].forEach((y, i) => {
+      base.push({ id: 'staff' + i, type: 'line', x1: 40, y1: y, x2: 400, y2: y, stroke: 'rgba(255,255,255,0.22)', sw: 2 });
+      if (i < 4) diffs.push({ id: 're_staff' + i, mx: 220, my: y, apply: c => { const g = c.get('staff' + i); if (g) g.stroke = CYA; } });
+    });
+    [[90, 200, RED], [140, 170, BLUE], [190, 140, YEL], [240, 200, CYA], [290, 170, PUR], [340, 110, RED], [370, 150, BLUE], [400, 190, PUR]].forEach(([x, y, col], i) => {
       base.push({ id: 'nh' + i, type: 'ellipse', cx: x, cy: y, rx: 12, ry: 9, rot: -20, fill: col });
       base.push({ id: 'ns' + i, type: 'line', x1: x + 11, y1: y, x2: x + 11, y2: y - 48, stroke: col, sw: 3 });
       diffs.push({ id: 're_n' + i, mx: x, my: y, apply: c => { c.recolor('nh' + i, rotate(col)); const g = c.get('ns' + i); if (g) g.stroke = rotate(col); } });
@@ -698,6 +714,7 @@
     [[140, 96, RED], [240, 86, BLUE], [318, 126, YEL], [180, 164, PUR], [280, 182, CYA], [150, 224, YEL]].forEach(([x, y, col], i) => {
       base.push({ id: 'bmp' + i, type: 'circle', cx: x, cy: y, r: 22, fill: col });
       base.push({ id: 'bmpr' + i, type: 'ring', cx: x, cy: y, r: 22, stroke: '#fff', sw: 2, opacity: 0.5 });
+      diffs.push({ id: 're_bmpr' + i, mx: x, my: y + 22, apply: c => { const g = c.get('bmpr' + i); if (g) { g.stroke = YEL; g.opacity = 1; } } });
       diffs.push({ id: 're_bmp' + i, mx: x, my: y, apply: c => c.recolor('bmp' + i, rotate(col)) });
       diffs.push({ id: 'gr_bmp' + i, mx: x, my: y, apply: c => { const g = c.get('bmp' + i); if (g) g.r = 28; } });
       if (i % 2 === 0) diffs.push({ id: 'rm_bmp' + i, mx: x, my: y, apply: c => { c.remove('bmp' + i); c.remove('bmpr' + i); } });
