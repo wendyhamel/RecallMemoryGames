@@ -121,6 +121,13 @@ body {
 .quad.armed:not(.lit):hover { filter: brightness(0.82); }
 .quad.idle { cursor: default; }
 
+/* Keyboard focus: a white ring that follows the button's shape. :focus-visible keeps it
+   off for mouse clicks. The ring sits inside the 10px gap between the buttons. */
+.quad:focus-visible {
+	outline: 3px solid #fff;
+	outline-offset: 3px;
+}
+
 .quad.lit {
 	filter: brightness(1.35) saturate(1.1);
 	transform: scale(0.97);
