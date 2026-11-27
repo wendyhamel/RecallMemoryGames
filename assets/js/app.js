@@ -352,7 +352,8 @@ function differenceGame() {
 		_gen: 0,
 
 		// fastest mode: TOTAL session time (separate from the per-round `elapsed` stopwatch above)
-		_sessionStartTs: 0,
+		_sessionStartTs: 0,   // when the current round's share of session play time started
+		_sessionPlayed: 0,    // seconds of session play banked from earlier rounds (Ready screens excluded)
 		_sessionInterval: null,
 		_graceInterval: null,
 
@@ -406,6 +407,7 @@ function differenceGame() {
 			this._clearSessionTimer();
 			this._clearGraceTimer();
 			this.showTimeCapWarning = false;
+			this._sessionPlayed = 0;
 			this.score = 0;
 			this.hint  = '';
 			if (this.mode === 'levels') {
@@ -429,8 +431,8 @@ function differenceGame() {
 		},
 
 		// Fastest Time only: called every round, when the player clicks Play on the
-		// Ready screen. Reveals the panels and (re)starts both the per-round stopwatch and
-		// the total-session cap timer at the same moment the images appear.
+		// Ready screen. Reveals the panels and starts the per-round stopwatch, and resumes
+		// the total-session cap timer, at the same moment the images appear.
 		playFastestRound() {
 			this.phase = 'playing';
 			this._startStopwatch();
@@ -581,13 +583,22 @@ function differenceGame() {
 		},
 
 		/* ---- fastest mode: total-session cap (separate from the per-round stopwatch) ---- */
+		// Resumes the session clock for a new round. Play time from earlier rounds is
+		// kept in _sessionPlayed, so the cap counts total play across the whole session.
 		_startSessionTimer() {
 			this._clearSessionTimer();
 			this._sessionStartTs = Date.now();
 			this._sessionInterval = setInterval(() => {
-				const total = (Date.now() - this._sessionStartTs) / 1000;
+				const total = this._sessionPlayed + (Date.now() - this._sessionStartTs) / 1000;
 				if (total >= DIFF_SESSION_CAP_SECONDS && !this.showTimeCapWarning) this._showSessionCapWarning();
 			}, 1000);
+		},
+
+		// Pauses the session clock between rounds (the Ready screen doesn't count).
+		_pauseSessionTimer() {
+			if (!this._sessionInterval) return;
+			this._sessionPlayed += (Date.now() - this._sessionStartTs) / 1000;
+			this._clearSessionTimer();
 		},
 
 		_clearSessionTimer() {
@@ -613,6 +624,7 @@ function differenceGame() {
 		dismissTimeCapWarning() {
 			this.showTimeCapWarning = false;
 			this._clearGraceTimer();
+			this._sessionPlayed = 0;
 			this._sessionStartTs = Date.now();
 		},
 
@@ -662,6 +674,7 @@ function differenceGame() {
 				this.phase = 'roundclear';
 			} else {
 				this._clearTimer();
+				this._pauseSessionTimer();
 				this.timerRunning = false;
 				this._commitFastest(this.elapsed);
 				this.phase = 'roundclear';
