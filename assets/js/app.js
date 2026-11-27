@@ -774,6 +774,7 @@ function matchGame() {
 		_gen: 0,
 		_gridW: 0,
 		_gridH: 0,
+		_gap: 10, // card gap in px, read from the rendered grid (gap-2.5) in _measureGrid
 
 		init() {
 			this.$watch('page', (value) => { if (value !== 'match') this.backToSetup(); });
@@ -787,6 +788,8 @@ function matchGame() {
 			this.$nextTick(() => {
 				const el = this.$refs.grid;
 				this._gridW = el ? el.clientWidth : 0;
+				const cards = el && el.querySelector('.match-grid');
+				if (cards) this._gap = parseFloat(getComputedStyle(cards).columnGap) || this._gap;
 				this._gridH = Math.max(240, window.innerHeight - 360);
 			});
 		},
@@ -838,20 +841,34 @@ function matchGame() {
 			return 48;
 		},
 
-		// Picks the card size (any column count from 1..n) that fits both the grid's
-		// available width and height, maximizing card size — which naturally favors
-		// fewer, wider rows without hardcoding a target aspect ratio. Cards render in a
-		// flex-wrap row so a partially-filled last row centers itself automatically.
-		get cardPx() {
-			const n = this.currentCardCount, gap = 10, ceiling = this.cardMinPx;
+		// Picks a column count and card size that fit both the grid's available width
+		// and height. Every column count from 1..n is tried; a layout that fills all its
+		// rows evenly wins as long as its cards are within 10% of the largest possible
+		// size (ties go to fewer rows). If no even layout is close enough, the layout
+		// with the fewest empty slots in its last row wins. The grid is then capped to
+		// exactly that many columns (gridMaxPx), so the rows come out balanced and a
+		// partially-filled last row centers itself.
+		get cardLayout() {
+			const n = this.currentCardCount, gap = this._gap, ceiling = this.cardMinPx;
 			const w = this._gridW || 600, h = this._gridH || 400;
-			let best = 44;
+			const options = [];
 			for (let cols = 1; cols <= n; cols++) {
 				const rows = Math.ceil(n / cols);
-				const size = Math.min(ceiling, (w - (cols - 1) * gap) / cols, (h - (rows - 1) * gap) / rows);
-				if (size > best) best = size;
+				const size = Math.floor(Math.min(ceiling, (w - (cols - 1) * gap) / cols, (h - (rows - 1) * gap) / rows));
+				options.push({ cols, rows, size, empty: rows * cols - n });
 			}
-			return Math.max(44, Math.floor(best));
+			const maxSize = Math.max(...options.map(o => o.size));
+			const close = options.filter(o => o.size >= maxSize * 0.9);
+			const even = close.filter(o => o.empty === 0);
+			const pool = even.length ? even : close;
+			pool.sort((a, b) => a.empty - b.empty || b.size - a.size || a.rows - b.rows);
+			const best = pool[0];
+			return { cols: best.cols, size: Math.max(44, best.size) };
+		},
+		get cardPx() { return this.cardLayout.size; },
+		get gridMaxPx() {
+			const { cols, size } = this.cardLayout;
+			return cols * size + (cols - 1) * this._gap;
 		},
 
 		/* ---- setup / lifecycle ---- */

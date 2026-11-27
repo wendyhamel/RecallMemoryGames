@@ -764,19 +764,21 @@
 			<!-- Board -->
 			<template x-if="!['complete', 'timeup', 'streakover'].includes(phase)">
 				<div class="flex flex-col items-center gap-3 w-full">
-					<div class="match-grid w-full max-w-3xl" x-ref="grid">
-						<template x-for="card in cards" :key="card.uid">
-							<div class="card-scene" :style="`width:${cardPx}px;height:${cardPx}px`">
-								<div class="card-inner" :class="{ 'is-flipped': card.flipped || card.matched, 'is-matched': card.matched }" @click="handleCardClick(card)">
-									<div class="card-face card-back">
-										<img src="assets/images/brand/recall-mark-dark.svg" alt="">
-									</div>
-									<div class="card-face card-front">
-										<img :src="frontSrc(card.frontId)" alt="">
+					<div class="w-full max-w-3xl" x-ref="grid">
+						<div class="match-grid gap-2.5 mx-auto" :style="`max-width:${gridMaxPx}px`">
+							<template x-for="card in cards" :key="card.uid">
+								<div class="card-scene" :style="`width:${cardPx}px;height:${cardPx}px`">
+									<div class="card-inner" :class="{ 'is-flipped': card.flipped || card.matched, 'is-matched': card.matched }" @click="handleCardClick(card)">
+										<div class="card-face card-back">
+											<img src="assets/images/brand/recall-mark-dark.svg" alt="">
+										</div>
+										<div class="card-face card-front">
+											<img :src="frontSrc(card.frontId)" alt="">
+										</div>
 									</div>
 								</div>
-							</div>
-						</template>
+							</template>
+						</div>
 					</div>
 					<div class="text-xs text-gray font-bold tracking-medium uppercase">Found <span x-text="matchedCount"></span> / <span x-text="pairCount"></span></div>
 				</div>
