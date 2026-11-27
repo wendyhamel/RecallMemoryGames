@@ -295,6 +295,10 @@ function memoryGame() {
 			};
 			const k = e.key.toLowerCase();
 			if (k === ' ' || k === 'enter') {
+				// During the player's turn, let Enter/Space press a focused colour button
+				// (keyboard/screen-reader play). Everything else stays blocked, so a focused
+				// Sound/Restart button can't be triggered mid-game.
+				if (this.phase === 'input' && e.target.closest && e.target.closest('.quad')) return;
 				e.preventDefault();
 				if (this.phase === 'idle' || this.phase === 'gameover') this.startGame();
 				return;
