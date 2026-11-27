@@ -790,8 +790,10 @@
 					<div class="text-[13px] text-cyan font-bold tracking-medium uppercase">Perfect Streak Complete!</div>
 					<div class="result-score" x-text="score"></div>
 					<div class="result-caption">final score</div>
-					<button type="button" @click="phase = 'setup'"
+					<button type="button" @click="startGame()"
 					        class="start-btn mt-2">Play Again</button>
+					<button type="button" @click="backToSetup()"
+					        class="start-btn start-btn-secondary mt-2">Change Settings</button>
 				</div>
 			</template>
 
@@ -1014,8 +1016,10 @@
 					<div class="text-[13px] text-cyan font-bold tracking-medium uppercase">All 10 Levels Cleared!</div>
 					<div class="result-score" x-text="score"></div>
 					<div class="result-caption">final score</div>
-					<button type="button" @click="phase = 'setup'"
+					<button type="button" @click="startGame()"
 					        class="start-btn mt-2">Play Again</button>
+					<button type="button" @click="backToSetup()"
+					        class="start-btn start-btn-secondary mt-2">Change Settings</button>
 				</div>
 			</template>
 
@@ -1272,8 +1276,10 @@
 					<div class="text-[13px] text-cyan font-bold tracking-medium uppercase">All 10 Levels Cleared!</div>
 					<div class="result-score" x-text="score"></div>
 					<div class="result-caption">final score</div>
-					<button type="button" @click="phase = 'setup'"
+					<button type="button" @click="startGame()"
 					        class="start-btn mt-2">Play Again</button>
+					<button type="button" @click="backToSetup()"
+					        class="start-btn start-btn-secondary mt-2">Change Settings</button>
 				</div>
 			</template>
 
