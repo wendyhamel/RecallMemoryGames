@@ -629,9 +629,9 @@
 				<div class="text-[13px] font-bold tracking-medium uppercase"
 				     :class="phase === 'watch' ? 'text-yellow' : 'text-cyan'"
 				     x-text="phase === 'watch' ? 'Watch' : 'Your Turn'"></div>
-				<div class="hub-big" x-text="roundCount"></div>
+				<div class="hub-big" x-text="phase === 'watch' ? watchLen : roundCount"></div>
 				<div class="result-caption"
-				     x-text="roundCount === 1 ? 'press' : 'presses'"></div>
+				     x-text="(phase === 'watch' ? watchLen : roundCount) === 1 ? 'press' : 'presses'"></div>
 			</div>
 
 		</div>

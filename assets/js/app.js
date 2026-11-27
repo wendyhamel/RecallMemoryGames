@@ -140,6 +140,7 @@ function memoryGame() {
 		level:      1,
 		score:      0,
 		roundCount: 0,
+		watchLen:   0, // length of the sequence being shown (or about to be), for the hub during Watch
 		lit:        null,
 		hint:       'Press Start, then repeat the sequence of lights.',
 		shake:      false,
@@ -201,6 +202,7 @@ function memoryGame() {
 			const next = [...prevSeq, Math.floor(Math.random() * 4)];
 			this.level    = Math.floor((next.length - 1) / this.LEVEL_LEN) + 1;
 			this.sequence = next;
+			this.watchLen = next.length;
 			await this._playBack(next);
 		},
 
@@ -267,6 +269,7 @@ function memoryGame() {
 					const seq = this.sequence, myRun = this._runId;
 					setTimeout(() => { if (this._runId === myRun) this._nextRound(seq); }, 1700);
 				} else {
+					this.watchLen = this.sequence.length + 1; // the next sequence is one press longer
 					this.phase = 'watch';
 					this.hint  = 'Nice! Next sequence…';
 					const seq = this.sequence, myRun = this._runId;
