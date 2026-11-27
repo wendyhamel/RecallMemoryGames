@@ -64,7 +64,8 @@
       get: id => arr[idx[id]],
       remove: id => { if (idx[id] != null) arr[idx[id]] = null; },
       add: e => { arr.push(e); },
-      recolor: (id, c) => { const e = arr[idx[id]]; if (e) e.fill = c; },
+      // outline-only shapes (lines, rings) have no fill, so recolor their stroke instead
+      recolor: (id, c) => { const e = arr[idx[id]]; if (!e) return; if (e.fill == null && e.stroke != null) e.stroke = c; else e.fill = c; },
       replace: (id, e) => { if (idx[id] != null) arr[idx[id]] = Object.assign({ id }, e); },
     };
   }
