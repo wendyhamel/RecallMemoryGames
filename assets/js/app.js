@@ -752,7 +752,7 @@ function matchGame() {
 		STREAK_STAGES_PER_LEVEL: MATCH_STREAK_STAGES_PER_LEVEL,
 		STREAK_MAX_LEVEL: MATCH_STREAK_MAX_LEVEL,
 
-		phase: 'setup', // setup | preview | playing | stageclear | levelup | complete | roundclear | timeup
+		phase: 'setup', // setup | preview | playing | stageclear | levelup | complete | roundclear | timeup | streakover | setclear
 
 		level: 1,
 		stage: 1,
@@ -1037,13 +1037,7 @@ function matchGame() {
 				this._clearTimer();
 				this.timerRunning = false;
 				this._commitFastest(this.elapsed);
-				this.phase = 'roundclear';
-				_guardedDelay(this, 900, () => {
-					this._dealRound(this.cardCount);
-					this.elapsed = 0;
-					this.timerRunning = false;
-					this.phase = 'playing';
-				});
+				this.phase = 'setclear'; // waits on the player: Play Again or Change Settings
 			} else {
 				this._commitStreakBest();
 				const level = this.level, stage = this.stage;

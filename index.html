@@ -762,7 +762,7 @@
 			<div x-show="phase === 'roundclear'" x-cloak class="text-[13px] text-cyan font-bold tracking-medium uppercase">Set clear!</div>
 
 			<!-- Board -->
-			<template x-if="!['complete', 'timeup', 'streakover'].includes(phase)">
+			<template x-if="!['complete', 'timeup', 'streakover', 'setclear'].includes(phase)">
 				<div class="flex flex-col items-center gap-3 w-full">
 					<div class="w-full max-w-3xl" x-ref="grid">
 						<div class="match-grid gap-2.5 mx-auto" :style="`max-width:${gridMaxPx}px`">
@@ -821,8 +821,21 @@
 				</div>
 			</template>
 
+			<!-- Set clear (fastest mode) -->
+			<template x-if="phase === 'setclear'">
+				<div class="result-screen">
+					<div class="text-[13px] text-cyan font-bold tracking-medium uppercase">Set Clear!</div>
+					<div class="result-score" x-text="elapsedLabel"></div>
+					<div class="result-caption">your time, banked if it's a new best</div>
+					<button type="button" @click="startGame()"
+					        class="start-btn mt-2">Play Again</button>
+					<button type="button" @click="backToSetup()"
+					        class="start-btn start-btn-secondary mt-2">Change Settings</button>
+				</div>
+			</template>
+
 			<!-- Controls -->
-			<div x-show="!['complete', 'timeup', 'streakover'].includes(phase)" x-cloak class="flex gap-2.5 items-center">
+			<div x-show="!['complete', 'timeup', 'streakover', 'setclear'].includes(phase)" x-cloak class="flex gap-2.5 items-center">
 				<button type="button" @click="muted = !muted"
 				        class="control-btn">
 					<svg data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24"
