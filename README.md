@@ -58,7 +58,7 @@ A memorize-and-recall game. Objects appear on a tray, get covered, then you pick
 
 - **Classic** — memorize the tray for 60 seconds (or press **Got it** to skip ahead once you're confident), then pick the objects you saw from a grid of silhouettes. 2 points per correct pick, -1 for a wrong one, 3 minutes to answer.
 - **Fastest Time** — memorize, then select everything you remember and submit. Selected tiles show in full color. Only a fully correct answer stops the clock — up to 3 attempts.
-- **Perfect Streak** — memorize a growing tray each stage. One wrong pick ends the run. 10 levels, 5 stages each, 6 up to 24 objects — clear level 10 stage 5 to win.
+- **Perfect Streak** — memorize a tray that grows each level. One wrong pick ends the run. 10 levels, 5 stages each, 6 up to 24 objects — clear level 10 stage 5 to win.
 
 ## Dashboard & Scores
 
