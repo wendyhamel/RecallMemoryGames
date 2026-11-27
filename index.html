@@ -733,7 +733,7 @@
 					<div class="stat-label">Level</div>
 					<div class="stat-value" x-text="level"></div>
 				</div>
-				<div class="stat-tile">
+				<div x-show="mode !== 'fastest'" x-cloak class="stat-tile">
 					<div class="stat-label">Score</div>
 					<div class="stat-value" x-text="score"></div>
 				</div>
